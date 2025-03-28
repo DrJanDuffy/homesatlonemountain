@@ -1,8 +1,9 @@
-import React from 'react'
 import { notFound } from 'next/navigation'
 import { allPosts } from 'contentlayer/generated'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { generateBlogPostSchema } from '@/lib/schema'
+import { MDXContent } from '@/components/MDXContent'
+import Image from 'next/image'
 
 interface BlogPostPageProps {
   params: {
@@ -10,7 +11,7 @@ interface BlogPostPageProps {
   }
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const post = allPosts.find((p) => p._raw.flattenedPath === params.slug)
 
   if (!post) {
@@ -68,14 +69,17 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               <span>{post.author}</span>
             </div>
           </div>
-          <div className="aspect-[16/9] relative mb-8">
-            <img
-              src={post.image}
-              alt={post.title}
-              className="rounded-lg object-cover"
-            />
-          </div>
-          {post.body.raw}
+          {post.image && (
+            <div className="aspect-[16/9] relative mb-8">
+              <Image
+                src={post.image}
+                alt={post.title}
+                fill
+                className="rounded-lg object-cover"
+              />
+            </div>
+          )}
+          <MDXContent code={post.body.code} />
         </article>
       </div>
     </>

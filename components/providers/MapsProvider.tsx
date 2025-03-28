@@ -1,4 +1,5 @@
-import React from 'react'
+'use client'
+
 import { LoadScript, Libraries } from '@react-google-maps/api'
 
 const libraries: Libraries = ['places', 'geometry']

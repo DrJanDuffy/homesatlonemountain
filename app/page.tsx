@@ -30,12 +30,10 @@ export default function HomePage() {
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl">
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+            <h1 className="luxury-heading text-white">
               Discover Your Dream Home at Lone Mountain
+              <span className="text-gray-200">Experience luxury living with breathtaking mountain views</span>
             </h1>
-            <p className="text-xl text-gray-200 mb-8">
-              Experience luxury living with breathtaking mountain views in Las Vegas's most prestigious community
-            </p>
             <div className="flex gap-4">
               <Button asChild size="lg">
                 <Link href="/properties">View Properties</Link>

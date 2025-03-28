@@ -1,19 +1,21 @@
-import React from 'react'
+'use client'
+
 import { allProperties } from 'contentlayer/generated'
 import { compareDesc } from 'date-fns'
 import { Image } from '@/components/ui/Image'
 import { useAnalytics } from '@/hooks/useAnalytics'
+import { useEffect } from 'react'
 
 export default function PropertiesPage() {
   const { trackPropertyView } = useAnalytics()
   const properties = allProperties.sort((a, b) =>
-    compareDesc(new Date(a.publishedAt), new Date(b.publishedAt))
+    compareDesc(new Date(a.published), new Date(b.published))
   )
 
   // Track page view
-  React.useEffect(() => {
+  useEffect(() => {
     if (typeof window !== 'undefined' && window.va) {
-      window.va('pageview')
+      window.va.pageview(window.location.pathname)
     }
   }, [])
 

@@ -10,11 +10,12 @@
     "format": "prettier --write \"**/*.{ts,tsx,md,mdx,json}\""
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.1.2",
     "@react-google-maps/api": "^2.19.2",
     "@types/google.maps": "^3.54.10",
     "@vercel/analytics": "^1.1.1",
     "class-variance-authority": "^0.7.0",
-    "clsx": "^2.0.0",
+    "clsx": "^2.1.1",
     "contentlayer": "^0.3.4",
     "date-fns": "^2.30.0",
     "next": "13.5.6",
@@ -25,6 +26,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^20.8.7",
     "@types/react": "^18.2.31",
     "@types/react-dom": "^18.2.14",

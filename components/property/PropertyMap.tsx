@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react'
 import Map, { MapMarker } from '@/components/ui/Map'
 import { useNearbyPlaces, NearbyPlace } from '@/hooks/useNearbyPlaces'

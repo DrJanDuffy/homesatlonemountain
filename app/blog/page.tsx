@@ -1,8 +1,10 @@
-import React from 'react'
+'use client'
+
 import { allPosts } from 'contentlayer/generated'
 import { compareDesc } from 'date-fns'
 import { Image } from '@/components/ui/Image'
 import { useAnalytics } from '@/hooks/useAnalytics'
+import { useEffect } from 'react'
 
 const categories = [
   'market-updates',
@@ -15,13 +17,13 @@ const categories = [
 export default function BlogPage() {
   const { trackBlogPost } = useAnalytics()
   const posts = allPosts.sort((a, b) =>
-    compareDesc(new Date(a.publishedAt), new Date(b.publishedAt))
+    compareDesc(new Date(a.published), new Date(b.published))
   )
 
   // Track page view
-  React.useEffect(() => {
+  useEffect(() => {
     if (typeof window !== 'undefined' && window.va) {
-      window.va('pageview')
+      window.va.pageview(window.location.pathname)
     }
   }, [])
 
@@ -83,7 +85,7 @@ export default function BlogPage() {
                 </p>
                 <div className="flex justify-between items-center">
                   <time className="text-sm text-gray-500">
-                    {new Date(post.publishedAt).toLocaleDateString('en-US', {
+                    {new Date(post.published).toLocaleDateString('en-US', {
                       month: 'long',
                       day: 'numeric',
                       year: 'numeric',

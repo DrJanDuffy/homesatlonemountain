@@ -19,7 +19,18 @@ export default function PropertyPage({ params }: PropertyPageProps) {
   }
 
   const propertySchema = generatePropertySchema({
-    ...property,
+    title: property.title,
+    description: property.description,
+    address: property.address,
+    price: property.price,
+    bedrooms: property.bedrooms,
+    bathrooms: property.bathrooms,
+    squareFeet: property.squareFeet,
+    images: property.images,
+    features: property.features,
+    latitude: property.lat,
+    longitude: property.lng,
+    status: property.status,
     url: property.url,
   })
 
@@ -75,7 +86,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           </div>
           <div>
             <PropertyMap
-              propertyLocation={{ lat: property.latitude, lng: property.longitude }}
+              propertyLocation={{ lat: property.lat, lng: property.lng }}
               propertyTitle={property.title}
               className="aspect-[4/3] w-full"
             />

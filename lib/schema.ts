@@ -139,4 +139,112 @@ export function generateBlogPostSchema(post: BlogPostSchemaInput) {
       '@id': post.url,
     },
   }
+}
+
+export function generateOrganizationSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': ['Organization', 'RealEstateAgent', 'LocalBusiness'],
+    '@id': 'https://homesatlonemountain.com/#organization',
+    name: 'Homes at Lone Mountain',
+    url: 'https://homesatlonemountain.com',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://homesatlonemountain.com/logo.png',
+      width: '180',
+      height: '60'
+    },
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '1234 Lone Mountain Drive',
+      addressLocality: 'Las Vegas',
+      addressRegion: 'NV',
+      postalCode: '89129',
+      addressCountry: 'US'
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 36.2455,
+      longitude: -115.2541
+    },
+    telephone: '+1-702-555-0123',
+    email: 'info@homesatlonemountain.com',
+    sameAs: [
+      'https://www.facebook.com/homesatlonemountain',
+      'https://www.instagram.com/homesatlonemountain',
+      'https://www.linkedin.com/company/homes-at-lone-mountain'
+    ],
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '09:00',
+        closes: '18:00'
+      },
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Saturday'],
+        opens: '10:00',
+        closes: '16:00'
+      }
+    ],
+    areaServed: {
+      '@type': 'GeoCircle',
+      geoMidpoint: {
+        '@type': 'GeoCoordinates',
+        latitude: 36.2455,
+        longitude: -115.2541
+      },
+      geoRadius: '10000'
+    },
+    priceRange: '$$$$',
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Real Estate Services',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Luxury Home Sales'
+          }
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Property Listings'
+          }
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Market Analysis'
+          }
+        }
+      ]
+    }
+  }
+}
+
+export function generateWebSiteSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': 'https://homesatlonemountain.com/#website',
+    name: 'Homes at Lone Mountain',
+    url: 'https://homesatlonemountain.com',
+    publisher: {
+      '@id': 'https://homesatlonemountain.com/#organization'
+    },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: 'https://homesatlonemountain.com/properties?search={search_term_string}'
+      },
+      'query-input': 'required name=search_term_string'
+    }
+  }
 } 

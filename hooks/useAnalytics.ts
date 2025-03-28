@@ -42,7 +42,7 @@ export function useAnalytics() {
     if (typeof window === 'undefined' || !window.va) return
 
     // Track the event using Vercel Analytics event method
-    window.va('event', { name, ...data })
+    window.va.event(name, data)
   }, [])
 
   return {
