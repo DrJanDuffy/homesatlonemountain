@@ -1,16 +1,44 @@
 ---
-const { title } = Astro.props;
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Luxury homes at Lone Mountain, Las Vegas" } = Astro.props;
 ---
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Find your dream home at Lone Mountain">
+    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+
+    <!-- RealScout Widget Script -->
+    <script 
+      src="https://em.realscout.com/widgets/realscout-web-components.umd.js" 
+      type="module"
+      crossorigin="anonymous"
+      integrity="sha384-"
+    ></script>
+
+    <!-- RealScout Global Styles -->
+    <style is:global>
+      realscout-office-listings,
+      realscout-advanced-search {
+        --rs-listing-divider-color: #4a90e2;
+        --rs-button-text-color: #ffffff;
+        --rs-button-background-color: #3A8DDE;
+        --rs-widget-width: 100%;
+        --rs-widget-max-width: 1200px;
+        width: 100%;
+        min-height: 480px;
+        display: block;
+      }
+    </style>
   </head>
   <body>
     <slot />
@@ -46,5 +74,22 @@ const { title } = Astro.props;
   code {
     font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
       Bitstream Vera Sans Mono, Courier New, monospace;
+  }
+
+  main {
+    flex: 1;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 0.5rem;
+    }
   }
 </style> 

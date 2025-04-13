@@ -1,0 +1,281 @@
+---
+import RealScoutSearch from './widgets/RealScoutSearch.astro';
+---
+
+<section class="section hero-section" id="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">Luxury Homes for Sale at Lone Mountain, Las Vegas, NV</h1>
+    <p class="hero-subtitle">Discover premium living with breathtaking mountain views, smart home features, and resort-style amenities in Northwest Las Vegas</p>
+    <div class="hero-cta">
+      <button class="cta-button primary" aria-label="Search available properties" id="viewProperties">View Available Properties</button>
+      <button class="cta-button secondary" aria-label="Schedule a property viewing">Schedule a Tour</button>
+    </div>
+    
+    <!-- Voice search component -->
+    <div class="voice-search">
+      <button class="voice-search-button" aria-label="Search by voice">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+          <line x1="12" y1="19" x2="12" y2="23"></line>
+          <line x1="8" y1="23" x2="16" y2="23"></line>
+        </svg>
+        <span>Search by voice</span>
+      </button>
+      <p class="voice-search-hint">Try saying: "Show me 4 bedroom homes with a pool"</p>
+    </div>
+  </div>
+  
+  <div class="property-showcase" id="propertyShowcase">
+    <div class="showcase-grid">
+      <div class="showcase-main">
+        <div class="property-card featured">
+          <div class="property-image">
+            <img src="/images/luxury-estate.jpg" alt="Luxury Mountain Estate with pool and mountain views in Lone Mountain, Las Vegas" loading="eager" width="600" height="400">
+            <div class="property-badge">Featured</div>
+            <div class="property-price">$1,250,000</div>
+          </div>
+          <div class="property-details">
+            <h3>Luxury Mountain Estate</h3>
+            <p>5 bed • 4 bath • 4,500 sqft • Lone Mountain</p>
+            <div class="property-features">
+              <span>Mountain View</span>
+              <span>Pool</span>
+              <span>Smart Home</span>
+            </div>
+            <div class="property-address">
+              <address>123 Mountain Ridge Dr, Las Vegas, NV 89129</address>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="showcase-side">
+        <div class="property-card">
+          <div class="property-image small">
+            <img src="/images/modern-townhouse.jpg" alt="Modern Townhouse in Lone Mountain community, Las Vegas" loading="lazy" width="300" height="200">
+            <div class="property-price">$875,000</div>
+          </div>
+          <div class="property-details compact">
+            <h4>Modern Townhouse</h4>
+            <p>3 bed • 2.5 bath • 2,200 sqft</p>
+            <div class="property-address">
+              <address>456 Valley View Ln, Las Vegas, NV 89129</address>
+            </div>
+          </div>
+        </div>
+        
+        <div class="property-card">
+          <div class="property-image small">
+            <img src="/images/golf-villa.jpg" alt="Golf Course Villa with luxury features in Lone Mountain, Las Vegas" loading="lazy" width="300" height="200">
+            <div class="property-price">$925,000</div>
+          </div>
+          <div class="property-details compact">
+            <h4>Golf Course Villa</h4>
+            <p>4 bed • 3 bath • 3,100 sqft</p>
+            <div class="property-address">
+              <address>789 Fairway Estates, Las Vegas, NV 89129</address>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="realscout-overlay" id="realscoutOverlay">
+    <div class="realscout-container">
+      <button class="close-button" id="closeRealscout" aria-label="Close property search">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <RealScoutSearch />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    min-height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('/images/lone-mountain-backdrop.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+    padding: 2rem;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    max-width: 800px;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2.5rem;
+    max-width: 700px;
+    line-height: 1.4;
+  }
+  
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .cta-button {
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .cta-button.primary {
+    background-color: var(--color-buyer);
+    color: white;
+    border: none;
+  }
+  
+  .cta-button.secondary {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+  }
+  
+  .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  }
+
+  .realscout-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 2rem;
+  }
+
+  .realscout-overlay.active {
+    display: flex;
+  }
+
+  .realscout-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    height: 90vh;
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    overflow-y: auto;
+  }
+
+  .close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001;
+    transition: transform 0.2s ease;
+  }
+
+  .close-button:hover {
+    transform: scale(1.1);
+  }
+
+  /* Rest of the styles from your original code */
+  /* ... */
+</style>
+
+<script>
+  // Voice search functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const voiceButton = document.querySelector('.voice-search-button');
+    const viewPropertiesBtn = document.getElementById('viewProperties');
+    const realscoutOverlay = document.getElementById('realscoutOverlay');
+    const closeRealscoutBtn = document.getElementById('closeRealscout');
+    const propertyShowcase = document.getElementById('propertyShowcase');
+    
+    // RealScout overlay controls
+    if (viewPropertiesBtn && realscoutOverlay && closeRealscoutBtn) {
+      viewPropertiesBtn.addEventListener('click', () => {
+        realscoutOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        propertyShowcase.style.display = 'none';
+      });
+
+      closeRealscoutBtn.addEventListener('click', () => {
+        realscoutOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+        propertyShowcase.style.display = '';
+      });
+    }
+
+    // Voice search implementation
+    if (voiceButton && 'webkitSpeechRecognition' in window) {
+      const recognition = new webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+      
+      voiceButton.addEventListener('click', function() {
+        recognition.start();
+        voiceButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg><span>Listening...</span>';
+      });
+      
+      recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript.toLowerCase();
+        
+        // Show RealScout overlay with voice search results
+        if (realscoutOverlay) {
+          realscoutOverlay.classList.add('active');
+          document.body.style.overflow = 'hidden';
+          propertyShowcase.style.display = 'none';
+
+          // Update RealScout widget with voice search parameters
+          const widget = document.querySelector('realscout-office-listings');
+          if (widget) {
+            if (transcript.match(/(\d+)\s*bed/)) {
+              widget.setAttribute('min-beds', transcript.match(/(\d+)\s*bed/)[1]);
+            }
+            if (transcript.includes('pool')) {
+              widget.setAttribute('features', 'pool');
+            }
+            if (transcript.includes('view') || transcript.includes('mountain')) {
+              widget.setAttribute('features', 'mountain-view');
+            }
+          }
+        }
+      };
+      
+      recognition.onend = function() {
+        voiceButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg><span>Search by voice</span>';
+      };
+      
+      recognition.onerror = function(event) {
+        console.error('Speech recognition error', event.error);
+        voiceButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg><span>Search by voice</span>';
+      };
+    } else if (voiceButton) {
+      voiceButton.parentElement.style.display = 'none';
+    }
+  });
+</script> 

@@ -8,143 +8,218 @@ interface Props {
 }
 
 const {
-  agentId = publicEnv.PUBLIC_REALSCOUT_AGENT_ID,
-  market = publicEnv.PUBLIC_REALSCOUT_MARKET
+  agentId = import.meta.env.PUBLIC_REALSCOUT_AGENT_ID,
+  market = 'las-vegas'
 } = Astro.props;
 ---
 
+<!-- Resource hints for faster loading -->
+<link rel="preconnect" href="https://widgets.realscout.com">
+<link rel="dns-prefetch" href="https://widgets.realscout.com">
+<link rel="preload" href="https://widgets.realscout.com/latest/realscout-widgets.js" as="script" crossorigin="anonymous">
+
 <div class="realscout-container">
-  <div class="loading-overlay" id="loading">
-    <div class="spinner"></div>
-    <p>Loading properties...</p>
+  <div class="loading-skeleton" aria-hidden="true">
+    <div class="skeleton-header"></div>
+    <div class="skeleton-inputs">
+      <div class="skeleton-input"></div>
+      <div class="skeleton-input"></div>
+    </div>
+    <div class="skeleton-filters">
+      <div class="skeleton-filter"></div>
+      <div class="skeleton-filter"></div>
+      <div class="skeleton-filter"></div>
+    </div>
   </div>
-  <div class="error-state hidden" id="error">
-    <p>Unable to load properties</p>
-    <button onclick="retryLoad()">Retry</button>
+
+  <div class="widget-container" style="visibility: hidden;">
+    <realscout-advanced-search
+      agent-encoded-id={agentId}
+      market={market}
+      sort-order="newest"
+      listing-status="active"
+      property-types="single-family,condo,townhouse"
+      price-min="400000"
+      error-mode="graceful"
+      data-loading="true"
+      data-perf-mode="high"
+      data-lazy-images="true"
+    ></realscout-advanced-search>
   </div>
-  <realscout-advanced-search
-    id="realscout-widget"
-    agent-encoded-id={agentId}
-    market={market}
-    sort-order="price-desc"
-    listing-status="active"
-    property-types="single-family,townhouse,condo"
-    price-min="500000"
-    error-mode="graceful"
-  ></realscout-advanced-search>
 </div>
-
-<script>
-  function setupWidget() {
-    const widget = document.getElementById('realscout-widget');
-    const loading = document.getElementById('loading');
-    const error = document.getElementById('error');
-
-    // Lazy load when widget is 50% visible
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            loading?.classList.remove('hidden');
-            widget?.setAttribute('data-load', 'true');
-            observer.disconnect();
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    if (widget) {
-      observer.observe(widget);
-
-      widget.addEventListener('load', () => {
-        loading?.classList.add('hidden');
-      });
-
-      widget.addEventListener('error', (e) => {
-        console.error('RealScout widget error:', e.detail);
-        loading?.classList.add('hidden');
-        error?.classList.remove('hidden');
-      });
-    }
-  }
-
-  function retryLoad() {
-    const widget = document.getElementById('realscout-widget');
-    const error = document.getElementById('error');
-    const loading = document.getElementById('loading');
-
-    if (widget) {
-      error?.classList.add('hidden');
-      loading?.classList.remove('hidden');
-      widget.setAttribute('data-load', 'true');
-    }
-  }
-
-  // Initialize widget when the DOM is ready
-  document.addEventListener('DOMContentLoaded', setupWidget);
-</script>
 
 <style>
   .realscout-container {
     position: relative;
-    width: 100%;
-    max-width: 500px;
     min-height: 480px;
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    contain: content; /* CSS containment for better performance */
+    will-change: transform; /* Hardware acceleration hint */
   }
 
-  .loading-overlay,
-  .error-state {
+  .loading-skeleton {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-background-card);
+    padding: 2rem;
+    z-index: 1;
+    transition: opacity 0.2s ease;
+    transform: translateZ(0); /* Force GPU acceleration */
+  }
+
+  .skeleton-header {
+    width: 60%;
+    height: 32px;
+    background: var(--color-skeleton);
+    border-radius: 6px;
+    margin-bottom: 2rem;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .skeleton-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .skeleton-input {
+    height: 48px;
+    background: var(--color-skeleton);
+    border-radius: 6px;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    animation-delay: 0.1s;
+  }
+
+  .skeleton-filters {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.9);
-    z-index: 1000;
+    gap: 1rem;
   }
 
-  .hidden {
-    display: none;
+  .skeleton-filter {
+    width: 120px;
+    height: 36px;
+    background: var(--color-skeleton);
+    border-radius: 18px;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    animation-delay: 0.2s;
   }
 
-  .spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3A8DDE;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
   }
 
-  .error-state button {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background: #3A8DDE;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.2s;
+  .widget-container {
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transform: translateZ(0); /* Force GPU acceleration */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
   }
 
-  .error-state button:hover {
-    background: #2c6eb3;
+  .widget-container.loaded {
+    opacity: 1;
+    visibility: visible;
   }
 
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  realscout-advanced-search {
+    display: block;
+    width: 100%;
+    min-height: 480px;
+    --rs-primary-color: var(--color-buyer);
+    --rs-background-color: var(--color-background-card);
+    --rs-text-color: var(--color-text-primary);
+    --rs-border-radius: 12px;
+    --rs-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    contain: content; /* CSS containment for better performance */
   }
 
   @media (max-width: 768px) {
-    .realscout-container {
-      max-width: 100%;
+    .skeleton-inputs {
+      grid-template-columns: 1fr;
+    }
+
+    .skeleton-filters {
+      flex-wrap: wrap;
     }
   }
-</style> 
+
+  /* Reduce animation complexity on mobile */
+  @media (prefers-reduced-motion: reduce) {
+    .loading-skeleton * {
+      animation: none;
+    }
+  }
+
+  /* Performance monitoring styles */
+  .performance-indicator {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 1000;
+    display: none;
+  }
+</style>
+
+<script>
+  import { realScoutLoader } from '../../scripts/realscout-loader';
+
+  // Use requestIdleCallback for non-critical initialization
+  const startInitialization = () => {
+    const containers = document.querySelectorAll('.realscout-container');
+    
+    containers.forEach(container => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              observer.disconnect();
+              // Initialize when browser is idle
+              requestIdleCallback(() => {
+                realScoutLoader.initializeWidget(container);
+              }, { timeout: 2000 });
+            }
+          });
+        },
+        {
+          rootMargin: '200px 0px', // Load earlier
+          threshold: 0
+        }
+      );
+
+      observer.observe(container);
+    });
+  };
+
+  // Start initialization based on document readiness
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startInitialization);
+  } else {
+    startInitialization();
+  }
+
+  // Cleanup on page hide/unload
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      document.querySelectorAll('.realscout-container').forEach(container => {
+        const widget = container.querySelector('realscout-advanced-search');
+        if (widget) {
+          widget.setAttribute('data-suspend', 'true');
+        }
+      });
+    }
+  });
+</script> 

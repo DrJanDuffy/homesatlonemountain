@@ -1,23 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import HeroSection from '../components/HeroSection.astro';
 import RealScoutSearch from '../components/widgets/RealScoutSearch.astro';
 import PropertyShowcase from '../components/widgets/PropertyShowcase.astro';
 import TestimonialCarousel from '../components/widgets/TestimonialCarousel.astro';
+import SmartFeatures from '../components/SmartFeatures.astro';
 ---
 
-<Layout title="Homes at Lone Mountain">
-  <!-- Hero Section -->
-  <section id="hero" class="section hero-section">
-    <div class="hero-content">
-      <h1 class="hero-title">Find Your Dream Home at Lone Mountain</h1>
-      <p class="hero-subtitle">Discover luxury living with breathtaking views and unparalleled amenities</p>
-      <div class="hero-cta">
-        <button class="cta-button primary">View Properties</button>
-        <button class="cta-button secondary">Schedule a Tour</button>
-      </div>
-    </div>
-    <PropertyShowcase />
-  </section>
+<Layout title="Luxury Homes at Lone Mountain | Las Vegas Real Estate">
+  <main>
+    <HeroSection />
+    <SmartFeatures />
+  </main>
 
   <!-- Pain Point Section -->
   <section id="pain-point" class="section pain-point-section">
@@ -119,6 +113,58 @@ import TestimonialCarousel from '../components/widgets/TestimonialCarousel.astro
     </div>
   </section>
 </Layout>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  "name": "Homes at Lone Mountain",
+  "url": "https://www.homesatlonemountain.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Las Vegas",
+    "addressRegion": "NV",
+    "postalCode": "89129",
+    "addressCountry": "US"
+  },
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "House",
+        "name": "Luxury Mountain Estate",
+        "description": "5 bedroom luxury home with mountain views, pool and smart home features",
+        "numberOfRooms": 5,
+        "floorSize": {
+          "@type": "QuantitativeValue",
+          "value": 4500,
+          "unitCode": "FTK"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "123 Mountain Ridge Dr",
+          "addressLocality": "Las Vegas",
+          "addressRegion": "NV",
+          "postalCode": "89129",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 36.2550,
+          "longitude": -115.2830
+        },
+        "image": "/images/luxury-estate.jpg",
+        "offers": {
+          "@type": "Offer",
+          "price": 1250000,
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    }
+  ]
+}
+</script>
 
 <style>
   .section {

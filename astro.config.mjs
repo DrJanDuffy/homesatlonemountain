@@ -2,19 +2,18 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import db from "@astrojs/db";
 import compress from "astro-compress";
+import vercel from '@astrojs/vercel/static';
 
 export default defineConfig({
   site: 'https://homesatlonemountain.com',
-  base: '/',
   output: 'static',
-  build: {
-    assets: '_assets',
-    inlineStylesheets: 'always'
-  },
-  server: {
-    host: true,
-    port: 3000
-  },
+  adapter: vercel({
+    analytics: true,
+    imageService: true,
+    webAnalytics: {
+      enabled: true
+    }
+  }),
   integrations: [
     sitemap({
       filter: (page) => !page.includes('draft'),
