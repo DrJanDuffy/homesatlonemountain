@@ -1,100 +1,97 @@
 ---
 // RealScoutSearch.astro
+import { publicEnv } from '../../utils/env';
+
 interface Props {
   agentId?: string;
   market?: string;
 }
 
-const { 
-  agentId = import.meta.env.PUBLIC_REALSCOUT_AGENT_ID || 'QWdlbnQtMjI1MDUw',
-  market = import.meta.env.PUBLIC_REALSCOUT_MARKET || 'las-vegas'
+const {
+  agentId = publicEnv.PUBLIC_REALSCOUT_AGENT_ID,
+  market = publicEnv.PUBLIC_REALSCOUT_MARKET
 } = Astro.props;
 ---
 
 <div class="realscout-container">
+  <div class="loading-overlay" id="loading">
+    <div class="spinner"></div>
+    <p>Loading properties...</p>
+  </div>
+  <div class="error-state hidden" id="error">
+    <p>Unable to load properties</p>
+    <button onclick="retryLoad()">Retry</button>
+  </div>
   <realscout-advanced-search
-    id="realscout-search"
-    class="realscout-search-widget"
-    token={import.meta.env.PUBLIC_REALSCOUT_TOKEN}
+    id="realscout-widget"
     agent-encoded-id={agentId}
     market={market}
-    sort-order="PRICE_LOW"
-    listing-status="For Sale"
-    property-types="SFR,MF,MOBILE"
+    sort-order="price-desc"
+    listing-status="active"
+    property-types="single-family,townhouse,condo"
     price-min="500000"
-    search-type="tiered"
-    cache-timeout="1500"
     error-mode="graceful"
-  >
-    <div slot="loading" class="loading-overlay">
-      <div class="loading-spinner"></div>
-      <p>Loading property search...</p>
-    </div>
-    <div slot="error" class="error-state">
-      <p>Unable to load property search. Please try again later.</p>
-      <button onclick="window.location.reload()" class="retry-button">Retry</button>
-    </div>
-  </realscout-advanced-search>
+  ></realscout-advanced-search>
 </div>
 
 <script>
-  // Intersection Observer for lazy loading
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const widget = entry.target.querySelector('realscout-advanced-search');
-          if (widget) {
-            widget.setAttribute('data-loaded', 'true');
-            // Trigger widget initialization
-            widget.dispatchEvent(new CustomEvent('rs-load'));
+  function setupWidget() {
+    const widget = document.getElementById('realscout-widget');
+    const loading = document.getElementById('loading');
+    const error = document.getElementById('error');
+
+    // Lazy load when widget is 50% visible
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            loading?.classList.remove('hidden');
+            widget?.setAttribute('data-load', 'true');
+            observer.disconnect();
           }
-          observer.disconnect();
-        }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    if (widget) {
+      observer.observe(widget);
+
+      widget.addEventListener('load', () => {
+        loading?.classList.add('hidden');
       });
-    },
-    { threshold: 0.1, rootMargin: '50px' }
-  );
 
-  // Start observing when the component mounts
-  document.addEventListener('DOMContentLoaded', () => {
-    const container = document.querySelector('.realscout-container');
-    if (container) {
-      observer.observe(container);
+      widget.addEventListener('error', (e) => {
+        console.error('RealScout widget error:', e.detail);
+        loading?.classList.add('hidden');
+        error?.classList.remove('hidden');
+      });
     }
-  });
+  }
 
-  // Error handling
-  document.querySelector('realscout-advanced-search')?.addEventListener('rs-error', (event) => {
-    console.error('RealScout widget error:', event.detail);
-    const errorElement = document.querySelector('.error-state');
-    if (errorElement) {
-      errorElement.style.display = 'flex';
+  function retryLoad() {
+    const widget = document.getElementById('realscout-widget');
+    const error = document.getElementById('error');
+    const loading = document.getElementById('loading');
+
+    if (widget) {
+      error?.classList.add('hidden');
+      loading?.classList.remove('hidden');
+      widget.setAttribute('data-load', 'true');
     }
-  });
+  }
+
+  // Initialize widget when the DOM is ready
+  document.addEventListener('DOMContentLoaded', setupWidget);
 </script>
 
 <style>
   .realscout-container {
     position: relative;
     width: 100%;
+    max-width: 500px;
     min-height: 480px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 2rem 0;
-  }
-
-  .realscout-search-widget {
-    width: 100%;
-    max-width: var(--rs-as-widget-width, 500px);
     margin: 0 auto;
-    opacity: 0;
-    transition: opacity 0.3s ease-out;
-  }
-
-  .realscout-search-widget[data-loaded="true"] {
-    opacity: 1;
   }
 
   .loading-overlay,
@@ -104,65 +101,50 @@ const {
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--color-background);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.3s ease-out;
+    background: rgba(255, 255, 255, 0.9);
+    z-index: 1000;
   }
 
-  .error-state {
+  .hidden {
     display: none;
-    text-align: center;
-    color: var(--color-primary);
   }
 
-  .retry-button {
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3A8DDE;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  .error-state button {
     margin-top: 1rem;
     padding: 0.5rem 1rem;
-    background-color: var(--color-buyer);
+    background: #3A8DDE;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background 0.2s;
   }
 
-  .retry-button:hover {
-    background-color: color-mix(in srgb, var(--color-buyer) 85%, black);
-  }
-
-  .loading-spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid var(--color-secondary);
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-bottom: 1rem;
+  .error-state button:hover {
+    background: #2c6eb3;
   }
 
   @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 
-  /* Responsive adjustments */
-  @media (max-width: 576px) {
+  @media (max-width: 768px) {
     .realscout-container {
-      padding: 1rem 0;
-    }
-
-    .realscout-search-widget {
       max-width: 100%;
     }
-  }
-
-  /* Shadow DOM isolation */
-  :host {
-    display: block;
-    z-index: 1000;
   }
 </style> 
