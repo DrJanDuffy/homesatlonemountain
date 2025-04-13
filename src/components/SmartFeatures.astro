@@ -1,7 +1,5 @@
 ---
 // SmartFeatures.astro
----
-
 interface Props {
   showVoiceCommands?: boolean;
 }
@@ -13,25 +11,29 @@ const features = [
     id: 'search',
     title: 'Smart Property Search',
     description: 'Advanced AI-powered search that understands your preferences and lifestyle needs.',
-    icon: 'search'
+    icon: 'search',
+    voiceExample: 'Show me homes in Lone Mountain under $500,000'
   },
   {
     id: '360',
     title: 'Immersive Virtual Tours',
     description: '360° virtual tours and detailed photo galleries of every property.',
-    icon: '360'
+    icon: '360',
+    voiceExample: 'Find houses with a pool and mountain view'
   },
   {
     id: 'insights',
     title: 'Las Vegas Market Insights',
     description: 'Real-time market data and trends to make informed decisions.',
-    icon: 'insights'
+    icon: 'insights',
+    voiceExample: 'What are the newest listings in 89129?'
   },
   {
     id: 'tour',
     title: 'Same-Day Tours',
     description: 'Schedule in-person viewings instantly with our local agents.',
-    icon: 'tour'
+    icon: 'tour',
+    voiceExample: 'Schedule a tour for tomorrow afternoon'
   }
 ];
 
@@ -41,8 +43,9 @@ const voiceCommands = [
   'What are the newest listings in 89129?',
   'Schedule a tour for tomorrow afternoon'
 ];
+---
 
-<section class="smart-features">
+<section class="smart-features" id="features">
   <div class="features-container">
     <h2>Smart Home Search Features</h2>
     <p class="subtitle">Discover your dream home with our cutting-edge tools</p>
@@ -57,30 +60,22 @@ const voiceCommands = [
           </div>
           <h3>{feature.title}</h3>
           <p>{feature.description}</p>
+          {showVoiceCommands && (
+            <div class="voice-example">
+              <button class="voice-trigger" data-command={feature.voiceExample}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                  <line x1="12" y1="19" x2="12" y2="23"></line>
+                  <line x1="8" y1="23" x2="16" y2="23"></line>
+                </svg>
+                Try: "{feature.voiceExample}"
+              </button>
+            </div>
+          )}
         </div>
       ))}
     </div>
-
-    {showVoiceCommands && (
-      <div class="voice-commands">
-        <div class="voice-tutorial">
-          <div class="voice-icon-wrapper">
-            <svg class="voice-icon" aria-hidden="true">
-              <use href="/images/feature-icons.svg#icon-voice"></use>
-            </svg>
-          </div>
-          <div class="voice-content">
-            <h3>Try Voice Commands</h3>
-            <p>Speak naturally to search properties</p>
-            <div class="command-examples">
-              {voiceCommands.map(command => (
-                <div class="command-pill">"{command}"</div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    )}
   </div>
 </section>
 
@@ -88,8 +83,7 @@ const voiceCommands = [
   .smart-features {
     position: relative;
     padding: 4rem 1rem;
-    background: url('/images/mountain-pattern.svg') no-repeat center center;
-    background-size: cover;
+    background: var(--color-background-secondary);
     overflow: hidden;
   }
 
@@ -114,7 +108,7 @@ const voiceCommands = [
 
   .feature-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     margin-bottom: 4rem;
   }
@@ -125,6 +119,13 @@ const voiceCommands = [
     padding: 2rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .feature-card.feature-visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .feature-card:hover {
@@ -158,96 +159,43 @@ const voiceCommands = [
   .feature-card p {
     color: var(--color-text-secondary);
     line-height: 1.6;
-  }
-
-  .voice-commands {
-    margin-top: 4rem;
-    padding: 2rem;
-    background: var(--color-background-card);
-    border-radius: 1rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  }
-
-  .voice-tutorial {
-    display: flex;
-    align-items: flex-start;
-    gap: 2rem;
-  }
-
-  .voice-icon-wrapper {
-    background: var(--color-primary);
-    width: 4rem;
-    height: 4rem;
-    border-radius: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .voice-icon {
-    width: 2rem;
-    height: 2rem;
-    color: white;
-  }
-
-  .voice-content {
-    flex-grow: 1;
-  }
-
-  .voice-content h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: var(--color-text-primary);
-  }
-
-  .voice-content p {
-    color: var(--color-text-secondary);
     margin-bottom: 1.5rem;
   }
 
-  .command-examples {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
+  .voice-example {
+    margin-top: auto;
   }
 
-  .command-pill {
+  .voice-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     background: var(--color-primary-light);
     color: var(--color-primary);
-    padding: 0.5rem 1rem;
+    border: none;
     border-radius: 2rem;
+    padding: 0.5rem 1rem;
     font-size: 0.875rem;
+    cursor: pointer;
     transition: background-color 0.2s ease;
+    width: 100%;
   }
 
-  .command-pill:hover {
+  .voice-trigger:hover {
     background: var(--color-primary-lighter);
   }
 
-  @media (max-width: 768px) {
-    .voice-tutorial {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .command-examples {
-      justify-content: center;
-    }
+  .voice-trigger svg {
+    flex-shrink: 0;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 768px) {
     h2 {
       font-size: 2rem;
     }
 
     .feature-grid {
       grid-template-columns: 1fr;
-    }
-
-    .voice-commands {
-      padding: 1.5rem;
     }
   }
 </style>
@@ -271,16 +219,39 @@ const voiceCommands = [
     observer.observe(card);
   });
 
-  // Add keyboard navigation for voice command pills
-  document.querySelectorAll('.command-pill').forEach(pill => {
-    pill.setAttribute('tabindex', '0');
-    pill.setAttribute('role', 'button');
-    
-    pill.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        // Trigger voice command (to be implemented)
-        console.log('Voice command triggered:', pill.textContent);
+  // Handle voice command triggers
+  document.querySelectorAll('.voice-trigger').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const command = trigger.dataset.command;
+      const voiceSearchButton = document.querySelector('.voice-search-button');
+      
+      if (voiceSearchButton && 'webkitSpeechRecognition' in window) {
+        // Simulate voice command
+        voiceSearchButton.click();
+        
+        // After a brief delay, trigger the RealScout search
+        setTimeout(() => {
+          const realscoutOverlay = document.getElementById('realscoutOverlay');
+          const propertyShowcase = document.getElementById('propertyShowcase');
+          const realscoutWidget = document.querySelector('realscout-office-listings');
+          
+          if (realscoutOverlay && propertyShowcase && realscoutWidget) {
+            realscoutOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            propertyShowcase.style.display = 'none';
+
+            // Parse command and set RealScout attributes
+            if (command.match(/(\d+)\s*bed/)) {
+              realscoutWidget.setAttribute('min-beds', command.match(/(\d+)\s*bed/)[1]);
+            }
+            if (command.includes('pool')) {
+              realscoutWidget.setAttribute('features', 'pool');
+            }
+            if (command.includes('view') || command.includes('mountain')) {
+              realscoutWidget.setAttribute('features', 'mountain-view');
+            }
+          }
+        }, 1500);
       }
     });
   });
