@@ -1,0 +1,257 @@
+---
+const testimonials = [
+  {
+    name: "Sarah Johnson",
+    role: "Homeowner",
+    image: "/images/testimonial1.jpg",
+    quote: "Finding our dream home at Lone Mountain was effortless. The smart search technology helped us narrow down exactly what we wanted.",
+    rating: 5
+  },
+  {
+    name: "Michael Chen",
+    role: "Recent Buyer",
+    image: "/images/testimonial2.jpg",
+    quote: "The virtual tours and detailed property insights made our remote home-buying experience smooth and confident.",
+    rating: 5
+  },
+  {
+    name: "Emily & David Ross",
+    role: "New Residents",
+    image: "/images/testimonial3.jpg",
+    quote: "We love our new community! The amenities and mountain views exceed our expectations every day.",
+    rating: 5
+  }
+];
+---
+
+<div class="testimonial-section">
+  <div class="testimonial-container">
+    <div class="testimonial-track">
+      {testimonials.map((testimonial) => (
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="testimonial-avatar">
+              <img src={testimonial.image} alt={testimonial.name} />
+            </div>
+            <div class="testimonial-author">
+              <h4>{testimonial.name}</h4>
+              <p>{testimonial.role}</p>
+            </div>
+          </div>
+          <div class="testimonial-rating">
+            {Array(testimonial.rating).fill("★").map(() => (
+              <span class="star">★</span>
+            ))}
+          </div>
+          <blockquote>"{testimonial.quote}"</blockquote>
+        </div>
+      ))}
+    </div>
+    <div class="testimonial-controls">
+      <button class="control-prev" aria-label="Previous testimonial">←</button>
+      <div class="testimonial-dots"></div>
+      <button class="control-next" aria-label="Next testimonial">→</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentSlide = 0;
+  const track = document.querySelector('.testimonial-track');
+  const cards = document.querySelectorAll('.testimonial-card');
+  const dots = document.querySelector('.testimonial-dots');
+  const prevBtn = document.querySelector('.control-prev');
+  const nextBtn = document.querySelector('.control-next');
+
+  // Create dots
+  cards.forEach((_, index) => {
+    const dot = document.createElement('button');
+    dot.classList.add('dot');
+    dot.setAttribute('aria-label', `Go to testimonial ${index + 1}`);
+    if (index === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goToSlide(index));
+    dots.appendChild(dot);
+  });
+
+  function updateSlide() {
+    const offset = currentSlide * -100;
+    track.style.transform = `translateX(${offset}%)`;
+    
+    // Update dots
+    document.querySelectorAll('.dot').forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentSlide);
+    });
+
+    // Update buttons
+    prevBtn.disabled = currentSlide === 0;
+    nextBtn.disabled = currentSlide === cards.length - 1;
+  }
+
+  function goToSlide(index) {
+    currentSlide = index;
+    updateSlide();
+  }
+
+  prevBtn?.addEventListener('click', () => {
+    if (currentSlide > 0) {
+      currentSlide--;
+      updateSlide();
+    }
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    if (currentSlide < cards.length - 1) {
+      currentSlide++;
+      updateSlide();
+    }
+  });
+
+  // Auto-advance slides
+  setInterval(() => {
+    if (currentSlide < cards.length - 1) {
+      currentSlide++;
+    } else {
+      currentSlide = 0;
+    }
+    updateSlide();
+  }, 5000);
+</script>
+
+<style>
+  .testimonial-section {
+    width: 100%;
+    background: linear-gradient(to right, var(--color-background), white);
+    padding: 4rem 0;
+  }
+
+  .testimonial-container {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .testimonial-track {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .testimonial-card {
+    flex: 0 0 100%;
+    padding: 2rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin: 1rem;
+  }
+
+  .testimonial-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .testimonial-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 1rem;
+  }
+
+  .testimonial-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .testimonial-author h4 {
+    color: var(--color-primary);
+    margin: 0;
+    font-size: 1.25rem;
+  }
+
+  .testimonial-author p {
+    color: var(--color-primary);
+    opacity: 0.7;
+    margin: 0;
+  }
+
+  .testimonial-rating {
+    margin-bottom: 1rem;
+  }
+
+  .star {
+    color: #FFD700;
+    font-size: 1.25rem;
+  }
+
+  blockquote {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-primary);
+    font-style: italic;
+    margin: 0;
+  }
+
+  .testimonial-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .control-prev,
+  .control-next {
+    background: white;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .control-prev:hover,
+  .control-next:hover {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .control-prev:disabled,
+  .control-next:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .testimonial-dots {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    opacity: 0.3;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+
+  .dot.active {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    .testimonial-card {
+      padding: 1.5rem;
+    }
+
+    blockquote {
+      font-size: 1rem;
+    }
+  }
+</style> 

@@ -1,0 +1,327 @@
+---
+import Layout from '../layouts/Layout.astro';
+import RealScoutSearch from '../components/widgets/RealScoutSearch.astro';
+import PropertyShowcase from '../components/widgets/PropertyShowcase.astro';
+import TestimonialCarousel from '../components/widgets/TestimonialCarousel.astro';
+---
+
+<Layout title="Homes at Lone Mountain">
+  <!-- Hero Section -->
+  <section id="hero" class="section hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Find Your Dream Home at Lone Mountain</h1>
+      <p class="hero-subtitle">Discover luxury living with breathtaking views and unparalleled amenities</p>
+      <div class="hero-cta">
+        <button class="cta-button primary">View Properties</button>
+        <button class="cta-button secondary">Schedule a Tour</button>
+      </div>
+    </div>
+    <PropertyShowcase />
+  </section>
+
+  <!-- Pain Point Section -->
+  <section id="pain-point" class="section pain-point-section">
+    <div class="container">
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h3>Smart Search</h3>
+          <p>Find exactly what you're looking for with our intelligent property matching system</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏠</div>
+          <h3>Virtual Tours</h3>
+          <p>Experience properties from anywhere with immersive 3D walkthroughs</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Market Insights</h3>
+          <p>Make informed decisions with real-time market data and trends</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solution Section -->
+  <section id="solution" class="section solution-section">
+    <div class="container">
+      <h2 class="section-title">Smart Home Search Technology</h2>
+      <p class="section-description">Filter properties based on your exact preferences and receive personalized recommendations.</p>
+      <div class="widget-container">
+        <RealScoutSearch />
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Proof Section -->
+  <section id="social-proof" class="section">
+    <div class="container">
+      <h2 class="section-title">What Our Homeowners Say</h2>
+      <TestimonialCarousel />
+    </div>
+  </section>
+
+  <!-- Interactive Tool Section -->
+  <section id="interactive-tool" class="section tool-section">
+    <div class="container">
+      <h2 class="section-title">Explore Your Options</h2>
+      <div class="tool-grid">
+        <div class="tool-card">
+          <h3>Property Value Estimator</h3>
+          <p>Get an instant estimate of your dream home's value</p>
+          <div class="widget-container">
+            <!-- Homebot valuation widget will be added here -->
+          </div>
+        </div>
+        <div class="tool-card">
+          <h3>Mortgage Calculator</h3>
+          <p>Plan your finances with our advanced mortgage calculator</p>
+          <div class="calculator-container">
+            <!-- Mortgage calculator will be added here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Objection Handling Section -->
+  <section id="objection-handling" class="section faq-section">
+    <div class="container">
+      <h2 class="section-title">Common Questions</h2>
+      <div class="faq-grid">
+        <details class="faq-item">
+          <summary>What makes Lone Mountain unique?</summary>
+          <p>Lone Mountain offers an unparalleled combination of luxury living, stunning views, and world-class amenities, all while maintaining a strong sense of community.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I schedule a viewing?</summary>
+          <p>You can schedule a viewing through our online booking system, or contact our team directly for a personalized tour experience.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What amenities are included?</summary>
+          <p>Our properties feature smart home technology, energy-efficient designs, and access to community facilities including pools, fitness centers, and walking trails.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section id="cta" class="section cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Find Your Dream Home?</h2>
+        <p>Join our community of happy homeowners at Lone Mountain</p>
+        <div class="cta-buttons">
+          <button class="cta-button">Schedule a Viewing</button>
+          <button class="cta-button outline">Download Brochure</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .section {
+    padding: 4rem var(--container-padding);
+  }
+
+  .container {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+    color: white;
+    padding: 6rem var(--container-padding);
+  }
+
+  .hero-content {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  /* Feature Grid */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .feature-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Tool Section */
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+  }
+
+  .tool-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  /* FAQ Section */
+  .faq-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .faq-item {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .faq-item summary {
+    padding: 1.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    list-style: none;
+    position: relative;
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    position: absolute;
+    right: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item[open] summary::after {
+    transform: rotate(45deg);
+  }
+
+  .faq-item p {
+    padding: 0 1.5rem 1.5rem;
+    margin: 0;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    background: linear-gradient(to right, var(--color-background), white);
+    text-align: center;
+  }
+
+  .cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .cta-button {
+    background-color: var(--color-buyer);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .cta-button.primary {
+    background-color: var(--color-accent);
+  }
+
+  .cta-button.secondary {
+    background-color: transparent;
+    border: 2px solid white;
+  }
+
+  .cta-button.outline {
+    background-color: transparent;
+    border: 2px solid var(--color-buyer);
+    color: var(--color-buyer);
+  }
+
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .section-description {
+    max-width: 800px;
+    margin: 1rem auto 2rem;
+    font-size: 1.125rem;
+    line-height: 1.5;
+    color: var(--color-primary);
+    opacity: 0.85;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+    }
+
+    .tool-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+
+    .section-title {
+      font-size: 2rem;
+    }
+  }
+</style> 

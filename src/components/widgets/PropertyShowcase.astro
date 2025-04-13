@@ -1,0 +1,174 @@
+---
+interface Props {
+  featured?: boolean;
+}
+
+const { featured = true } = Astro.props;
+---
+
+<div class="property-showcase">
+  <div class="showcase-grid">
+    <div class="showcase-main">
+      <div class="property-card featured">
+        <div class="property-image">
+          <div class="property-badge">Featured</div>
+          <div class="property-price">$1,250,000</div>
+        </div>
+        <div class="property-details">
+          <h3>Luxury Mountain Estate</h3>
+          <p>5 bed • 4 bath • 4,500 sqft</p>
+          <div class="property-features">
+            <span>Mountain View</span>
+            <span>Pool</span>
+            <span>Smart Home</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="showcase-side">
+      <div class="property-card">
+        <div class="property-image small">
+          <div class="property-price">$875,000</div>
+        </div>
+        <div class="property-details compact">
+          <h4>Modern Townhouse</h4>
+          <p>3 bed • 2.5 bath</p>
+        </div>
+      </div>
+      <div class="property-card">
+        <div class="property-image small">
+          <div class="property-price">$925,000</div>
+        </div>
+        <div class="property-details compact">
+          <h4>Golf Course Villa</h4>
+          <p>4 bed • 3 bath</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .property-showcase {
+    width: 100%;
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 2rem var(--container-padding);
+  }
+
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    height: 600px;
+  }
+
+  .property-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+
+  .property-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .property-image {
+    position: relative;
+    height: 400px;
+    background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)),
+                url('/images/luxury-home.jpg') center/cover;
+  }
+
+  .property-image.small {
+    height: 200px;
+  }
+
+  .property-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--color-accent);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .property-price {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+
+  .property-details {
+    padding: 1.5rem;
+  }
+
+  .property-details.compact {
+    padding: 1rem;
+  }
+
+  .property-details h3 {
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .property-details h4 {
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin-bottom: 0.25rem;
+  }
+
+  .property-details p {
+    color: var(--color-primary);
+    opacity: 0.8;
+    margin-bottom: 1rem;
+  }
+
+  .property-features {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .property-features span {
+    background: var(--color-background);
+    color: var(--color-primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.875rem;
+  }
+
+  .showcase-side {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 992px) {
+    .showcase-grid {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+
+    .property-image {
+      height: 300px;
+    }
+
+    .showcase-side {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+  }
+</style> 

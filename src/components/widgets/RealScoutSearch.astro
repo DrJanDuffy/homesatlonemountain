@@ -1,0 +1,168 @@
+---
+// RealScoutSearch.astro
+interface Props {
+  agentId?: string;
+  market?: string;
+}
+
+const { 
+  agentId = import.meta.env.PUBLIC_REALSCOUT_AGENT_ID || 'QWdlbnQtMjI1MDUw',
+  market = import.meta.env.PUBLIC_REALSCOUT_MARKET || 'las-vegas'
+} = Astro.props;
+---
+
+<div class="realscout-container">
+  <realscout-advanced-search
+    id="realscout-search"
+    class="realscout-search-widget"
+    token={import.meta.env.PUBLIC_REALSCOUT_TOKEN}
+    agent-encoded-id={agentId}
+    market={market}
+    sort-order="PRICE_LOW"
+    listing-status="For Sale"
+    property-types="SFR,MF,MOBILE"
+    price-min="500000"
+    search-type="tiered"
+    cache-timeout="1500"
+    error-mode="graceful"
+  >
+    <div slot="loading" class="loading-overlay">
+      <div class="loading-spinner"></div>
+      <p>Loading property search...</p>
+    </div>
+    <div slot="error" class="error-state">
+      <p>Unable to load property search. Please try again later.</p>
+      <button onclick="window.location.reload()" class="retry-button">Retry</button>
+    </div>
+  </realscout-advanced-search>
+</div>
+
+<script>
+  // Intersection Observer for lazy loading
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const widget = entry.target.querySelector('realscout-advanced-search');
+          if (widget) {
+            widget.setAttribute('data-loaded', 'true');
+            // Trigger widget initialization
+            widget.dispatchEvent(new CustomEvent('rs-load'));
+          }
+          observer.disconnect();
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '50px' }
+  );
+
+  // Start observing when the component mounts
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector('.realscout-container');
+    if (container) {
+      observer.observe(container);
+    }
+  });
+
+  // Error handling
+  document.querySelector('realscout-advanced-search')?.addEventListener('rs-error', (event) => {
+    console.error('RealScout widget error:', event.detail);
+    const errorElement = document.querySelector('.error-state');
+    if (errorElement) {
+      errorElement.style.display = 'flex';
+    }
+  });
+</script>
+
+<style>
+  .realscout-container {
+    position: relative;
+    width: 100%;
+    min-height: 480px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem 0;
+  }
+
+  .realscout-search-widget {
+    width: 100%;
+    max-width: var(--rs-as-widget-width, 500px);
+    margin: 0 auto;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+  }
+
+  .realscout-search-widget[data-loaded="true"] {
+    opacity: 1;
+  }
+
+  .loading-overlay,
+  .error-state {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--color-background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease-out;
+  }
+
+  .error-state {
+    display: none;
+    text-align: center;
+    color: var(--color-primary);
+  }
+
+  .retry-button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-buyer);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .retry-button:hover {
+    background-color: color-mix(in srgb, var(--color-buyer) 85%, black);
+  }
+
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--color-secondary);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 576px) {
+    .realscout-container {
+      padding: 1rem 0;
+    }
+
+    .realscout-search-widget {
+      max-width: 100%;
+    }
+  }
+
+  /* Shadow DOM isolation */
+  :host {
+    display: block;
+    z-index: 1000;
+  }
+</style> 
