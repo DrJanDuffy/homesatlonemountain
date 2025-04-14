@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "include": [
+    "/*"
+  ],
+  "exclude": [
+    "/api/*",
+    "/assets/*",
+    "/_astro/*"
+  ],
+  "rules": [
+    {
+      "pattern": "^/assets/.*\\.(jpg|jpeg|png|gif|svg|webp|avif|css|js|woff2)$",
+      "cache": {
+        "browser": {
+          "maxAge": 31536000,
+          "serviceWorkerTtl": 31536000
+        },
+        "edge": {
+          "maxAge": 31536000,
+          "staleWhileRevalidate": 86400
+        }
+      },
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "pattern": "^/api/.*$",
+      "cache": {
+        "browser": false,
+        "edge": {
+          "maxAge": 30,
+          "staleWhileRevalidate": 60
+        }
+      }
+    },
+    {
+      "pattern": ".*",
+      "cache": {
+        "browser": {
+          "maxAge": 0
+        },
+        "edge": {
+          "maxAge": 3600,
+          "staleWhileRevalidate": 86400
+        }
+      }
+    }
+  ]
+} 
