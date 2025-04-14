@@ -73,16 +73,7 @@ export default defineConfig({
     }
   },
   compressHTML: true,
-  image: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**.realscout.com'
-      },
-      {
-        protocol: 'https',
-        hostname: '**.imagedelivery.net'
-      }
-    ]
+  experimental: {
+    assets: true
   }
 }); 
