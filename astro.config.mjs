@@ -10,7 +10,6 @@ export default defineConfig({
   adapter: cloudflare({
     mode: 'directory',
     functionPerRoute: true,
-    imageService: true,
     runtime: {
       mode: 'local',
       type: 'pages',
@@ -75,15 +74,6 @@ export default defineConfig({
   },
   compressHTML: true,
   image: {
-    service: {
-      entrypoint: '@astrojs/cloudflare/image',
-      config: {
-        baseURL: 'https://homesatlonemountain.com',
-        sizes: [400, 800, 1200, 1920],
-        format: ['avif', 'webp'],
-        defaultQuality: 80
-      }
-    },
     remotePatterns: [
       {
         protocol: 'https',
