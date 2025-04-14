@@ -1,8 +1,14 @@
 # Redirect domain aliases to primary domain
-https://homesatlonemountain.vercel.app/* https://homesatlonemountain.com/:splat 301!
+https://www.homesatlonemountain.com/* https://homesatlonemountain.com/:splat 301!
 
 # Optional: Redirect default Netlify subdomain to primary domain
-https://homesatlonemountain-3.vercel.app/* https://homesatlonemountain.com/:splat 301!
+https://homesatlonemountain.pages.dev/* https://homesatlonemountain.com/:splat 301!
+
+# Handle 404s
+/* /404.html 404
+
+# Redirect old blog URLs if needed
+/blog/* /posts/:splat 301
 
 # Handle old URLs or common misspellings
 /home / 301
