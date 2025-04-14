@@ -2,16 +2,31 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import db from "@astrojs/db";
 import compress from "astro-compress";
-import vercel from '@astrojs/vercel/static';
+import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
   site: 'https://homesatlonemountain.com',
-  output: 'static',
-  adapter: vercel({
-    analytics: true,
-    imageService: true,
-    webAnalytics: {
-      enabled: true
+  output: 'server',
+  adapter: cloudflare({
+    mode: 'directory',
+    functionPerRoute: true,
+    imageService: 'cloudflare',
+    runtime: {
+      mode: 'local',
+      type: 'pages',
+      bindings: {
+        ZONE_ID: { type: 'plain_text', value: process.env.CLOUDFLARE_ZONE_ID },
+        ACCOUNT_ID: { type: 'plain_text', value: process.env.CLOUDFLARE_ACCOUNT_ID }
+      }
+    },
+    routes: {
+      strategy: 'include',
+      patterns: ['/*']
+    },
+    build: {
+      split: true,
+      minify: true,
+      sourcemap: true
     }
   }),
   integrations: [
@@ -25,7 +40,10 @@ export default defineConfig({
     compress({
       CSS: true,
       HTML: true,
-      Image: true,
+      Image: {
+        quality: 80,
+        format: ['avif', 'webp']
+      },
       JavaScript: true,
       SVG: true,
     })
@@ -69,10 +87,21 @@ export default defineConfig({
       {
         protocol: 'https',
         hostname: '**.realscout.com'
+      },
+      {
+        protocol: 'https',
+        hostname: '**.imagedelivery.net'
       }
     ],
-    service: {
-      entrypoint: 'astro/assets/services/sharp'
+    service: 'cloudflare',
+    domains: {
+      'imagedelivery.net': {
+        variants: {
+          'thumbnail': 'w=400,h=300,fit=cover',
+          'gallery': 'w=800,h=600,fit=contain',
+          'hero': 'w=1920,h=1080,fit=cover,q=80'
+        }
+      }
     }
   }
 }); 

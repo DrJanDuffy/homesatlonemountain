@@ -8,218 +8,1204 @@ interface Props {
 }
 
 const {
-  agentId = import.meta.env.PUBLIC_REALSCOUT_AGENT_ID,
-  market = 'las-vegas'
+  agentId = "QWdlbnQtMjI1MDUw",
+  market = import.meta.env.PUBLIC_REALSCOUT_MARKET || 'las-vegas'
 } = Astro.props;
+
+const visualizations = [
+  {
+    id: 'map',
+    title: 'Map View',
+    icon: 'map',
+    description: 'Interactive map with property clusters'
+  },
+  {
+    id: 'grid',
+    title: 'Grid View',
+    icon: 'grid',
+    description: 'Traditional grid layout'
+  },
+  {
+    id: 'analytics',
+    title: 'Market Analytics',
+    icon: 'analytics',
+    description: 'Price trends and market data'
+  }
+];
+
+const advancedFilters = [
+  {
+    group: 'Property Details',
+    filters: [
+      { id: 'yearBuilt', label: 'Year Built', type: 'range' },
+      { id: 'lotSize', label: 'Lot Size', type: 'range' },
+      { id: 'stories', label: 'Stories', type: 'select' },
+      { id: 'garage', label: 'Garage Spaces', type: 'select' }
+    ]
+  },
+  {
+    group: 'Features',
+    filters: [
+      { id: 'pool', label: 'Pool', type: 'boolean' },
+      { id: 'view', label: 'View', type: 'select' },
+      { id: 'waterfront', label: 'Waterfront', type: 'boolean' },
+      { id: 'smartHome', label: 'Smart Home', type: 'boolean' }
+    ]
+  },
+  {
+    group: 'Community',
+    filters: [
+      { id: 'gated', label: 'Gated Community', type: 'boolean' },
+      { id: 'hoa', label: 'HOA', type: 'boolean' },
+      { id: 'amenities', label: 'Community Amenities', type: 'multiselect' },
+      { id: 'schools', label: 'School Rating', type: 'range' }
+    ]
+  }
+];
 ---
 
 <!-- Resource hints for faster loading -->
-<link rel="preconnect" href="https://widgets.realscout.com">
-<link rel="dns-prefetch" href="https://widgets.realscout.com">
-<link rel="preload" href="https://widgets.realscout.com/latest/realscout-widgets.js" as="script" crossorigin="anonymous">
+<link rel="preconnect" href="https://em.realscout.com">
+<link rel="preload" href="https://em.realscout.com/widgets/realscout-web-components.umd.js" as="script" crossorigin="anonymous">
 
-<div class="realscout-container">
-  <div class="loading-skeleton" aria-hidden="true">
-    <div class="skeleton-header"></div>
-    <div class="skeleton-inputs">
-      <div class="skeleton-input"></div>
-      <div class="skeleton-input"></div>
+<div class="realscout-container" data-aos="fade-up">
+  <div class="search-controls">
+    <div class="visualization-toggle">
+      {visualizations.map(view => (
+        <button 
+          class="view-btn" 
+          data-view={view.id}
+          title={view.description}
+        >
+          <svg class="icon">
+            <use href={`/images/feature-icons.svg#icon-${view.icon}`}></use>
+          </svg>
+          {view.title}
+        </button>
+      ))}
     </div>
-    <div class="skeleton-filters">
-      <div class="skeleton-filter"></div>
-      <div class="skeleton-filter"></div>
-      <div class="skeleton-filter"></div>
+    
+    <button class="filters-toggle">
+      <svg class="icon">
+        <use href="/images/feature-icons.svg#icon-filter"></use>
+      </svg>
+      Advanced Filters
+    </button>
+  </div>
+
+  <div class="advanced-filters-panel hidden">
+    {advancedFilters.map(group => (
+      <div class="filter-group">
+        <h3>{group.group}</h3>
+        <div class="filter-grid">
+          {group.filters.map(filter => (
+            <div class="filter-item">
+              <label for={filter.id}>{filter.label}</label>
+              {filter.type === 'range' && (
+                <div class="range-inputs">
+                  <input 
+                    type="number" 
+                    id={`${filter.id}-min`}
+                    placeholder="Min"
+                    data-filter={filter.id}
+                    data-type="min"
+                  />
+                  <span>to</span>
+                  <input 
+                    type="number" 
+                    id={`${filter.id}-max`}
+                    placeholder="Max"
+                    data-filter={filter.id}
+                    data-type="max"
+                  />
+                </div>
+              )}
+              {filter.type === 'select' && (
+                <select id={filter.id} data-filter={filter.id}>
+                  <option value="">Any</option>
+                  <!-- Options will be populated dynamically -->
+                </select>
+              )}
+              {filter.type === 'boolean' && (
+                <label class="toggle">
+                  <input 
+                    type="checkbox" 
+                    id={filter.id}
+                    data-filter={filter.id}
+                  />
+                  <span class="toggle-slider"></span>
+                </label>
+              )}
+              {filter.type === 'multiselect' && (
+                <div class="multiselect" data-filter={filter.id}>
+                  <button class="multiselect-toggle">
+                    Select Options
+                    <svg class="icon">
+                      <use href="/images/feature-icons.svg#icon-chevron"></use>
+                    </svg>
+                  </button>
+                  <div class="multiselect-dropdown hidden">
+                    <!-- Options will be populated dynamically -->
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+    
+    <div class="filter-actions">
+      <button class="apply-filters">Apply Filters</button>
+      <button class="reset-filters">Reset</button>
     </div>
   </div>
 
-  <div class="widget-container" style="visibility: hidden;">
-    <realscout-advanced-search
-      agent-encoded-id={agentId}
-      market={market}
-      sort-order="newest"
-      listing-status="active"
-      property-types="single-family,condo,townhouse"
-      price-min="400000"
-      error-mode="graceful"
-      data-loading="true"
-      data-perf-mode="high"
-      data-lazy-images="true"
-    ></realscout-advanced-search>
+  <div class="search-overlay">
+    <div class="search-loader">
+      <svg class="spinner" viewBox="0 0 50 50">
+        <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+      </svg>
+      <p>Loading search experience...</p>
+    </div>
+  </div>
+
+  <div class="search-error hidden">
+    <svg class="icon"><use href="/images/feature-icons.svg#icon-search"></use></svg>
+    <h3>Search Temporarily Unavailable</h3>
+    <p class="error-message">We're having trouble loading the search. Please try again.</p>
+    <button class="retry-btn">Retry Search</button>
+  </div>
+
+  <realscout-office-listings
+    id="realscout-widget"
+    agent-encoded-id={agentId}
+    sort-order="PRICE_LOW"
+    listing-status="For Sale"
+    property-types="MF,SFR"
+    price-min="500000"
+    class="search-widget"
+    style="--rs-listing-divider-color: #4a90e2; width: 100%;"
+  >
+    <div class="search-features">
+      <div class="feature-item" data-aos="fade-up" data-aos-delay="100">
+        <svg class="icon"><use href="/images/feature-icons.svg#icon-search"></use></svg>
+        <h4>Smart Search</h4>
+        <p>Natural language processing for intuitive property search</p>
+      </div>
+      <div class="feature-item" data-aos="fade-up" data-aos-delay="200">
+        <svg class="icon"><use href="/images/feature-icons.svg#icon-voice"></use></svg>
+        <h4>Voice Search</h4>
+        <p>Search hands-free with voice commands</p>
+      </div>
+      <div class="feature-item" data-aos="fade-up" data-aos-delay="300">
+        <svg class="icon"><use href="/images/feature-icons.svg#icon-insights"></use></svg>
+        <h4>Market Insights</h4>
+        <p>Real-time market data and trends</p>
+      </div>
+    </div>
+  </realscout-office-listings>
+
+  <div class="market-analytics hidden">
+    <div class="analytics-header">
+      <h3>Market Analytics</h3>
+      <div class="analytics-controls">
+        <select class="timeframe-select">
+          <option value="1M">1 Month</option>
+          <option value="3M">3 Months</option>
+          <option value="6M">6 Months</option>
+          <option value="1Y">1 Year</option>
+          <option value="ALL">All Time</option>
+        </select>
+        <select class="metric-select">
+          <option value="price">Price Trends</option>
+          <option value="inventory">Inventory Levels</option>
+          <option value="dom">Days on Market</option>
+          <option value="sqft">Price per Sq Ft</option>
+        </select>
+      </div>
+    </div>
+    <div class="analytics-content">
+      <canvas id="analyticsChart"></canvas>
+    </div>
+    <div class="analytics-insights">
+      <!-- Insights will be populated dynamically -->
+    </div>
   </div>
 </div>
 
 <style>
   .realscout-container {
     position: relative;
-    min-height: 480px;
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
+    min-height: 480px;
+    background: var(--color-background, #fff);
     border-radius: 12px;
     overflow: hidden;
-    contain: content; /* CSS containment for better performance */
-    will-change: transform; /* Hardware acceleration hint */
+    box-shadow: var(--shadow-lg);
   }
 
-  .loading-skeleton {
+  .search-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--color-background-card);
-    padding: 2rem;
-    z-index: 1;
-    transition: opacity 0.2s ease;
-    transform: translateZ(0); /* Force GPU acceleration */
-  }
-
-  .skeleton-header {
-    width: 60%;
-    height: 32px;
-    background: var(--color-skeleton);
-    border-radius: 6px;
-    margin-bottom: 2rem;
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  .skeleton-inputs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-
-  .skeleton-input {
-    height: 48px;
-    background: var(--color-skeleton);
-    border-radius: 6px;
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    animation-delay: 0.1s;
-  }
-
-  .skeleton-filters {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(4px);
     display: flex;
-    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
   }
 
-  .skeleton-filter {
-    width: 120px;
-    height: 36px;
-    background: var(--color-skeleton);
-    border-radius: 18px;
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    animation-delay: 0.2s;
+  .search-loader {
+    text-align: center;
   }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+  .spinner {
+    width: 50px;
+    height: 50px;
+    animation: rotate 2s linear infinite;
   }
 
-  .widget-container {
-    position: relative;
-    z-index: 2;
-    opacity: 0;
-    transform: translateZ(0); /* Force GPU acceleration */
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+  .spinner .path {
+    stroke: var(--color-primary);
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
   }
 
-  .widget-container.loaded {
-    opacity: 1;
-    visibility: visible;
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
-  realscout-advanced-search {
-    display: block;
+  @keyframes dash {
+    0% {
+      stroke-dasharray: 1, 150;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      stroke-dasharray: 90, 150;
+      stroke-dashoffset: -35;
+    }
+    100% {
+      stroke-dasharray: 90, 150;
+      stroke-dashoffset: -124;
+    }
+  }
+
+  .search-error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+  }
+
+  .search-error .icon {
+    width: 48px;
+    height: 48px;
+    color: var(--color-error);
+    margin-bottom: 1rem;
+  }
+
+  .retry-btn {
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+  }
+
+  .retry-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .search-widget {
     width: 100%;
+    height: 100%;
     min-height: 480px;
-    --rs-primary-color: var(--color-buyer);
-    --rs-background-color: var(--color-background-card);
-    --rs-text-color: var(--color-text-primary);
-    --rs-border-radius: 12px;
-    --rs-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    contain: content; /* CSS containment for better performance */
+  }
+
+  .search-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    background: var(--color-background-alt);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .feature-item {
+    text-align: center;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease-out;
+  }
+
+  .feature-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .feature-item .icon {
+    width: 32px;
+    height: 32px;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+  }
+
+  .feature-item h4 {
+    font-size: 1.25rem;
+    color: var(--color-heading);
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-item p {
+    font-size: 0.875rem;
+    color: var(--color-text);
+    opacity: 0.8;
+  }
+
+  .hidden {
+    display: none;
   }
 
   @media (max-width: 768px) {
-    .skeleton-inputs {
+    .search-features {
       grid-template-columns: 1fr;
+      padding: 1rem;
     }
 
-    .skeleton-filters {
-      flex-wrap: wrap;
+    .feature-item {
+      padding: 1rem;
     }
   }
 
-  /* Reduce animation complexity on mobile */
   @media (prefers-reduced-motion: reduce) {
-    .loading-skeleton * {
+    .spinner,
+    .feature-item,
+    .retry-btn {
+      transition: none;
+    }
+
+    .spinner {
       animation: none;
     }
   }
 
-  /* Performance monitoring styles */
-  .performance-indicator {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: rgba(0, 0, 0, 0.8);
+  .search-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--color-background-alt);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .visualization-toggle {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .view-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .view-btn:hover,
+  .view-btn.active {
+    background: var(--color-primary);
     color: white;
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 12px;
+    border-color: var(--color-primary);
+  }
+
+  .filters-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--color-primary);
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .advanced-filters-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    max-width: 600px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
     z-index: 1000;
-    display: none;
+    padding: 1.5rem;
+    transform-origin: top right;
+  }
+
+  .filter-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .filter-group h3 {
+    color: var(--color-heading);
+    margin-bottom: 1rem;
+  }
+
+  .filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .range-inputs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .range-inputs input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+  }
+
+  .toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+  }
+
+  .toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+  }
+
+  .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+
+  .toggle input:checked + .toggle-slider {
+    background-color: var(--color-primary);
+  }
+
+  .toggle input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+  }
+
+  .multiselect {
+    position: relative;
+  }
+
+  .multiselect-toggle {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .multiselect-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    box-shadow: var(--shadow-md);
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .filter-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .apply-filters {
+    padding: 0.75rem 1.5rem;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .reset-filters {
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .market-analytics {
+    padding: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+  }
+
+  .analytics-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .analytics-controls {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .analytics-controls select {
+    padding: 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background: white;
+  }
+
+  .analytics-content {
+    height: 400px;
+    margin-bottom: 1.5rem;
+  }
+
+  .analytics-insights {
+    background: var(--color-background-alt);
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  @media (max-width: 768px) {
+    .search-controls {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .visualization-toggle {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .filters-toggle {
+      width: 100%;
+    }
+
+    .advanced-filters-panel {
+      max-width: 100%;
+    }
+
+    .filter-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .error-message {
+    margin: 1rem 0;
+    color: var(--color-error);
+    font-size: 0.875rem;
+  }
+
+  realscout-office-listings {
+    --rs-listing-divider-color: #4a90e2;
+    width: 100%;
+    min-height: 480px;
   }
 </style>
 
 <script>
-  import { realScoutLoader } from '../../scripts/realscout-loader';
+  import { animate, spring } from 'motion';
+  import AOS from 'aos';
+  import 'aos/dist/aos.css';
+  import Chart from 'chart.js/auto';
 
-  // Use requestIdleCallback for non-critical initialization
-  const startInitialization = () => {
-    const containers = document.querySelectorAll('.realscout-container');
-    
-    containers.forEach(container => {
+  // Initialize AOS
+  AOS.init({
+    duration: 800,
+    easing: 'ease-out',
+    once: true
+  });
+
+  class SearchWidget {
+    constructor() {
+      this.container = document.querySelector('.realscout-container');
+      this.widget = document.querySelector('#realscout-widget');
+      this.overlay = document.querySelector('.search-overlay');
+      this.errorEl = document.querySelector('.search-error');
+      this.errorMessage = document.querySelector('.error-message');
+      this.retryBtn = document.querySelector('.retry-btn');
+      this.searchFeatures = document.querySelector('.search-features');
+      
+      this.setupIntersectionObserver();
+      this.setupEventListeners();
+      this.loadWidget();
+      this.setupVisualizationToggles();
+      this.setupAdvancedFilters();
+      this.setupMarketAnalytics();
+    }
+
+    setupIntersectionObserver() {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              observer.disconnect();
-              // Initialize when browser is idle
-              requestIdleCallback(() => {
-                realScoutLoader.initializeWidget(container);
-              }, { timeout: 2000 });
+              this.initializeWidget();
+              observer.unobserve(entry.target);
             }
           });
         },
-        {
-          rootMargin: '200px 0px', // Load earlier
-          threshold: 0
-        }
+        { rootMargin: '50px' }
       );
 
-      observer.observe(container);
-    });
-  };
+      if (this.container) {
+        observer.observe(this.container);
+      }
+    }
 
-  // Start initialization based on document readiness
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', startInitialization);
-  } else {
-    startInitialization();
-  }
+    setupEventListeners() {
+      this.widget?.addEventListener('rs-error', this.handleError.bind(this));
+      this.widget?.addEventListener('rs-ready', this.handleReady.bind(this));
+      this.widget?.addEventListener('rs-load-error', this.handleLoadError.bind(this));
+      this.retryBtn?.addEventListener('click', this.handleRetry.bind(this));
 
-  // Cleanup on page hide/unload
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      document.querySelectorAll('.realscout-container').forEach(container => {
-        const widget = container.querySelector('realscout-advanced-search');
-        if (widget) {
-          widget.setAttribute('data-suspend', 'true');
+      // Monitor widget initialization
+      this.widget?.addEventListener('rs-init', () => {
+        console.log('RealScout widget initialized');
+      });
+
+      // Monitor search events
+      this.widget?.addEventListener('rs-search', (event) => {
+        console.log('Search performed:', event.detail);
+      });
+
+      // Voice search activation
+      document.addEventListener('keypress', (e) => {
+        if (e.key === '/') {
+          e.preventDefault();
+          this.activateVoiceSearch();
         }
       });
     }
-  });
+
+    async initializeWidget() {
+      try {
+        const script = document.createElement('script');
+        script.src = 'https://em.realscout.com/widgets/realscout-web-components.umd.js';
+        script.type = 'module';
+        script.crossOrigin = 'anonymous';
+        
+        script.onerror = () => {
+          this.handleLoadError(new Error('Failed to load RealScout script'));
+        };
+
+        await new Promise((resolve, reject) => {
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+
+        // Initialize widget after script loads
+        if (window.RealScout) {
+          window.RealScout.init({
+            version: 'v3',
+            market: this.widget?.getAttribute('market') || 'las-vegas'
+          });
+        } else {
+          throw new Error('RealScout not initialized properly');
+        }
+      } catch (error) {
+        console.error('Failed to initialize RealScout:', error);
+        this.handleLoadError(error);
+      }
+    }
+
+    handleLoadError(error) {
+      console.error('RealScout load error:', error);
+      this.errorMessage.textContent = 'Unable to load search functionality. Please check your internet connection and try again.';
+      this.handleError();
+    }
+
+    handleError(event) {
+      const errorDetails = event?.detail?.error || 'Unknown error occurred';
+      console.error('RealScout widget error:', errorDetails);
+      
+      this.overlay?.classList.add('hidden');
+      this.errorEl?.classList.remove('hidden');
+      
+      animate(
+        this.errorEl,
+        { opacity: [0, 1], scale: [0.9, 1] },
+        { duration: 0.3, easing: spring() }
+      );
+    }
+
+    handleReady() {
+      console.log('RealScout widget ready');
+      animate(
+        this.overlay,
+        { opacity: [1, 0] },
+        { 
+          duration: 0.3,
+          easing: 'ease-out',
+          onComplete: () => {
+            this.overlay?.classList.add('hidden');
+          }
+        }
+      );
+    }
+
+    async handleRetry() {
+      this.errorEl?.classList.add('hidden');
+      this.overlay?.classList.remove('hidden');
+      await this.initializeWidget();
+    }
+
+    async activateVoiceSearch() {
+      if (!('webkitSpeechRecognition' in window)) {
+        alert('Voice search is not supported in your browser. Please use Chrome.');
+        return;
+      }
+
+      const recognition = new webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+
+      // Add voice search UI
+      const voiceUI = document.createElement('div');
+      voiceUI.className = 'voice-search-ui';
+      voiceUI.innerHTML = `
+        <div class="voice-search-modal">
+          <div class="voice-indicator">
+            <div class="voice-wave"></div>
+          </div>
+          <p class="voice-instruction">Listening...</p>
+          <p class="voice-result"></p>
+          <button class="voice-cancel">Cancel</button>
+        </div>
+      `;
+      document.body.appendChild(voiceUI);
+
+      // Add styles dynamically
+      const style = document.createElement('style');
+      style.textContent = `
+        .voice-search-ui {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.8);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 10000;
+        }
+        .voice-search-modal {
+          background: white;
+          padding: 2rem;
+          border-radius: 16px;
+          text-align: center;
+          max-width: 400px;
+          width: 90%;
+        }
+        .voice-indicator {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          background: var(--color-primary);
+          margin: 0 auto 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .voice-wave {
+          width: 60%;
+          height: 60%;
+          border-radius: 50%;
+          background: white;
+          animation: pulse 1.5s ease-in-out infinite;
+        }
+        .voice-instruction {
+          font-size: 1.25rem;
+          margin-bottom: 1rem;
+        }
+        .voice-result {
+          font-size: 1rem;
+          color: var(--color-text);
+          min-height: 1.5em;
+        }
+        .voice-cancel {
+          margin-top: 1rem;
+          padding: 0.75rem 1.5rem;
+          background: var(--color-accent);
+          color: white;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+        @keyframes pulse {
+          0% { transform: scale(0.95); opacity: 0.5; }
+          50% { transform: scale(1.05); opacity: 0.8; }
+          100% { transform: scale(0.95); opacity: 0.5; }
+        }
+      `;
+      document.head.appendChild(style);
+
+      // Handle voice recognition
+      recognition.onresult = (event) => {
+        const resultP = voiceUI.querySelector('.voice-result');
+        const results = Array.from(event.results)
+          .map(result => result[0].transcript)
+          .join('');
+        
+        resultP.textContent = results;
+        
+        if (event.results[0].isFinal) {
+          // Process the search query
+          this.processVoiceSearch(results);
+          setTimeout(() => {
+            voiceUI.remove();
+            style.remove();
+          }, 1000);
+        }
+      };
+
+      recognition.onerror = (event) => {
+        console.error('Voice recognition error:', event.error);
+        voiceUI.remove();
+        style.remove();
+      };
+
+      // Handle cancel button
+      const cancelBtn = voiceUI.querySelector('.voice-cancel');
+      cancelBtn.addEventListener('click', () => {
+        recognition.stop();
+        voiceUI.remove();
+        style.remove();
+      });
+
+      recognition.start();
+    }
+
+    processVoiceSearch(query) {
+      // Format voice commands into search parameters
+      const params = this.parseVoiceQuery(query);
+      
+      // Update RealScout widget with new parameters
+      if (this.widget) {
+        Object.entries(params).forEach(([key, value]) => {
+          this.widget.setAttribute(key, value);
+        });
+        
+        // Trigger search
+        this.widget.dispatchEvent(new CustomEvent('rs-search', {
+          detail: { query: query }
+        }));
+      }
+    }
+
+    parseVoiceQuery(query) {
+      const params = {};
+      
+      // Price range
+      const priceMatch = query.match(/(\$\d+(\.\d+)?|\d+)\s*(k|m|million|thousand)?/i);
+      if (priceMatch) {
+        let price = parseFloat(priceMatch[1].replace('$', ''));
+        if (priceMatch[3]) {
+          price *= priceMatch[3].toLowerCase() === 'm' || priceMatch[3].toLowerCase() === 'million' 
+            ? 1000000 : 1000;
+        }
+        params['price-min'] = Math.floor(price).toString();
+      }
+
+      // Property type
+      if (query.includes('house') || query.includes('home')) params['property-types'] = 'single-family';
+      if (query.includes('condo')) params['property-types'] = 'condo';
+      if (query.includes('townhouse')) params['property-types'] = 'townhouse';
+
+      // Bedrooms
+      const bedsMatch = query.match(/(\d+)\s*bed/i);
+      if (bedsMatch) {
+        params['beds-min'] = bedsMatch[1];
+      }
+
+      // Bathrooms
+      const bathsMatch = query.match(/(\d+(\.\d+)?)\s*bath/i);
+      if (bathsMatch) {
+        params['baths-min'] = bathsMatch[1];
+      }
+
+      return params;
+    }
+
+    setupVisualizationToggles() {
+      const viewBtns = document.querySelectorAll('.view-btn');
+      const analyticsView = document.querySelector('.market-analytics');
+      
+      viewBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const view = btn.dataset.view;
+          
+          // Update active state
+          viewBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          // Handle view changes
+          if (view === 'analytics') {
+            analyticsView?.classList.remove('hidden');
+            this.widget?.classList.add('hidden');
+          } else {
+            analyticsView?.classList.add('hidden');
+            this.widget?.classList.remove('hidden');
+            
+            // Update RealScout view mode
+            this.widget?.setAttribute('view-mode', view);
+          }
+        });
+      });
+    }
+
+    setupAdvancedFilters() {
+      const filtersToggle = document.querySelector('.filters-toggle');
+      const filtersPanel = document.querySelector('.advanced-filters-panel');
+      const applyBtn = document.querySelector('.apply-filters');
+      const resetBtn = document.querySelector('.reset-filters');
+
+      filtersToggle?.addEventListener('click', () => {
+        const isHidden = filtersPanel?.classList.contains('hidden');
+        
+        if (isHidden) {
+          filtersPanel?.classList.remove('hidden');
+          animate(
+            filtersPanel,
+            { 
+              opacity: [0, 1],
+              scale: [0.95, 1]
+            },
+            { duration: 0.2, easing: spring() }
+          );
+        } else {
+          animate(
+            filtersPanel,
+            { 
+              opacity: [1, 0],
+              scale: [1, 0.95]
+            },
+            { 
+              duration: 0.2,
+              easing: spring(),
+              onComplete: () => filtersPanel?.classList.add('hidden')
+            }
+          );
+        }
+      });
+
+      applyBtn?.addEventListener('click', () => {
+        this.applyFilters();
+      });
+
+      resetBtn?.addEventListener('click', () => {
+        this.resetFilters();
+      });
+    }
+
+    setupMarketAnalytics() {
+      const canvas = document.getElementById('analyticsChart');
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: [], // Will be populated with dates
+          datasets: [
+            {
+              label: 'Market Trend',
+              data: [], // Will be populated with values
+              borderColor: 'rgb(75, 192, 192)',
+              tension: 0.1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Market Analytics'
+            }
+          }
+        }
+      });
+
+      // Handle analytics controls
+      const timeframeSelect = document.querySelector('.timeframe-select');
+      const metricSelect = document.querySelector('.metric-select');
+
+      const updateChart = () => {
+        const timeframe = timeframeSelect?.value;
+        const metric = metricSelect?.value;
+        
+        // Fetch and update data based on selections
+        this.fetchAnalyticsData(timeframe, metric).then(data => {
+          chart.data.labels = data.labels;
+          chart.data.datasets[0].data = data.values;
+          chart.update();
+        });
+      };
+
+      timeframeSelect?.addEventListener('change', updateChart);
+      metricSelect?.addEventListener('change', updateChart);
+    }
+
+    async fetchAnalyticsData(timeframe, metric) {
+      // Implement actual data fetching here
+      // This is a placeholder that returns dummy data
+      const now = new Date();
+      const labels = Array.from({length: 12}, (_, i) => {
+        const date = new Date(now);
+        date.setMonth(now.getMonth() - i);
+        return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+      }).reverse();
+
+      const values = Array.from({length: 12}, () => 
+        Math.floor(Math.random() * 1000000) + 500000
+      );
+
+      return { labels, values };
+    }
+
+    applyFilters() {
+      const filters = {};
+      
+      // Collect all filter values
+      document.querySelectorAll('[data-filter]').forEach(element => {
+        const filter = element.dataset.filter;
+        const type = element.dataset.type;
+        
+        if (element.type === 'checkbox') {
+          filters[filter] = element.checked;
+        } else if (type === 'min' || type === 'max') {
+          filters[filter] = filters[filter] || {};
+          filters[filter][type] = element.value;
+        } else {
+          filters[filter] = element.value;
+        }
+      });
+
+      // Update RealScout widget with new filters
+      if (this.widget) {
+        Object.entries(filters).forEach(([key, value]) => {
+          if (typeof value === 'object') {
+            if (value.min) this.widget.setAttribute(`${key}-min`, value.min);
+            if (value.max) this.widget.setAttribute(`${key}-max`, value.max);
+          } else {
+            this.widget.setAttribute(key, value.toString());
+          }
+        });
+
+        // Trigger search update
+        this.widget.dispatchEvent(new CustomEvent('rs-filter-update'));
+      }
+    }
+
+    resetFilters() {
+      // Reset all form elements
+      document.querySelectorAll('[data-filter]').forEach(element => {
+        if (element.type === 'checkbox') {
+          element.checked = false;
+        } else {
+          element.value = '';
+        }
+      });
+
+      // Reset RealScout widget
+      if (this.widget) {
+        const defaultAttrs = {
+          'sort-order': 'price-desc',
+          'listing-status': 'active',
+          'property-types': 'single-family,townhouse,condo',
+          'price-min': '500000'
+        };
+
+        Object.entries(defaultAttrs).forEach(([key, value]) => {
+          this.widget.setAttribute(key, value);
+        });
+
+        // Trigger search update
+        this.widget.dispatchEvent(new CustomEvent('rs-filter-update'));
+      }
+    }
+  }
+
+  // Initialize the search widget
+  new SearchWidget();
 </script> 

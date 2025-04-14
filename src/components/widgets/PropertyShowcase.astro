@@ -3,172 +3,528 @@ interface Props {
   featured?: boolean;
 }
 
-const { featured = true } = Astro.props;
+const { featured = false } = Astro.props;
+
+const properties = [
+  {
+    id: 'p1',
+    title: 'Luxury Mountain Estate',
+    price: '$2,450,000',
+    beds: 5,
+    baths: 4.5,
+    sqft: 4800,
+    address: '1234 Lone Mountain Dr',
+    features: ['Mountain Views', 'Pool', 'Smart Home'],
+    image: '/images/properties/luxury-estate.jpg',
+    cloudflareImage: 'luxury-estate',
+    status: 'For Sale',
+    virtualTour: true,
+    yearBuilt: 2022,
+    lotSize: '0.75 acres',
+    garage: '3 Car',
+    description: 'Stunning mountain estate with panoramic views...',
+    amenities: ['Smart Home', 'Pool', 'Spa', 'Wine Cellar', 'Home Theater'],
+    schools: {
+      elementary: 'Mountain View Elementary',
+      middle: 'Lone Peak Middle',
+      high: 'Summit High'
+    }
+  },
+  // Add more properties here
+];
+
+// Share options
+const shareOptions = {
+  title: 'Check out this amazing property',
+  text: 'I found this incredible home on Homes at Lone Mountain',
+  url: 'https://homesatlonemountain.com/properties/'
+};
 ---
 
-<div class="property-showcase">
-  <div class="showcase-grid">
-    <div class="showcase-main">
-      <div class="property-card featured">
-        <div class="property-image">
-          <div class="property-badge">Featured</div>
-          <div class="property-price">$1,250,000</div>
-        </div>
-        <div class="property-details">
-          <h3>Luxury Mountain Estate</h3>
-          <p>5 bed • 4 bath • 4,500 sqft</p>
-          <div class="property-features">
-            <span>Mountain View</span>
-            <span>Pool</span>
-            <span>Smart Home</span>
+<section class="property-showcase" data-featured={featured}>
+  <div class="property-grid">
+    {properties.map((property, index) => (
+      <article 
+        class:list={[
+          'property-card',
+          { 'featured': index === 0 && featured }
+        ]}
+        data-aos="fade-up"
+        data-aos-delay={index * 100}
+      >
+        <div class="property-image-container">
+          <img 
+            src={`https://imagedelivery.net/${import.meta.env.PUBLIC_CLOUDFLARE_ACCOUNT_HASH}/${property.cloudflareImage}/hero`}
+            alt={property.title}
+            width="800"
+            height="600"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="property-status">{property.status}</div>
+          <div class="property-actions-overlay">
+            {property.virtualTour && (
+              <button class="action-btn virtual-tour-btn" data-property-id={property.id}>
+                <svg class="icon"><use href="/images/feature-icons.svg#icon-360"></use></svg>
+                Virtual Tour
+              </button>
+            )}
+            <button class="action-btn share-btn" data-property-id={property.id}>
+              <svg class="icon"><use href="/images/feature-icons.svg#icon-share"></use></svg>
+              Share
+            </button>
+            <button class="action-btn compare-btn" data-property-id={property.id}>
+              <svg class="icon"><use href="/images/feature-icons.svg#icon-compare"></use></svg>
+              Compare
+            </button>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="showcase-side">
-      <div class="property-card">
-        <div class="property-image small">
-          <div class="property-price">$875,000</div>
+        <div class="property-details">
+          <div class="details-header">
+            <h3>{property.title}</h3>
+            <p class="price">{property.price}</p>
+          </div>
+          <div class="property-features">
+            <span>{property.beds} Beds</span>
+            <span>{property.baths} Baths</span>
+            <span>{property.sqft.toLocaleString()} Sq Ft</span>
+            <span>{property.yearBuilt}</span>
+            <span>{property.lotSize}</span>
+            <span>{property.garage}</span>
+          </div>
+          <p class="address">{property.address}</p>
+          <div class="feature-tags">
+            {property.features.map(feature => (
+              <span class="feature-tag">{feature}</span>
+            ))}
+          </div>
+          <div class="property-actions">
+            <button class="schedule-tour" data-property-id={property.id}>
+              <svg class="icon"><use href="/images/feature-icons.svg#icon-tour"></use></svg>
+              Schedule Tour
+            </button>
+            <button class="save-property" data-property-id={property.id}>
+              <svg class="icon"><use href="/images/feature-icons.svg#icon-insights"></use></svg>
+              Save
+            </button>
+          </div>
+          <div class="property-details-expand">
+            <button class="expand-btn">
+              More Details
+              <svg class="icon"><use href="/images/feature-icons.svg#icon-expand"></use></svg>
+            </button>
+          </div>
         </div>
-        <div class="property-details compact">
-          <h4>Modern Townhouse</h4>
-          <p>3 bed • 2.5 bath</p>
+        <div class="property-expanded hidden">
+          <div class="expanded-section">
+            <h4>Description</h4>
+            <p>{property.description}</p>
+          </div>
+          <div class="expanded-section">
+            <h4>Amenities</h4>
+            <ul class="amenities-list">
+              {property.amenities.map(amenity => (
+                <li>{amenity}</li>
+              ))}
+            </ul>
+          </div>
+          <div class="expanded-section">
+            <h4>Schools</h4>
+            <div class="schools-info">
+              <p><strong>Elementary:</strong> {property.schools.elementary}</p>
+              <p><strong>Middle:</strong> {property.schools.middle}</p>
+              <p><strong>High:</strong> {property.schools.high}</p>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="property-card">
-        <div class="property-image small">
-          <div class="property-price">$925,000</div>
-        </div>
-        <div class="property-details compact">
-          <h4>Golf Course Villa</h4>
-          <p>4 bed • 3 bath</p>
-        </div>
-      </div>
-    </div>
+      </article>
+    ))}
   </div>
-</div>
+</section>
+
+<script>
+  import { animate, spring } from 'motion';
+
+  // Initialize AOS
+  import AOS from 'aos';
+  AOS.init({
+    duration: 800,
+    easing: 'ease-out',
+    once: true
+  });
+
+  class PropertyCard {
+    constructor(element) {
+      this.card = element;
+      this.expandBtn = element.querySelector('.expand-btn');
+      this.expandedContent = element.querySelector('.property-expanded');
+      this.shareBtn = element.querySelector('.share-btn');
+      this.compareBtn = element.querySelector('.compare-btn');
+      this.virtualTourBtn = element.querySelector('.virtual-tour-btn');
+      this.saveBtn = element.querySelector('.save-property');
+      
+      this.setupEventListeners();
+      this.setupTouchInteractions();
+    }
+
+    setupEventListeners() {
+      this.expandBtn?.addEventListener('click', () => this.toggleExpand());
+      this.shareBtn?.addEventListener('click', () => this.shareProperty());
+      this.compareBtn?.addEventListener('click', () => this.addToCompare());
+      this.virtualTourBtn?.addEventListener('click', () => this.openVirtualTour());
+      this.saveBtn?.addEventListener('click', () => this.toggleSave());
+    }
+
+    setupTouchInteractions() {
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      this.card.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      });
+
+      this.card.addEventListener('touchmove', (e) => {
+        if (!touchStartX || !touchStartY) return;
+
+        const touchEndX = e.touches[0].clientX;
+        const touchEndY = e.touches[0].clientY;
+
+        const deltaX = touchEndX - touchStartX;
+        const deltaY = touchEndY - touchStartY;
+
+        // If horizontal swipe is greater than vertical movement
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+          e.preventDefault();
+          this.card.style.transform = `translateX(${deltaX}px) rotate(${deltaX * 0.1}deg)`;
+        }
+      });
+
+      this.card.addEventListener('touchend', () => {
+        this.card.style.transform = '';
+        touchStartX = 0;
+        touchStartY = 0;
+      });
+    }
+
+    async toggleExpand() {
+      const isExpanded = !this.expandedContent.classList.contains('hidden');
+      
+      if (!isExpanded) {
+        this.expandedContent.classList.remove('hidden');
+        await animate(
+          this.expandedContent,
+          { 
+            height: ['0px', this.expandedContent.scrollHeight + 'px'],
+            opacity: [0, 1]
+          },
+          { duration: 0.3, easing: spring() }
+        );
+      } else {
+        await animate(
+          this.expandedContent,
+          { 
+            height: [this.expandedContent.scrollHeight + 'px', '0px'],
+            opacity: [1, 0]
+          },
+          { duration: 0.3, easing: spring() }
+        );
+        this.expandedContent.classList.add('hidden');
+      }
+    }
+
+    async shareProperty() {
+      const propertyId = this.shareBtn.dataset.propertyId;
+      const shareData = {
+        ...shareOptions,
+        url: `${shareOptions.url}${propertyId}`
+      };
+
+      try {
+        if (navigator.share) {
+          await navigator.share(shareData);
+        } else {
+          // Fallback to clipboard
+          await navigator.clipboard.writeText(shareData.url);
+          this.showToast('Link copied to clipboard!');
+        }
+      } catch (err) {
+        console.error('Error sharing:', err);
+      }
+    }
+
+    showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+
+      animate(
+        toast,
+        [
+          { opacity: 0, transform: 'translateY(20px)' },
+          { opacity: 1, transform: 'translateY(0)' },
+          { opacity: 1, transform: 'translateY(0)', offset: 0.8 },
+          { opacity: 0, transform: 'translateY(-20px)' }
+        ],
+        { duration: 2000, easing: 'ease' }
+      ).finished.then(() => toast.remove());
+    }
+
+    addToCompare() {
+      const propertyId = this.compareBtn.dataset.propertyId;
+      // Implement comparison logic
+      this.showToast('Added to compare list');
+    }
+
+    openVirtualTour() {
+      const propertyId = this.virtualTourBtn.dataset.propertyId;
+      // Implement virtual tour modal
+      console.log('Opening virtual tour for:', propertyId);
+    }
+
+    async toggleSave() {
+      const icon = this.saveBtn.querySelector('.icon');
+      await animate(icon, 
+        { scale: [1, 1.2, 1] },
+        { duration: 0.3, easing: spring() }
+      );
+      // Implement save functionality
+      this.showToast('Property saved!');
+    }
+  }
+
+  // Initialize all property cards
+  document.querySelectorAll('.property-card').forEach(card => {
+    new PropertyCard(card);
+  });
+</script>
 
 <style>
   .property-showcase {
     width: 100%;
-    max-width: var(--container-max-width);
+    max-width: var(--container-width, 1200px);
     margin: 0 auto;
-    padding: 2rem var(--container-padding);
+    padding: 2rem;
   }
 
-  .showcase-grid {
+  .property-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 1.5rem;
-    height: 600px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
   }
 
   .property-card {
-    background: white;
+    background: var(--color-card-bg, #fff);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-  }
-
-  .property-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  }
-
-  .property-image {
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease-out;
     position: relative;
-    height: 400px;
-    background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)),
-                url('/images/luxury-home.jpg') center/cover;
   }
 
-  .property-image.small {
-    height: 200px;
+  .property-card.featured {
+    grid-column: 1 / -1;
   }
 
-  .property-badge {
+  .property-image-container {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+
+  .property-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease-out;
+  }
+
+  .property-card:hover .property-image-container img {
+    transform: scale(1.05);
+  }
+
+  .property-status {
     position: absolute;
     top: 1rem;
     left: 1rem;
-    background: var(--color-accent);
+    background: var(--color-primary);
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 20px;
+    font-size: 0.875rem;
     font-weight: 500;
   }
 
-  .property-price {
+  .property-actions-overlay {
     position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    font-weight: 600;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .property-image-container:hover .property-actions-overlay {
+    opacity: 1;
+  }
+
+  .action-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    transform: translateY(20px);
+  }
+
+  .property-image-container:hover .action-btn {
+    transform: translateY(0);
   }
 
   .property-details {
     padding: 1.5rem;
   }
 
-  .property-details.compact {
-    padding: 1rem;
-  }
-
-  .property-details h3 {
+  .price {
     font-size: 1.5rem;
+    font-weight: 700;
     color: var(--color-primary);
-    margin-bottom: 0.5rem;
-  }
-
-  .property-details h4 {
-    font-size: 1.25rem;
-    color: var(--color-primary);
-    margin-bottom: 0.25rem;
-  }
-
-  .property-details p {
-    color: var(--color-primary);
-    opacity: 0.8;
-    margin-bottom: 1rem;
+    margin: 0.5rem 0;
   }
 
   .property-features {
     display: flex;
     gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .property-features span {
-    background: var(--color-background);
-    color: var(--color-primary);
-    padding: 0.25rem 0.75rem;
-    border-radius: 15px;
+    margin: 1rem 0;
     font-size: 0.875rem;
   }
 
-  .showcase-side {
+  .feature-tags {
     display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
   }
 
-  @media (max-width: 992px) {
-    .showcase-grid {
+  .feature-tag {
+    background: var(--color-accent-light);
+    color: var(--color-accent);
+    padding: 0.25rem 0.75rem;
+    border-radius: 16px;
+    font-size: 0.75rem;
+  }
+
+  .property-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .property-actions button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+  }
+
+  .schedule-tour {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .save-property {
+    background: var(--color-accent-light);
+    color: var(--color-accent);
+  }
+
+  .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .property-details-expand {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  .expand-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    color: var(--color-primary);
+  }
+
+  .property-expanded {
+    padding: 1.5rem;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-background-alt);
+  }
+
+  .expanded-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .expanded-section h4 {
+    color: var(--color-heading);
+    margin-bottom: 0.5rem;
+  }
+
+  .amenities-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .schools-info p {
+    margin: 0.5rem 0;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .property-grid {
       grid-template-columns: 1fr;
-      height: auto;
     }
 
-    .property-image {
-      height: 300px;
+    .property-actions {
+      flex-direction: column;
     }
+  }
 
-    .showcase-side {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  @media (prefers-reduced-motion: reduce) {
+    .property-card,
+    .property-image-container img,
+    .property-actions-overlay,
+    .action-btn {
+      transition: none;
     }
   }
 </style> 

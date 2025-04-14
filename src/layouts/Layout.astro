@@ -18,25 +18,11 @@ const { title, description = "Luxury homes at Lone Mountain, Las Vegas" } = Astr
     <title>{title}</title>
 
     <!-- RealScout Widget Script -->
-    <script 
-      src="https://em.realscout.com/widgets/realscout-web-components.umd.js" 
-      type="module"
-      crossorigin="anonymous"
-      integrity="sha384-"
-    ></script>
-
-    <!-- RealScout Global Styles -->
-    <style is:global>
-      realscout-office-listings,
-      realscout-advanced-search {
+    <script src="https://em.realscout.com/widgets/realscout-web-components.umd.js" type="module"></script>
+    <style>
+      realscout-office-listings {
         --rs-listing-divider-color: #4a90e2;
-        --rs-button-text-color: #ffffff;
-        --rs-button-background-color: #3A8DDE;
-        --rs-widget-width: 100%;
-        --rs-widget-max-width: 1200px;
         width: 100%;
-        min-height: 480px;
-        display: block;
       }
     </style>
   </head>

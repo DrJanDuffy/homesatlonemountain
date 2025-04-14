@@ -1,0 +1,108 @@
+name = "homes-at-lone-mountain"
+main = "./.output/server/entry.mjs"
+compatibility_date = "2024-01-01"
+
+[site]
+bucket = "./.output/client"
+
+[build]
+command = "npm run build"
+watch_dir = "src"
+
+[env.production]
+zone_id = "c9bd4a0591d9dce7af89a93358dc0eb1"
+account_id = "2cc579c1ec9e426ed585e933ebf4753b"
+route = "homesatlonemountain.com/*"
+workers_dev = false
+
+# Security Headers
+[env.production.security_headers]
+Content-Security-Policy = "default-src 'self' https://*.realscout.com https://*.cloudflare.com; script-src 'self' 'unsafe-inline' https://*.realscout.com https://*.cloudflare.com; style-src 'self' 'unsafe-inline' https://*.realscout.com; img-src 'self' data: https://*.realscout.com https://*.cloudflare.com https://*.imagedelivery.net; connect-src 'self' https://*.realscout.com https://*.cloudflare.com;"
+X-Content-Type-Options = "nosniff"
+X-Frame-Options = "DENY"
+X-XSS-Protection = "1; mode=block"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "camera=(), microphone=(), geolocation=(self), interest-cohort=()"
+
+[env.production.analytics]
+token = "${CLOUDFLARE_ANALYTICS_TOKEN}"
+beacon = true
+scriptPath = "/analytics.js"
+spa = true
+
+[env.staging]
+workers_dev = true
+
+# Cache Configuration
+[env.production.cache]
+browser_TTL = 3600
+edge_TTL = 86400
+cache_by_device_type = true
+cache_deception_armor = true
+always_online = true
+cache_reserve = true
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "cache"
+preview_id = "cache_preview"
+
+[triggers]
+crons = ["0 0 * * *"] # Daily at midnight
+
+[miniflare]
+kv_persist = true
+cache_persist = true
+
+# Asset Optimization
+[env.production.assets]
+compress = true
+minify = true
+http3 = true
+0rtt = true
+brotli = true
+http2_push_assets = true
+polish = "lossy"
+webp = true
+quality = 85
+
+# Security Rules
+[env.production.security]
+waf = true
+bot_management = true
+ddos_l7 = true
+ssl = "strict"
+always_use_https = true
+opportunistic_encryption = true
+automatic_https_rewrites = true
+ip_geolocation = true
+browser_check = true
+challenge_ttl = 31536000
+privacy_pass = true
+
+[[r2_buckets]]
+binding = "ASSETS"
+bucket_name = "site-assets"
+preview_bucket_name = "site-assets-preview"
+
+# Rate Limiting
+[[rules]]
+type = "rate_limit"
+expression = '(http.request.uri.path matches "^/api/.*$")'
+period = 60
+requests_per_period = 100
+mitigation_timeout = 600
+
+# Web Analytics
+[web_analytics]
+site_tag = "homes-at-lone-mountain"
+token = "${CLOUDFLARE_ANALYTICS_TOKEN}"
+spa = true
+
+# Image Optimization
+[images]
+default_quality = 85
+preserve_exif = false
+metadata_honor = false
+formats = ["avif", "webp"]
+sizes = [400, 800, 1200, 1920] 

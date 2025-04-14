@@ -5,113 +5,89 @@ import RealScoutSearch from '../components/widgets/RealScoutSearch.astro';
 import PropertyShowcase from '../components/widgets/PropertyShowcase.astro';
 import TestimonialCarousel from '../components/widgets/TestimonialCarousel.astro';
 import SmartFeatures from '../components/SmartFeatures.astro';
+import RealScoutListings from '../components/RealScoutListings.astro';
 ---
 
 <Layout title="Luxury Homes at Lone Mountain | Las Vegas Real Estate">
   <main>
     <HeroSection />
     <SmartFeatures />
+    
+    <!-- Solution Section -->
+    <section id="solution" class="section solution-section">
+      <div class="container">
+        <h2 class="section-title">Available Properties</h2>
+        <p class="section-description">Browse our curated selection of luxury homes at Lone Mountain.</p>
+        <RealScoutListings />
+      </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section id="social-proof" class="section">
+      <div class="container">
+        <h2 class="section-title">What Our Homeowners Say</h2>
+        <TestimonialCarousel />
+      </div>
+    </section>
+
+    <!-- Interactive Tool Section -->
+    <section id="interactive-tool" class="section tool-section">
+      <div class="container">
+        <h2 class="section-title">Explore Your Options</h2>
+        <div class="tool-grid">
+          <div class="tool-card">
+            <h3>Property Value Estimator</h3>
+            <p>Get an instant estimate of your dream home's value</p>
+            <div class="widget-container">
+              <!-- Homebot valuation widget will be added here -->
+            </div>
+          </div>
+          <div class="tool-card">
+            <h3>Mortgage Calculator</h3>
+            <p>Plan your finances with our advanced mortgage calculator</p>
+            <div class="calculator-container">
+              <!-- Mortgage calculator will be added here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Objection Handling Section -->
+    <section id="objection-handling" class="section faq-section">
+      <div class="container">
+        <h2 class="section-title">Common Questions</h2>
+        <div class="faq-grid">
+          <details class="faq-item">
+            <summary>What makes Lone Mountain unique?</summary>
+            <p>Lone Mountain offers an unparalleled combination of luxury living, stunning views, and world-class amenities, all while maintaining a strong sense of community.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I schedule a viewing?</summary>
+            <p>You can schedule a viewing through our online booking system, or contact our team directly for a personalized tour experience.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What amenities are included?</summary>
+            <p>Our properties feature smart home technology, energy-efficient designs, and access to community facilities including pools, fitness centers, and walking trails.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="section cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Ready to Find Your Dream Home?</h2>
+          <p>Join our community of happy homeowners at Lone Mountain</p>
+          <div class="cta-buttons">
+            <button class="cta-button">Schedule a Viewing</button>
+            <button class="cta-button outline">Download Brochure</button>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
-
-  <!-- Pain Point Section -->
-  <section id="pain-point" class="section pain-point-section">
-    <div class="container">
-      <div class="feature-grid">
-        <div class="feature-card">
-          <div class="feature-icon">🔍</div>
-          <h3>Smart Search</h3>
-          <p>Find exactly what you're looking for with our intelligent property matching system</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🏠</div>
-          <h3>Virtual Tours</h3>
-          <p>Experience properties from anywhere with immersive 3D walkthroughs</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">📊</div>
-          <h3>Market Insights</h3>
-          <p>Make informed decisions with real-time market data and trends</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Solution Section -->
-  <section id="solution" class="section solution-section">
-    <div class="container">
-      <h2 class="section-title">Smart Home Search Technology</h2>
-      <p class="section-description">Filter properties based on your exact preferences and receive personalized recommendations.</p>
-      <div class="widget-container">
-        <RealScoutSearch />
-      </div>
-    </div>
-  </section>
-
-  <!-- Social Proof Section -->
-  <section id="social-proof" class="section">
-    <div class="container">
-      <h2 class="section-title">What Our Homeowners Say</h2>
-      <TestimonialCarousel />
-    </div>
-  </section>
-
-  <!-- Interactive Tool Section -->
-  <section id="interactive-tool" class="section tool-section">
-    <div class="container">
-      <h2 class="section-title">Explore Your Options</h2>
-      <div class="tool-grid">
-        <div class="tool-card">
-          <h3>Property Value Estimator</h3>
-          <p>Get an instant estimate of your dream home's value</p>
-          <div class="widget-container">
-            <!-- Homebot valuation widget will be added here -->
-          </div>
-        </div>
-        <div class="tool-card">
-          <h3>Mortgage Calculator</h3>
-          <p>Plan your finances with our advanced mortgage calculator</p>
-          <div class="calculator-container">
-            <!-- Mortgage calculator will be added here -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Objection Handling Section -->
-  <section id="objection-handling" class="section faq-section">
-    <div class="container">
-      <h2 class="section-title">Common Questions</h2>
-      <div class="faq-grid">
-        <details class="faq-item">
-          <summary>What makes Lone Mountain unique?</summary>
-          <p>Lone Mountain offers an unparalleled combination of luxury living, stunning views, and world-class amenities, all while maintaining a strong sense of community.</p>
-        </details>
-        <details class="faq-item">
-          <summary>How do I schedule a viewing?</summary>
-          <p>You can schedule a viewing through our online booking system, or contact our team directly for a personalized tour experience.</p>
-        </details>
-        <details class="faq-item">
-          <summary>What amenities are included?</summary>
-          <p>Our properties feature smart home technology, energy-efficient designs, and access to community facilities including pools, fitness centers, and walking trails.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section id="cta" class="section cta-section">
-    <div class="container">
-      <div class="cta-content">
-        <h2>Ready to Find Your Dream Home?</h2>
-        <p>Join our community of happy homeowners at Lone Mountain</p>
-        <div class="cta-buttons">
-          <button class="cta-button">Schedule a Viewing</button>
-          <button class="cta-button outline">Download Brochure</button>
-        </div>
-      </div>
-    </div>
-  </section>
 </Layout>
 
 <script type="application/ld+json">
