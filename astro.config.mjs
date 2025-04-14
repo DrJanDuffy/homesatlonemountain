@@ -1,7 +1,8 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import cloudflare from '@astrojs/cloudflare';
+import db from "@astrojs/db";
 import compress from "astro-compress";
+import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
   site: 'https://homesatlonemountain.com',
@@ -9,9 +10,14 @@ export default defineConfig({
   adapter: cloudflare({
     mode: 'directory',
     functionPerRoute: true,
+    imageService: 'cloudflare',
     runtime: {
       mode: 'local',
-      type: 'pages'
+      type: 'pages',
+      bindings: {
+        ZONE_ID: { type: 'plain_text', value: process.env.CLOUDFLARE_ZONE_ID },
+        ACCOUNT_ID: { type: 'plain_text', value: process.env.CLOUDFLARE_ACCOUNT_ID }
+      }
     },
     routes: {
       strategy: 'include',
@@ -24,12 +30,8 @@ export default defineConfig({
     }
   }),
   integrations: [
-    sitemap({
-      filter: (page) => !page.includes('draft'),
-      changefreq: 'weekly',
-      priority: 0.7,
-      lastmod: new Date()
-    }),
+    sitemap(),
+    db(),
     compress({
       CSS: true,
       HTML: true,
@@ -73,18 +75,15 @@ export default defineConfig({
   },
   compressHTML: true,
   image: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**.realscout.com'
-      },
-      {
-        protocol: 'https',
-        hostname: '**.imagedelivery.net'
+    service: 'cloudflare',
+    domains: {
+      'imagedelivery.net': {
+        variants: {
+          'thumbnail': 'w=400,h=300,fit=cover',
+          'gallery': 'w=800,h=600,fit=contain',
+          'hero': 'w=1920,h=1080,fit=cover,q=80'
+        }
       }
-    ],
-    service: {
-      entrypoint: '@astrojs/cloudflare/image'
     }
   }
 }); 

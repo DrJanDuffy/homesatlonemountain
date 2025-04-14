@@ -1,5 +1,9 @@
 ---
-interface Props {
+import { env } from '../utils/env';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+export interface Props {
   title: string;
   description?: string;
   image?: string;
@@ -7,42 +11,48 @@ interface Props {
 
 const { 
   title, 
-  description = "Luxury homes at Lone Mountain, Las Vegas",
-  image = "/images/og-image.jpg"
+  description = "Find your dream home at Lone Mountain with our expert real estate services.",
+  image = "/images/og-default.jpg"
 } = Astro.props;
 
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+const canonicalURL = new URL(Astro.url.pathname, env.PUBLIC_SITE_URL);
 ---
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonicalURL} />
+    
     <title>{title}</title>
-
-    <!-- SEO Meta Tags -->
+    <meta name="description" content={description} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#0A2540" />
-
-    <!-- Preload Critical Assets -->
-    <link rel="preconnect" href="https://em.realscout.com" />
+    <meta property="og:image" content={new URL(image, env.PUBLIC_SITE_URL)} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, env.PUBLIC_SITE_URL)} />
+    
+    <!-- Preload critical assets -->
     <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
-
+    <link rel="preconnect" href="https://em.realscout.com" />
+    
     <!-- RealScout Widget Script -->
     <script 
       src="https://em.realscout.com/widgets/realscout-web-components.umd.js" 
       type="module"
       crossorigin="anonymous"
-      integrity="sha384-PLACEHOLDER"
+      integrity="sha384-9c3C8DgBMvf8R/lx8578PmHhN3FwC/z+UZuKGwqUK7CL/4yGsl+AKPGBCPQdJh0n"
     ></script>
 
     <!-- Structured Data -->
@@ -51,96 +61,158 @@ import Footer from '../components/Footer.astro';
         "@context": "https://schema.org",
         "@type": "RealEstateAgent",
         "name": "Homes at Lone Mountain",
-        "image": "/images/logo.png",
+        "image": "/images/logo.svg",
+        "url": env.PUBLIC_SITE_URL,
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Las Vegas",
-          "addressRegion": "NV"
+          "addressRegion": "NV",
+          "postalCode": "89129",
+          "addressCountry": "US"
         },
-        "url": "https://homesatlonemountain.com",
-        "telephone": "+1-XXX-XXX-XXXX",
-        "priceRange": "$$$"
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 36.2544,
+          "longitude": -115.2935
+        },
+        "areaServed": {
+          "@type": "City",
+          "name": "Las Vegas"
+        }
       }
     </script>
+
+    <!-- RealScout Global Styles -->
+    <style is:global>
+      realscout-office-listings,
+      realscout-advanced-search {
+        --rs-primary-color: var(--color-primary, #3A8DDE);
+        --rs-font-family: var(--font-sans, system-ui);
+        --rs-border-radius: 8px;
+        --rs-card-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.1));
+        width: 100%;
+        min-height: 480px;
+        display: block;
+      }
+    </style>
   </head>
   <body>
-    <Header />
-    <main>
-      <slot />
-    </main>
-    <Footer />
+    <div id="page-wrapper">
+      <Header />
+      
+      <main id="main-content">
+        <slot />
+      </main>
+
+      <Footer />
+    </div>
+
+    <!-- Error Boundary -->
+    <div id="error-boundary" class="hidden">
+      <div class="error-content">
+        <h2>Something went wrong</h2>
+        <p>We're sorry, but there was an error loading this page. Please try refreshing.</p>
+        <button onclick="window.location.reload()">Refresh Page</button>
+      </div>
+    </div>
   </body>
 </html>
 
+<script>
+  // Global error handler
+  window.addEventListener('error', (event) => {
+    console.error('Global error:', event.error);
+    showErrorBoundary();
+  });
+
+  window.addEventListener('unhandledrejection', (event) => {
+    console.error('Unhandled promise rejection:', event.reason);
+    showErrorBoundary();
+  });
+
+  function showErrorBoundary() {
+    const errorBoundary = document.getElementById('error-boundary');
+    const pageWrapper = document.getElementById('page-wrapper');
+    
+    if (errorBoundary && pageWrapper) {
+      pageWrapper.style.display = 'none';
+      errorBoundary.classList.remove('hidden');
+    }
+  }
+</script>
+
 <style is:global>
   :root {
-    --color-primary: #0A2540;
-    --color-secondary: #3A8DDE;
-    --color-accent: #16B286;
+    --font-sans: 'Inter var', system-ui, -apple-system, sans-serif;
+    --color-primary: #3A8DDE;
+    --color-primary-dark: #0A2540;
     --color-background: #F7F9FC;
-    --color-buyer: #3A8DDE;
-    --color-seller: #16B286;
-    --container-max-width: 1200px;
-    --container-padding: 1rem;
-    --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --transition: 0.3s ease;
+    --color-text: #374151;
+    --color-error: #dc2626;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
   }
 
-  @font-face {
-    font-family: 'Inter var';
-    src: url('/fonts/inter-var.woff2') format('woff2');
-    font-weight: 100 900;
-    font-display: swap;
-  }
-
+  /* Base styles */
   html {
-    font-family: 'Inter var', system-ui, sans-serif;
-    background: var(--color-background);
-    color: var(--color-primary);
+    font-family: var(--font-sans);
     scroll-behavior: smooth;
   }
 
   body {
+    background: var(--color-background);
+    color: var(--color-text);
     margin: 0;
     padding: 0;
-    min-height: 100vh;
+  }
+
+  /* Error boundary styles */
+  #error-boundary {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
   }
 
-  main {
-    flex: 1;
+  #error-boundary.hidden {
+    display: none;
   }
 
-  .container {
-    width: 100%;
-    max-width: var(--container-max-width);
-    margin: 0 auto;
-    padding: 0 var(--container-padding);
+  .error-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+    max-width: 400px;
   }
 
-  @media (max-width: 768px) {
-    .container {
-      padding: 0 calc(var(--container-padding) / 2);
-    }
+  .error-content h2 {
+    color: var(--color-error);
+    margin-bottom: 1rem;
   }
 
-  /* RealScout Widget Styles */
-  realscout-office-listings,
-  realscout-advanced-search {
-    --rs-primary-color: var(--color-primary);
-    --rs-secondary-color: var(--color-secondary);
-    --rs-accent-color: var(--color-accent);
-    --rs-background-color: var(--color-background);
-    --rs-listing-divider-color: var(--color-secondary);
-    --rs-button-text-color: white;
-    --rs-button-background: var(--color-secondary);
-    --rs-widget-width: 100%;
-    --rs-widget-min-height: 480px;
-    --rs-widget-z-index: 1000;
-    width: 100%;
+  .error-content button {
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .error-content button:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
   }
 </style> 

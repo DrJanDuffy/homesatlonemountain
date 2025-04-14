@@ -1,25 +1,62 @@
-<div class="realscout-container">
-  <div class="loading-overlay" id="loading">
-    <div class="spinner"></div>
-    <p>Loading properties...</p>
-  </div>
-  
-  <div class="error-state hidden" id="error">
-    <p>Unable to load properties</p>
-    <button onclick="retryLoad()">Retry</button>
+import { env } from '../utils/env';
+
+interface Props {
+  minPrice?: string;
+  maxPrice?: string;
+  propertyTypes?: string;
+  sortOrder?: 'PRICE_LOW' | 'PRICE_HIGH' | 'NEWEST' | 'BEDS' | 'BATHS' | 'SQFT';
+  limit?: number;
+}
+
+const { 
+  minPrice = "500000",
+  propertyTypes = "SFR,MF",
+  sortOrder = "PRICE_HIGH",
+  limit = 9
+} = Astro.props;
+
+<section class="listings-section">
+  <div class="listings-header">
+    <h2>Featured Luxury Properties</h2>
+    <p>Discover exceptional homes in the prestigious Lone Mountain area</p>
   </div>
 
-  <realscout-office-listings 
-    id="realscout-widget"
-    agent-encoded-id="QWdlbnQtMjI1MDUw" 
-    sort-order="PRICE_LOW" 
-    listing-status="For Sale" 
-    property-types="MF,SFR" 
-    price-min="500000"
-  ></realscout-office-listings>
-</div>
+  <div class="realscout-container">
+    <div class="loading-overlay" id="loading">
+      <div class="spinner"></div>
+      <p>Loading luxury properties...</p>
+    </div>
+
+    <div class="error-state hidden" id="error">
+      <div class="error-content">
+        <h3>Unable to load properties</h3>
+        <p>We're having trouble fetching the latest listings. Please try again.</p>
+        <button onclick="retryLoad()">Retry Loading</button>
+      </div>
+    </div>
+
+    <realscout-office-listings 
+      id="realscout-widget"
+      agent-encoded-id="QWdlbnQtMjI1MDUw"
+      sort-order={sortOrder}
+      listing-status="For Sale"
+      property-types={propertyTypes}
+      price-min={minPrice}
+      limit={limit}
+      class="listings-grid"
+    ></realscout-office-listings>
+  </div>
+
+  <div class="cta-container">
+    <a href="/properties" class="cta-button primary">View All Properties</a>
+    <a href="/contact" class="cta-button secondary">Schedule a Tour</a>
+  </div>
+</section>
 
 <script>
+  let retryCount = 0;
+  const MAX_RETRIES = 3;
+
   // Initialize widget when it becomes visible
   document.addEventListener('DOMContentLoaded', function() {
     const widget = document.getElementById('realscout-widget');
@@ -29,50 +66,84 @@
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          loading?.classList.remove('hidden');
-          widget?.setAttribute('data-load', 'true');
+          initializeWidget();
           observer.disconnect();
         }
       });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.1 });
 
     if (widget) {
       observer.observe(widget);
-
-      // Handle widget events
-      widget.addEventListener('load', () => {
-        loading?.classList.add('hidden');
-      });
-
-      widget.addEventListener('error', (e) => {
-        loading?.classList.add('hidden');
-        error?.classList.remove('hidden');
-      });
     }
   });
 
-  // Retry loading function
-  function retryLoad() {
+  function initializeWidget() {
     const widget = document.getElementById('realscout-widget');
     const loading = document.getElementById('loading');
     const error = document.getElementById('error');
 
-    if (widget) {
-      error?.classList.add('hidden');
-      loading?.classList.remove('hidden');
-      widget.setAttribute('data-load', 'true');
-    }
+    if (!widget) return;
+
+    loading?.classList.remove('hidden');
+    error?.classList.add('hidden');
+    
+    widget.setAttribute('data-load', 'true');
+
+    // Handle widget events
+    widget.addEventListener('load', () => {
+      loading?.classList.add('hidden');
+      retryCount = 0;
+    });
+
+    widget.addEventListener('error', (e) => {
+      console.error('RealScout widget error:', e);
+      loading?.classList.add('hidden');
+      
+      if (retryCount < MAX_RETRIES) {
+        retryCount++;
+        setTimeout(retryLoad, 2000 * retryCount); // Exponential backoff
+      } else {
+        error?.classList.remove('hidden');
+      }
+    });
+  }
+
+  // Retry loading function
+  function retryLoad() {
+    initializeWidget();
   }
 </script>
 
 <style>
-  .realscout-container {
+  .listings-section {
     width: 100%;
-    max-width: var(--container-max-width);
+    max-width: var(--container-max-width, 1200px);
     margin: 0 auto;
-    padding: var(--container-padding);
+    padding: var(--section-padding, 4rem) var(--container-padding, 1rem);
+  }
+
+  .listings-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .listings-header h2 {
+    font-size: 2.5rem;
+    color: var(--color-primary-dark);
+    margin-bottom: 1rem;
+  }
+
+  .listings-header p {
+    font-size: 1.125rem;
+    color: var(--color-text);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .realscout-container {
     position: relative;
     min-height: 480px;
+    margin-bottom: 3rem;
   }
 
   .loading-overlay {
@@ -85,8 +156,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(247, 249, 252, 0.9);
     z-index: 10;
+    backdrop-filter: blur(4px);
   }
 
   .spinner {
@@ -107,18 +179,62 @@
     text-align: center;
     background: white;
     padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    z-index: 20;
   }
 
-  .error-state button {
+  .error-content h3 {
+    color: var(--color-error);
+    margin-bottom: 1rem;
+  }
+
+  .error-content button {
     margin-top: 1rem;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.5rem;
     background: var(--color-primary);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .error-content button:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+  }
+
+  .cta-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+
+  .cta-button {
+    padding: 0.875rem 2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .cta-button.primary {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .cta-button.secondary {
+    background: white;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+  }
+
+  .cta-button:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
   }
 
   .hidden {
@@ -128,6 +244,34 @@
   @keyframes spin {
     to {
       transform: rotate(360deg);
+    }
+  }
+
+  /* RealScout custom styles */
+  :global(realscout-office-listings) {
+    --rs-primary-color: var(--color-primary);
+    --rs-font-family: var(--font-sans);
+    --rs-border-radius: 12px;
+    --rs-card-shadow: var(--shadow-md);
+    --rs-listing-divider-color: #e5e7eb;
+    --rs-button-text-color: white;
+    --rs-button-background-color: var(--color-primary);
+    width: 100%;
+    min-height: 480px;
+  }
+
+  @media (max-width: 768px) {
+    .listings-header h2 {
+      font-size: 2rem;
+    }
+
+    .cta-container {
+      flex-direction: column;
+    }
+
+    .cta-button {
+      width: 100%;
+      text-align: center;
     }
   }
 </style> 

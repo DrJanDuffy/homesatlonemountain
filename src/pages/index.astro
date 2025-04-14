@@ -2,87 +2,63 @@
 import Layout from '../layouts/Layout.astro';
 import HeroSection from '../components/HeroSection.astro';
 import RealScoutSearch from '../components/widgets/RealScoutSearch.astro';
-import PropertyShowcase from '../components/widgets/PropertyShowcase.astro';
+import RealScoutListings from '../components/RealScoutListings.astro';
 import TestimonialCarousel from '../components/widgets/TestimonialCarousel.astro';
 import SmartFeatures from '../components/SmartFeatures.astro';
-import RealScoutListings from '../components/RealScoutListings.astro';
 ---
 
 <Layout title="Luxury Homes at Lone Mountain | Las Vegas Real Estate">
   <main>
+    <!-- Hero Section -->
     <HeroSection />
+
+    <!-- Smart Features Section -->
     <SmartFeatures />
-    
-    <!-- Solution Section -->
-    <section id="solution" class="section solution-section">
+
+    <!-- Property Search Section -->
+    <section class="search-section">
       <div class="container">
-        <h2 class="section-title">Available Properties</h2>
-        <p class="section-description">Browse our curated selection of luxury homes at Lone Mountain.</p>
-        <RealScoutListings />
+        <h2>Find Your Dream Home</h2>
+        <p>Discover the perfect property with our advanced search tools</p>
+        <RealScoutSearch />
       </div>
     </section>
 
-    <!-- Social Proof Section -->
-    <section id="social-proof" class="section">
+    <!-- Featured Properties Section -->
+    <RealScoutListings 
+      minPrice="500000"
+      propertyTypes="SFR,MF"
+      sortOrder="PRICE_HIGH"
+      limit={6}
+    />
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
       <div class="container">
-        <h2 class="section-title">What Our Homeowners Say</h2>
+        <h2>What Our Clients Say</h2>
         <TestimonialCarousel />
       </div>
     </section>
 
-    <!-- Interactive Tool Section -->
-    <section id="interactive-tool" class="section tool-section">
+    <!-- Market Stats Section -->
+    <section class="market-stats">
       <div class="container">
-        <h2 class="section-title">Explore Your Options</h2>
-        <div class="tool-grid">
-          <div class="tool-card">
-            <h3>Property Value Estimator</h3>
-            <p>Get an instant estimate of your dream home's value</p>
-            <div class="widget-container">
-              <!-- Homebot valuation widget will be added here -->
-            </div>
+        <h2>Lone Mountain Market Insights</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Average Price</h3>
+            <p class="stat-value">$875,000</p>
+            <p class="stat-trend positive">↑ 5.2% from last year</p>
           </div>
-          <div class="tool-card">
-            <h3>Mortgage Calculator</h3>
-            <p>Plan your finances with our advanced mortgage calculator</p>
-            <div class="calculator-container">
-              <!-- Mortgage calculator will be added here -->
-            </div>
+          <div class="stat-card">
+            <h3>Days on Market</h3>
+            <p class="stat-value">32</p>
+            <p class="stat-trend negative">↓ 12% from last month</p>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Objection Handling Section -->
-    <section id="objection-handling" class="section faq-section">
-      <div class="container">
-        <h2 class="section-title">Common Questions</h2>
-        <div class="faq-grid">
-          <details class="faq-item">
-            <summary>What makes Lone Mountain unique?</summary>
-            <p>Lone Mountain offers an unparalleled combination of luxury living, stunning views, and world-class amenities, all while maintaining a strong sense of community.</p>
-          </details>
-          <details class="faq-item">
-            <summary>How do I schedule a viewing?</summary>
-            <p>You can schedule a viewing through our online booking system, or contact our team directly for a personalized tour experience.</p>
-          </details>
-          <details class="faq-item">
-            <summary>What amenities are included?</summary>
-            <p>Our properties feature smart home technology, energy-efficient designs, and access to community facilities including pools, fitness centers, and walking trails.</p>
-          </details>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section id="cta" class="section cta-section">
-      <div class="container">
-        <div class="cta-content">
-          <h2>Ready to Find Your Dream Home?</h2>
-          <p>Join our community of happy homeowners at Lone Mountain</p>
-          <div class="cta-buttons">
-            <button class="cta-button">Schedule a Viewing</button>
-            <button class="cta-button outline">Download Brochure</button>
+          <div class="stat-card">
+            <h3>Available Homes</h3>
+            <p class="stat-value">45</p>
+            <p class="stat-trend">Updated daily</p>
           </div>
         </div>
       </div>
@@ -143,206 +119,98 @@ import RealScoutListings from '../components/RealScoutListings.astro';
 </script>
 
 <style>
-  .section {
-    padding: 4rem var(--container-padding);
-  }
-
   .container {
-    max-width: var(--container-max-width);
+    max-width: var(--container-max-width, 1200px);
     margin: 0 auto;
+    padding: 0 var(--container-padding, 1rem);
   }
 
-  /* Hero Section */
-  .hero-section {
-    background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
-    color: white;
-    padding: 6rem var(--container-padding);
+  section {
+    padding: var(--section-padding, 4rem) 0;
   }
 
-  .hero-content {
+  h2 {
+    font-size: 2.5rem;
+    color: var(--color-primary-dark);
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
   }
 
-  .hero-title {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-    line-height: 1.2;
+  .search-section {
+    background: var(--color-background);
+    text-align: center;
   }
 
-  .hero-subtitle {
-    font-size: 1.5rem;
-    opacity: 0.9;
-    margin-bottom: 2rem;
+  .search-section p {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    color: var(--color-text);
+    font-size: 1.125rem;
   }
 
-  .hero-cta {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
+  .testimonials-section {
+    background: white;
   }
 
-  /* Feature Grid */
-  .feature-grid {
+  .market-stats {
+    background: var(--color-background);
+  }
+
+  .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
     margin-top: 3rem;
   }
 
-  .feature-card {
+  .stat-card {
     background: white;
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-md);
     text-align: center;
-    transition: transform 0.3s ease;
   }
 
-  .feature-card:hover {
-    transform: translateY(-4px);
-  }
-
-  .feature-icon {
-    font-size: 2.5rem;
+  .stat-card h3 {
+    font-size: 1.125rem;
+    color: var(--color-text);
     margin-bottom: 1rem;
   }
 
-  /* Tool Section */
-  .tool-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2rem;
-  }
-
-  .tool-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  }
-
-  /* FAQ Section */
-  .faq-grid {
-    display: grid;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-
-  .faq-item {
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .faq-item summary {
-    padding: 1.5rem;
-    cursor: pointer;
-    font-weight: 500;
-    list-style: none;
-    position: relative;
-  }
-
-  .faq-item summary::after {
-    content: '+';
-    position: absolute;
-    right: 1.5rem;
-    transition: transform 0.3s ease;
-  }
-
-  .faq-item[open] summary::after {
-    transform: rotate(45deg);
-  }
-
-  .faq-item p {
-    padding: 0 1.5rem 1.5rem;
-    margin: 0;
-  }
-
-  /* CTA Section */
-  .cta-section {
-    background: linear-gradient(to right, var(--color-background), white);
-    text-align: center;
-  }
-
-  .cta-content {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .cta-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    margin-top: 2rem;
-  }
-
-  .cta-button {
-    background-color: var(--color-buyer);
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: 4px;
-    font-size: 1.125rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .cta-button.primary {
-    background-color: var(--color-accent);
-  }
-
-  .cta-button.secondary {
-    background-color: transparent;
-    border: 2px solid white;
-  }
-
-  .cta-button.outline {
-    background-color: transparent;
-    border: 2px solid var(--color-buyer);
-    color: var(--color-buyer);
-  }
-
-  .cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-
-  .section-title {
+  .stat-value {
     font-size: 2.5rem;
-    color: var(--color-primary);
-    text-align: center;
-    margin-bottom: 1rem;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    margin-bottom: 0.5rem;
   }
 
-  .section-description {
-    max-width: 800px;
-    margin: 1rem auto 2rem;
-    font-size: 1.125rem;
-    line-height: 1.5;
-    color: var(--color-primary);
-    opacity: 0.85;
-    text-align: center;
+  .stat-trend {
+    font-size: 0.875rem;
+    color: var(--color-text);
+  }
+
+  .stat-trend.positive {
+    color: #16B286;
+  }
+
+  .stat-trend.negative {
+    color: #DC2626;
   }
 
   @media (max-width: 768px) {
-    .hero-title {
-      font-size: 2.5rem;
+    h2 {
+      font-size: 2rem;
     }
 
-    .hero-subtitle {
-      font-size: 1.25rem;
-    }
-
-    .tool-grid {
+    .stats-grid {
       grid-template-columns: 1fr;
     }
 
-    .cta-buttons {
-      flex-direction: column;
+    .stat-card {
+      padding: 1.5rem;
     }
 
-    .section-title {
+    .stat-value {
       font-size: 2rem;
     }
   }

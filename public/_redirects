@@ -1,16 +1,38 @@
-# Redirect domain aliases to primary domain
+# Domain normalization
 https://www.homesatlonemountain.com/* https://homesatlonemountain.com/:splat 301!
-
-# Optional: Redirect default Netlify subdomain to primary domain
 https://homesatlonemountain.pages.dev/* https://homesatlonemountain.com/:splat 301!
+https://homesatlonemountain.netlify.app/* https://homesatlonemountain.com/:splat 301!
 
-# Handle 404s
+# Handle common paths
+/home / 301
+/index.html / 301
+/properties.html /properties 301
+/contact.html /contact 301
+/about.html /about 301
+/services.html /services 301
+
+# Blog redirects
+/blog/* /posts/:splat 301
+/articles/* /posts/:splat 301
+/news/* /posts/:splat 301
+
+# Property listing redirects
+/listing/* /properties/:splat 301
+/listings/* /properties/:splat 301
+/homes/* /properties/:splat 301
+
+# API fallbacks
+/api/* /api/404 404
+
+# SPA fallbacks
+/properties/* /properties/index.html 200
+/posts/* /posts/index.html 200
+
+# Error pages
 /* /404.html 404
 
-# Redirect old blog URLs if needed
-/blog/* /posts/:splat 301
-
-# Handle old URLs or common misspellings
-/home / 301
-/properties.html /properties 301
-/contact.html /contact 301 
+# Security headers for Netlify (in case used as secondary deployment)
+/* 
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin 
