@@ -10,7 +10,7 @@ export default defineConfig({
   adapter: cloudflare({
     mode: 'directory',
     functionPerRoute: true,
-    imageService: 'cloudflare',
+    imageService: true,
     runtime: {
       mode: 'local',
       type: 'pages',
@@ -75,15 +75,24 @@ export default defineConfig({
   },
   compressHTML: true,
   image: {
-    service: 'cloudflare',
-    domains: {
-      'imagedelivery.net': {
-        variants: {
-          'thumbnail': 'w=400,h=300,fit=cover',
-          'gallery': 'w=800,h=600,fit=contain',
-          'hero': 'w=1920,h=1080,fit=cover,q=80'
-        }
+    service: {
+      entrypoint: '@astrojs/cloudflare/image',
+      config: {
+        baseURL: 'https://homesatlonemountain.com',
+        sizes: [400, 800, 1200, 1920],
+        format: ['avif', 'webp'],
+        defaultQuality: 80
       }
-    }
+    },
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.realscout.com'
+      },
+      {
+        protocol: 'https',
+        hostname: '**.imagedelivery.net'
+      }
+    ]
   }
 }); 
