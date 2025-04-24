@@ -1,0 +1,349 @@
+---
+import Layout from '../layouts/Layout.astro';
+import RealScoutListings from '../components/RealScoutListings.astro';
+import { Image } from 'astro:assets';
+
+const pageTitle = "Luxury Homes For Sale at Lone Mountain | Las Vegas Real Estate";
+const pageDescription = "Browse our exclusive collection of luxury homes for sale in the prestigious Lone Mountain area of Las Vegas. Find your dream home with stunning mountain views and resort-style amenities.";
+---
+
+<Layout title={pageTitle}>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <h1>Luxury Homes at Lone Mountain</h1>
+        <p class="subtitle">Discover Your Dream Home in Northwest Las Vegas</p>
+      </div>
+    </section>
+
+    <!-- Search Filters -->
+    <section class="filters-section">
+      <div class="container">
+        <div class="filters-grid">
+          <div class="filter-group">
+            <label>Price Range</label>
+            <div class="price-inputs">
+              <input type="text" placeholder="Min Price" class="price-input" />
+              <span>to</span>
+              <input type="text" placeholder="Max Price" class="price-input" />
+            </div>
+          </div>
+          <div class="filter-group">
+            <label>Property Type</label>
+            <select class="property-type-select">
+              <option value="all">All Types</option>
+              <option value="SFR">Single Family</option>
+              <option value="MF">Multi Family</option>
+              <option value="CONDO">Condos</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Sort By</label>
+            <select class="sort-select">
+              <option value="PRICE_HIGH">Price (High to Low)</option>
+              <option value="PRICE_LOW">Price (Low to High)</option>
+              <option value="NEWEST">Newest First</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Property Listings -->
+    <section class="listings-section">
+      <div class="container">
+        <RealScoutListings 
+          minPrice="500000"
+          propertyTypes="SFR,MF"
+          sortOrder="PRICE_HIGH"
+          limit={12}
+        />
+      </div>
+    </section>
+
+    <!-- Market Overview -->
+    <section class="market-overview">
+      <div class="container">
+        <h2>Lone Mountain Market Overview</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-label">Median Price</span>
+            <span class="stat-value">$875,000</span>
+            <span class="stat-trend positive">↑ 5.2% from last year</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Average DOM</span>
+            <span class="stat-value">32</span>
+            <span class="stat-trend negative">↓ 12% from last month</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Available Homes</span>
+            <span class="stat-value">45</span>
+            <span class="stat-trend">Updated daily</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  let widget;
+  let minPriceInput;
+  let maxPriceInput;
+  let propertyTypeSelect;
+  let sortSelect;
+
+  // Initialize when the document is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    widget = document.querySelector('realscout-office-listings');
+    minPriceInput = document.querySelector('input[placeholder="Min Price"]');
+    maxPriceInput = document.querySelector('input[placeholder="Max Price"]');
+    propertyTypeSelect = document.querySelector('.property-type-select');
+    sortSelect = document.querySelector('.sort-select');
+
+    // Set up event listeners
+    if (minPriceInput && maxPriceInput) {
+      minPriceInput.addEventListener('change', handlePriceChange);
+      maxPriceInput.addEventListener('change', handlePriceChange);
+    }
+
+    if (propertyTypeSelect) {
+      propertyTypeSelect.addEventListener('change', handlePropertyTypeChange);
+    }
+
+    if (sortSelect) {
+      sortSelect.addEventListener('change', handleSortChange);
+    }
+  });
+
+  // Handle price range changes
+  function handlePriceChange() {
+    if (!widget) return;
+
+    const minPrice = minPriceInput.value ? parseInt(minPriceInput.value.replace(/\D/g, '')) : null;
+    const maxPrice = maxPriceInput.value ? parseInt(maxPriceInput.value.replace(/\D/g, '')) : null;
+
+    if (minPrice) {
+      widget.setAttribute('price-min', minPrice.toString());
+    } else {
+      widget.removeAttribute('price-min');
+    }
+
+    if (maxPrice) {
+      widget.setAttribute('price-max', maxPrice.toString());
+    } else {
+      widget.removeAttribute('price-max');
+    }
+
+    reloadWidget();
+  }
+
+  // Handle property type changes
+  function handlePropertyTypeChange() {
+    if (!widget || !propertyTypeSelect) return;
+
+    const selectedType = propertyTypeSelect.value;
+    if (selectedType === 'all') {
+      widget.setAttribute('property-types', 'SFR,MF,CONDO');
+    } else {
+      widget.setAttribute('property-types', selectedType);
+    }
+
+    reloadWidget();
+  }
+
+  // Handle sort order changes
+  function handleSortChange() {
+    if (!widget || !sortSelect) return;
+
+    widget.setAttribute('sort-order', sortSelect.value);
+    reloadWidget();
+  }
+
+  // Reload the widget with new settings
+  function reloadWidget() {
+    if (!widget) return;
+    
+    widget.setAttribute('data-load', 'false');
+    setTimeout(() => {
+      widget.setAttribute('data-load', 'true');
+    }, 100);
+  }
+
+  // Format price inputs
+  function formatPrice(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value) {
+      value = parseInt(value).toLocaleString('en-US');
+      input.value = `$${value}`;
+    }
+  }
+
+  // Add price formatting to inputs
+  document.querySelectorAll('.price-input').forEach(input => {
+    input.addEventListener('blur', () => formatPrice(input));
+    input.addEventListener('focus', () => {
+      input.value = input.value.replace(/[\$,]/g, '');
+    });
+  });
+</script>
+
+<style>
+  .container {
+    max-width: var(--container-max-width, 1200px);
+    margin: 0 auto;
+    padding: 0 var(--container-padding, 1rem);
+  }
+
+  section {
+    padding: var(--section-padding, 4rem) 0;
+  }
+
+  .hero-section {
+    background: linear-gradient(to right, var(--color-primary-dark), var(--color-primary));
+    color: white;
+    text-align: center;
+    padding: 6rem 0;
+  }
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .subtitle {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .filters-section {
+    background: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    align-items: end;
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .price-inputs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .price-input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 0.875rem;
+  }
+
+  select {
+    padding: 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 0.875rem;
+    background: white;
+  }
+
+  .listings-section {
+    background: white;
+  }
+
+  .market-overview {
+    background: var(--color-background);
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--color-primary-dark);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+  }
+
+  .stat-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.875rem;
+    color: var(--color-text);
+  }
+
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+  }
+
+  .stat-trend {
+    font-size: 0.875rem;
+  }
+
+  .stat-trend.positive {
+    color: #16B286;
+  }
+
+  .stat-trend.negative {
+    color: #DC2626;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    .filters-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .price-inputs {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .stat-card {
+      padding: 1.5rem;
+    }
+  }
+</style> 
