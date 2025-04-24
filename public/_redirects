@@ -1,4 +1,4 @@
-# Domain normalization
+# Domain normalization - only redirect if not already on the correct domain
 https://www.homesatlonemountain.com/* https://homesatlonemountain.com/:splat 301!
 https://homesatlonemountain.pages.dev/* https://homesatlonemountain.com/:splat 301!
 https://homesatlonemountain.netlify.app/* https://homesatlonemountain.com/:splat 301!
@@ -24,11 +24,11 @@ https://homesatlonemountain.netlify.app/* https://homesatlonemountain.com/:splat
 # API fallbacks
 /api/* /api/404 404
 
-# SPA fallbacks
+# SPA fallbacks - use 200 instead of redirects
 /properties/* /properties/index.html 200
 /posts/* /posts/index.html 200
 
-# Error pages
+# Error pages - must be last
 /* /404.html 404
 
 # Security headers for Netlify (in case used as secondary deployment)
