@@ -1,14 +1,47 @@
 import { Metadata } from 'next'
 import { Container } from '@/components/ui/Container'
+import dynamic from 'next/dynamic'
+import { SchemaMarkup } from '@/components/SchemaMarkup'
+
+const FeatureSection = dynamic(() => import('@/components/layout/FeatureSection').then(mod => mod.FeatureSection), { ssr: false })
 
 export const metadata: Metadata = {
-  title: 'About Us | Homes at Lone Mountain',
-  description: 'Learn about our commitment to helping you find your perfect home in the Lone Mountain area.',
+  title: 'About Dr. Jan Duffy | Homes at Lone Mountain',
+  description: 'Learn about Dr. Jan Duffy, your trusted Lone Mountain real estate expert. Discover her experience, local knowledge, and commitment to helping you buy or sell your home.',
+  openGraph: {
+    title: 'About Dr. Jan Duffy | Homes at Lone Mountain',
+    description: 'Learn about Dr. Jan Duffy, your trusted Lone Mountain real estate expert. Discover her experience, local knowledge, and commitment to helping you buy or sell your home.',
+    url: 'https://homesatlonemountain.com/about',
+    type: 'profile',
+    images: [
+      {
+        url: 'https://homesatlonemountain.com/jan-duffy.jpg',
+        width: 800,
+        height: 800,
+        alt: 'Dr. Jan Duffy, Lone Mountain Realtor'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About Dr. Jan Duffy | Homes at Lone Mountain',
+    description: 'Learn about Dr. Jan Duffy, your trusted Lone Mountain real estate expert. Discover her experience, local knowledge, and commitment to helping you buy or sell your home.',
+    images: ['https://homesatlonemountain.com/jan-duffy.jpg']
+  }
 }
 
 export default function AboutPage() {
   return (
     <Container>
+      <SchemaMarkup schema={{
+        "@context": "https://schema.org",
+        "@type": "RealEstateAgent",
+        "name": "Dr. Jan Duffy",
+        "areaServed": "Lone Mountain, Las Vegas",
+        "url": "https://homesatlonemountain.com/about",
+        "image": "https://homesatlonemountain.com/jan-duffy.jpg",
+        "telephone": "+1-555-555-5555"
+      }} />
       <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:py-32">
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
@@ -45,6 +78,8 @@ export default function AboutPage() {
             </p>
           </div>
         </div>
+
+        <FeatureSection variant="alt2" ctaText="Meet Jan & See Her Top Listings!" ctaButtonText="Meet Jan's Picks" ctaIconUrl="/icons/user.svg" />
       </div>
     </Container>
   )

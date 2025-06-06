@@ -1,0 +1,49 @@
+Project: Dr. Jan Duffy Realtor - Homes at Lone Mountain
+
+Overview:
+Dr. Jan Duffy is a real estate agent specializing in buying and selling homes in the Lone Mountain area. The goal is to create a digital toolkit and workflow that streamlines property listings, client communications, and local market analysis.
+
+Unique Selling Points:
+- Personalized service, deep local knowledge, and a proven track record in Lone Mountain real estate.
+
+Key Features:
+- Showcase Lone Mountain properties with high-quality images and detailed descriptions.
+- Integrate lead capture forms and automated follow-up.
+- Provide neighborhood insights and market trends.
+- Enable easy scheduling for showings and consultations.
+- Optimize for SEO and local search.
+- Ensure mobile-friendly, fast-loading pages.
+
+Content Strategy:
+- Weekly blog posts about Lone Mountain market trends, home buying tips, and community events.
+
+Lead Nurturing:
+- Automated email sequences for new leads, follow-up reminders, and post-sale check-ins.
+
+Integrations:
+- Integrate with Homebot, RealScout, and CloudCMA for property valuations and client engagement.
+
+Branding:
+- Brand Colors: #0A2540, #3A8DDE, #F7F9FC, #16B286
+- Accent Colors: Buyer: #3A8DDE, Seller: #16B286
+- Typography: Modern, clean sans-serif
+- Imagery: High-resolution photos of Lone Mountain, local landmarks, and happy clients
+
+Target Audience:
+- Home buyers and sellers interested in Lone Mountain.
+- Relocation clients seeking local expertise.
+
+Success Metrics:
+- Increased qualified leads.
+- Higher engagement on property pages.
+- Improved client satisfaction and conversion rates.
+
+Automation & Recurring Workflows:
+- Weekly blog publishing
+- Monthly market report generation
+- Quarterly website SEO audits
+- Regular CRM data cleanup
+
+Tech Stack:
+- Next.js, Tailwind CSS, shadcn/ui
+- Follow design system and coding standards 

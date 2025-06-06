@@ -74,6 +74,17 @@ export default function RootLayout({
       <head>
         <SchemaMarkup schema={organizationSchema} />
         <SchemaMarkup schema={websiteSchema} />
+        {/* RealScout Widget Script and Style */}
+        <script
+          src="https://em.realscout.com/widgets/realscout-web-components.umd.js"
+          type="module"
+        />
+        <style>{`
+          realscout-office-listings {
+            --rs-listing-divider-color: rgb(101, 141, 172);
+            width: 100%;
+          }
+        `}</style>
       </head>
       <body className={`${inter.className} h-full`}>
         <MapsProvider>
