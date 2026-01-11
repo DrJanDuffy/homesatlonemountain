@@ -1,3 +1,5 @@
+'use client'
+
 // RealScout Office Listings Widget Component
 // @ts-ignore
 declare global {

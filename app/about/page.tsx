@@ -82,6 +82,17 @@ export default function AboutPage() {
 
         <FeatureSection variant="alt2" ctaText="Meet Jan & See Her Top Listings!" ctaButtonText="Meet Jan's Picks" ctaIconUrl="/icons/user.svg" />
       </div>
+
+      {/* Properties Listings Section */}
+      <div className="mt-16 py-12 bg-white rounded-lg shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-4 text-luxury-navy">Available Properties</h2>
+            <p className="text-lg text-luxury-charcoal">Browse our current listings</p>
+          </div>
+          <RealScoutWidget />
+        </div>
+      </div>
     </Container>
   )
 } 
