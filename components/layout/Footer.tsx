@@ -9,6 +9,87 @@ const navigation = {
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
   ],
+  relatedSites: [
+    'arieshenderson.com',
+    'justcallgene.com',
+    'macdonaldhighlandshomes.com',
+    'regencyvegas.com',
+    'yourdivorcerealtor.com',
+    'inspiradahomes.com',
+    'mesquiteestates.com',
+    'maravillahomesforsale.com',
+    'wealthtransitionplanning.com',
+    'arcadiahomeslasvegas.com',
+    'sunstonewoodsidehomes.com',
+    'spanishtrailhomes.com',
+    'silverstoneranchhomes.com',
+    'arroyoskyeview.com',
+    'duffyrealtyoflasvegas.com',
+    'vegas55plushomes.com',
+    'calldrduffy.com',
+    'justcalldrjan.com',
+    'reverencesummerlinhomes.com',
+    'speedycashhomeoffers.com',
+    'siennaridgehomes.com',
+    'goodtoknowrealtor.com',
+    'skyecanyonhomeexpert.com',
+    'skyecanyonrealestateexpert.com',
+    'openhouseupdates.com',
+    'terraskyeview.com',
+    'cadencehenderson.com',
+    'midtownlasvegascondos.com',
+    'townesunionvillage.com',
+    'sierraskyeview.com',
+    'bravadohomes.com',
+    'homesteadwestlasvegas.com',
+    'villagestulesprings.com',
+    'openhouseupdate.com',
+    'manzanohomes.com',
+    'lasvegasnevadahomesales.net',
+    'californiaprogressivedesignbuild.com',
+    'drjanduffy.com',
+    'newbridgehomesforsale.com',
+    'opportunityzonespecialists.com',
+    'opportunityzonespecialist.com',
+    'drgeneboyle.com',
+    'drjanetduffy.com',
+    'skyecanyonhomesforsale.com',
+    'aliantehomesforsale.com',
+    'lasvegasrelocationservices.com',
+    'probaterealestatesales.com',
+    'searchforhomesinhenderson.com',
+    'searchforlasvegashomes.com',
+    'westsummerlinhomes.com',
+    'summerlinwesthomes.com',
+    'openhousemarketplace.com',
+    'searchnorthlasvegashomes.com',
+    'searchforhomeslasvegas.com',
+    'suncitysummerlinhomesforsale.com',
+    'trilogysunstonehomes.com',
+    'lasvegashomeexpert.com',
+    'skyesummithomes.com',
+    'findahomeinlasvegas.com',
+    'lasvegasnevadahomesales.com',
+    'drjanduffyreviews.com',
+    'solaranorthlasvegas.com',
+    'summerlinwestrealestate.com',
+    'thevistassummerlin.com',
+    'shawoodhomes.com',
+    'craigranchhomes.com',
+    'pewtervalleyestates.com',
+    'logcabinranchhomes.com',
+    'sunstonelasvegashomes.com',
+    'consenzaestates.com',
+    'theridgessummerlinhomes.com',
+    'lonemountainheights.com',
+    'mountainedgehomes.com',
+    'homesatlonemountain.com',
+    'lonemountainvistas.com',
+    'centennialhillshomesforsale.com',
+    'heritagestonebridge.com',
+    'findlonemountainhomes.com',
+    'mayfieldestateslasvegas.com',
+  ],
   social: [
     {
       name: 'Facebook',
@@ -50,37 +131,63 @@ const navigation = {
 
 export function Footer() {
   return (
-    <footer className="bg-white">
+    <footer className="bg-white border-t border-luxury-stone">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="py-12 md:flex md:items-center md:justify-between">
-          <div className="flex justify-center space-x-6 md:order-2">
-            {navigation.social.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-gray-400 hover:text-primary-blue"
-              >
-                <span className="sr-only">{item.name}</span>
-                <item.icon className="h-6 w-6" aria-hidden="true" />
-              </Link>
-            ))}
-          </div>
-          <div className="mt-8 md:order-1 md:mt-0">
-            <div className="flex justify-center space-x-6">
+        {/* Main Navigation */}
+        <div className="py-8 border-b border-luxury-stone">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+            <div className="flex justify-center space-x-6 mb-4 md:mb-0">
               {navigation.main.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-sm text-gray-500 hover:text-primary-blue"
+                  className="text-sm text-luxury-charcoal hover:text-luxury-gold transition-colors"
                 >
                   {item.name}
                 </Link>
               ))}
             </div>
-            <p className="mt-8 text-center text-sm text-gray-400">
-              &copy; {new Date().getFullYear()} Homes at Lone Mountain. All rights reserved.
-            </p>
+            <div className="flex justify-center space-x-6">
+              {navigation.social.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="text-luxury-charcoal hover:text-luxury-gold transition-colors"
+                >
+                  <span className="sr-only">{item.name}</span>
+                  <item.icon className="h-6 w-6" aria-hidden="true" />
+                </Link>
+              ))}
+            </div>
           </div>
+        </div>
+
+        {/* Related Sites Links */}
+        <div className="py-8">
+          <h3 className="text-sm font-semibold text-luxury-navy mb-4 text-center">
+            Related Real Estate Sites
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 text-xs">
+            {navigation.relatedSites.map((domain) => (
+              <Link
+                key={domain}
+                href={`https://${domain}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-luxury-charcoal hover:text-luxury-gold transition-colors truncate"
+                title={domain}
+              >
+                {domain}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Copyright */}
+        <div className="py-6 border-t border-luxury-stone">
+          <p className="text-center text-sm text-luxury-charcoal">
+            &copy; {new Date().getFullYear()} Homes at Lone Mountain. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
