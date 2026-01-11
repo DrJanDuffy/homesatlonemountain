@@ -1,4 +1,6 @@
 import { MetadataRoute } from 'next'
+import { allPosts } from 'contentlayer/generated'
+import { allProperties } from 'contentlayer/generated'
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.homesatlonemountain.com'
 
@@ -7,21 +9,33 @@ export default function sitemap(): MetadataRoute.Sitemap {
   
   // Static pages with priorities
   const staticRoutes = [
-    { route: '', priority: 1.0, changeFreq: 'weekly' },
-    { route: '/about', priority: 0.8, changeFreq: 'monthly' },
-    { route: '/contact', priority: 0.9, changeFreq: 'monthly' },
-    { route: '/properties', priority: 0.9, changeFreq: 'daily' },
-    { route: '/blog', priority: 0.8, changeFreq: 'weekly' },
+    { route: '', priority: 1.0, changeFreq: 'weekly' as const },
+    { route: '/about', priority: 0.8, changeFreq: 'monthly' as const },
+    { route: '/contact', priority: 0.9, changeFreq: 'monthly' as const },
+    { route: '/properties', priority: 0.9, changeFreq: 'daily' as const },
+    { route: '/blog', priority: 0.8, changeFreq: 'weekly' as const },
   ].map(({ route, priority, changeFreq }) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: changeFreq as 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never',
+    changeFrequency: changeFreq,
     priority,
   }))
 
-  // Dynamic routes from contentlayer
-  // Note: Contentlayer data is only available at build time in server components
-  // For dynamic routes, they will be discovered by crawlers via links on the collection pages
+  // Dynamic blog post routes
+  const blogRoutes = allPosts.map((post) => ({
+    url: `${baseUrl}${post.url}`,
+    lastModified: new Date(post.published),
+    changeFrequency: 'monthly' as const,
+    priority: post.featured ? 0.9 : 0.7,
+  }))
+
+  // Dynamic property routes
+  const propertyRoutes = allProperties.map((property) => ({
+    url: `${baseUrl}${property.url}`,
+    lastModified: new Date(property.published),
+    changeFrequency: 'weekly' as const,
+    priority: property.featured ? 0.9 : 0.8,
+  }))
   
-  return staticRoutes
+  return [...staticRoutes, ...blogRoutes, ...propertyRoutes]
 }
