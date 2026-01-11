@@ -1,8 +1,12 @@
 import { Metadata } from 'next'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
-import dynamic from 'next/dynamic'
+import dynamicImport from 'next/dynamic'
 import { BlogList } from '@/components/blog/BlogList'
 import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
+
+// Force static generation for SEO
+export const dynamic = 'force-static'
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Lone Mountain Real Estate Blog | Homes at Lone Mountain',
@@ -29,7 +33,7 @@ export const metadata: Metadata = {
   }
 }
 
-const FeatureSection = dynamic(() => import('@/components/layout/FeatureSection').then(mod => mod.FeatureSection), { ssr: false })
+const FeatureSection = dynamicImport(() => import('@/components/layout/FeatureSection').then(mod => mod.FeatureSection), { ssr: false })
 
 export default function BlogPage() {
   return (
@@ -44,10 +48,13 @@ export default function BlogPage() {
       <div className="container">
         <div className="max-w-2xl mx-auto text-center mb-16">
           <h1 className="text-4xl font-bold text-luxury-navy mb-4">
-            Market Insights
+            Lone Mountain Real Estate Market Updates
           </h1>
-          <p className="text-xl text-luxury-charcoal">
+          <p className="text-xl text-luxury-charcoal mb-2">
             Stay informed about the Lone Mountain real estate market
+          </p>
+          <p className="text-lg text-luxury-charcoal">
+            Expert insights from Dr. Jan Duffy | <a href="tel:+17022221964" className="text-luxury-gold font-semibold hover:underline">702-222-1964</a>
           </p>
         </div>
 

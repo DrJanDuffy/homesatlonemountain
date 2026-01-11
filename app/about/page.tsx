@@ -1,10 +1,14 @@
 import { Metadata } from 'next'
 import { Container } from '@/components/ui/Container'
-import dynamic from 'next/dynamic'
+import dynamicImport from 'next/dynamic'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 
-const FeatureSection = dynamic(() => import('@/components/layout/FeatureSection').then(mod => mod.FeatureSection), { ssr: false })
+// Force static generation for SEO
+export const dynamic = 'force-static'
+export const revalidate = 3600
+
+const FeatureSection = dynamicImport(() => import('@/components/layout/FeatureSection').then(mod => mod.FeatureSection), { ssr: false })
 
 export const metadata: Metadata = {
   title: 'About Dr. Jan Duffy | Homes at Lone Mountain',
@@ -41,7 +45,7 @@ export default function AboutPage() {
         "areaServed": "Lone Mountain, Las Vegas",
         "url": "https://homesatlonemountain.com/about",
         "image": "https://homesatlonemountain.com/jan-duffy.jpg",
-        "telephone": "+1-555-555-5555"
+        "telephone": "+1-702-222-1964"
       }} />
       <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:py-32">
         <div className="text-center">

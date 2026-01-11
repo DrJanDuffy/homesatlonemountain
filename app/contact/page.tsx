@@ -1,9 +1,13 @@
 import React from 'react'
 import { Button } from '@/components/ui/Button'
-import dynamic from 'next/dynamic'
+import dynamicImport from 'next/dynamic'
 import { Metadata } from 'next'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
+
+// Force static generation for SEO
+export const dynamic = 'force-static'
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Contact Dr. Jan Duffy | Homes at Lone Mountain',
@@ -30,7 +34,7 @@ export const metadata: Metadata = {
   }
 }
 
-const FeatureSection = dynamic(() => import('@/components/layout/FeatureSection').then(mod => mod.FeatureSection), { ssr: false })
+const FeatureSection = dynamicImport(() => import('@/components/layout/FeatureSection').then(mod => mod.FeatureSection), { ssr: false })
 
 export default function ContactPage() {
   return (
@@ -44,17 +48,20 @@ export default function ContactPage() {
           "areaServed": "Lone Mountain, Las Vegas",
           "url": "https://homesatlonemountain.com/contact",
           "image": "https://homesatlonemountain.com/jan-duffy.jpg",
-          "telephone": "+1-555-555-5555"
+          "telephone": "+1-702-222-1964"
         }
       }} />
       <div className="py-16">
         <div className="container">
           <div className="max-w-2xl mx-auto text-center mb-16">
             <h1 className="text-4xl font-bold text-luxury-navy mb-4">
-              Contact Us
+              Contact Dr. Jan Duffy - Lone Mountain Real Estate Expert
             </h1>
-            <p className="text-xl text-luxury-charcoal">
+            <p className="text-xl text-luxury-charcoal mb-2">
               We're here to help you find your perfect home at Lone Mountain
+            </p>
+            <p className="text-lg text-luxury-charcoal">
+              Call <a href="tel:+17022221964" className="text-luxury-gold font-semibold hover:underline">702-222-1964</a> for immediate assistance
             </p>
           </div>
 
@@ -149,8 +156,8 @@ export default function ContactPage() {
                     Phone
                   </h3>
                   <p className="text-luxury-charcoal">
-                    <a href="tel:+1-555-555-5555" className="hover:text-luxury-gold transition-colors">
-                      (555) 555-5555
+                    <a href="tel:+17022221964" className="hover:text-luxury-gold transition-colors font-semibold">
+                      702-222-1964
                     </a>
                   </p>
                 </div>

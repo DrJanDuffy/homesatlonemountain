@@ -1,15 +1,19 @@
 import { Metadata } from 'next'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
-import dynamic from 'next/dynamic'
+import dynamicImport from 'next/dynamic'
 import { PropertiesList } from '@/components/properties/PropertiesList'
 import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 
+// Force static generation for SEO
+export const dynamic = 'force-static'
+export const revalidate = 3600 // Rebuild every hour
+
 export const metadata: Metadata = {
   title: 'Lone Mountain Homes for Sale | Properties | Homes at Lone Mountain',
-  description: 'Browse all homes for sale in Lone Mountain, Las Vegas. Find your dream property with Dr. Jan Duffy\'s expert guidance and local knowledge.',
+  description: 'Browse all homes for sale in Lone Mountain, Las Vegas. Find your dream property with Dr. Jan Duffy\'s expert guidance and local knowledge. Updated daily listings. Call 702-222-1964.',
 }
 
-const FeatureSection = dynamic(() => import('@/components/layout/FeatureSection').then(mod => mod.FeatureSection), { ssr: false })
+const FeatureSection = dynamicImport(() => import('@/components/layout/FeatureSection').then(mod => mod.FeatureSection), { ssr: false })
 
 export default function PropertiesPage() {
   return (
@@ -24,10 +28,13 @@ export default function PropertiesPage() {
       <div className="container">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <h1 className="text-4xl font-bold text-luxury-navy mb-4">
-            Available Properties
+            Lone Mountain Homes for Sale - Las Vegas, Nevada
           </h1>
-          <p className="text-xl text-luxury-charcoal">
+          <p className="text-xl text-luxury-charcoal mb-2">
             Discover your perfect home in the Lone Mountain area
+          </p>
+          <p className="text-lg text-luxury-charcoal">
+            Expert guidance from Dr. Jan Duffy | Call <a href="tel:+17022221964" className="text-luxury-gold font-semibold hover:underline">702-222-1964</a>
           </p>
         </div>
 
