@@ -11,7 +11,7 @@ import { SchemaMarkup } from '@/components/SchemaMarkup'
 
 export const metadata: Metadata = {
   title: 'Lone Mountain Homes for Sale | Properties | Homes at Lone Mountain',
-  description: 'Browse all homes for sale in Lone Mountain, Las Vegas. Find your dream property with Dr. Jan Duffy's expert guidance and local knowledge.',
+  description: 'Browse all homes for sale in Lone Mountain, Las Vegas. Find your dream property with Dr. Jan Duffy\'s expert guidance and local knowledge.',
 }
 
 const FeatureSection = dynamic(() => import('@/components/layout/FeatureSection').then(mod => mod.FeatureSection), { ssr: false })

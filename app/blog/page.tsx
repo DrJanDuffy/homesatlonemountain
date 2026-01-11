@@ -11,10 +11,10 @@ import { SchemaMarkup } from '@/components/SchemaMarkup'
 
 export const metadata: Metadata = {
   title: 'Lone Mountain Real Estate Blog | Homes at Lone Mountain',
-  description: 'Read the latest news, tips, and market trends for Lone Mountain real estate. Stay informed with Dr. Jan Duffy's expert blog.',
+  description: 'Read the latest news, tips, and market trends for Lone Mountain real estate. Stay informed with Dr. Jan Duffy\'s expert blog.',
   openGraph: {
     title: 'Lone Mountain Real Estate Blog | Homes at Lone Mountain',
-    description: 'Read the latest news, tips, and market trends for Lone Mountain real estate. Stay informed with Dr. Jan Duffy's expert blog.',
+    description: 'Read the latest news, tips, and market trends for Lone Mountain real estate. Stay informed with Dr. Jan Duffy\'s expert blog.',
     url: 'https://homesatlonemountain.com/blog',
     type: 'blog',
     images: [
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Lone Mountain Real Estate Blog | Homes at Lone Mountain',
-    description: 'Read the latest news, tips, and market trends for Lone Mountain real estate. Stay informed with Dr. Jan Duffy's expert blog.',
+    description: 'Read the latest news, tips, and market trends for Lone Mountain real estate. Stay informed with Dr. Jan Duffy\'s expert blog.',
     images: ['https://homesatlonemountain.com/og-image.jpg']
   }
 }
