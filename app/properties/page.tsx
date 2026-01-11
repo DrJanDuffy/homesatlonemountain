@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
 import dynamic from 'next/dynamic'
 import { PropertiesList } from '@/components/properties/PropertiesList'
+import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 
 export const metadata: Metadata = {
   title: 'Lone Mountain Homes for Sale | Properties | Homes at Lone Mountain',
@@ -21,13 +22,18 @@ export default function PropertiesPage() {
         "url": "https://homesatlonemountain.com/properties"
       }} />
       <div className="container">
-        <div className="max-w-2xl mx-auto text-center mb-16">
+        <div className="max-w-2xl mx-auto text-center mb-12">
           <h1 className="text-4xl font-bold text-luxury-navy mb-4">
             Available Properties
           </h1>
           <p className="text-xl text-luxury-charcoal">
             Discover your perfect home in the Lone Mountain area
           </p>
+        </div>
+
+        {/* RealScout Widget */}
+        <div className="mb-16 bg-white rounded-lg shadow-lg p-6">
+          <RealScoutWidget />
         </div>
 
         <PropertiesList />

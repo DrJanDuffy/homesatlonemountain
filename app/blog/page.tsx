@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
 import dynamic from 'next/dynamic'
 import { BlogList } from '@/components/blog/BlogList'
+import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 
 export const metadata: Metadata = {
   title: 'Lone Mountain Real Estate Blog | Homes at Lone Mountain',
@@ -53,6 +54,15 @@ export default function BlogPage() {
         <BlogList />
 
         <FeatureSection variant="alt1" ctaText="Explore the Latest Blog-Featured Listings!" ctaButtonText="See Blog Picks" ctaIconUrl="/icons/blog.svg" />
+
+        {/* Properties Listings Section */}
+        <div className="mt-16 py-12 bg-white rounded-lg shadow-lg">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-4 text-luxury-navy">Available Properties</h2>
+            <p className="text-lg text-luxury-charcoal">Browse our current listings</p>
+          </div>
+          <RealScoutWidget />
+        </div>
       </div>
     </div>
   )

@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { Container } from '@/components/ui/Container'
 import dynamic from 'next/dynamic'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
+import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 
 const FeatureSection = dynamic(() => import('@/components/layout/FeatureSection').then(mod => mod.FeatureSection), { ssr: false })
 

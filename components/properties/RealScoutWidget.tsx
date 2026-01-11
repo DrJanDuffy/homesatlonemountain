@@ -1,0 +1,35 @@
+// RealScout Office Listings Widget Component
+// @ts-ignore
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'realscout-office-listings': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
+        'agent-encoded-id'?: string;
+        'sort-order'?: string;
+        'listing-status'?: string;
+        'property-types'?: string;
+        'price-min'?: string;
+        'price-max'?: string;
+      };
+    }
+  }
+}
+
+interface RealScoutWidgetProps {
+  className?: string;
+}
+
+export function RealScoutWidget({ className = '' }: RealScoutWidgetProps) {
+  return (
+    <div className={className}>
+      <realscout-office-listings
+        agent-encoded-id="QWdlbnQtMjI1MDUw"
+        sort-order="NEWEST"
+        listing-status="For Sale"
+        property-types="SFR"
+        price-min="400000"
+        price-max="700000"
+      ></realscout-office-listings>
+    </div>
+  );
+}

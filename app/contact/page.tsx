@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/Button'
 import dynamic from 'next/dynamic'
 import { Metadata } from 'next'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
+import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 
 export const metadata: Metadata = {
   title: 'Contact Dr. Jan Duffy | Homes at Lone Mountain',
@@ -178,6 +179,19 @@ export default function ContactPage() {
           </div>
 
           <FeatureSection variant="default" ctaText="Contact Jan & See Featured Listings!" ctaButtonText="Contact & Browse" ctaIconUrl="/icons/contact.svg" />
+        </div>
+      </div>
+
+      {/* Properties Listings Section */}
+      <div className="py-12 bg-white">
+        <div className="container">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-4 text-luxury-navy">Available Properties</h2>
+            <p className="text-lg text-luxury-charcoal">Browse our current listings</p>
+          </div>
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <RealScoutWidget />
+          </div>
         </div>
       </div>
     </>

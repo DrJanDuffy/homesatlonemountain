@@ -1,4 +1,4 @@
-// Add this at the top of the file for TypeScript to recognize the custom element
+// Type declaration for RealScout custom element (shared with RealScoutWidget)
 // @ts-ignore
 declare global {
   namespace JSX {
@@ -8,6 +8,8 @@ declare global {
         'sort-order'?: string;
         'listing-status'?: string;
         'property-types'?: string;
+        'price-min'?: string;
+        'price-max'?: string;
       };
     }
   }

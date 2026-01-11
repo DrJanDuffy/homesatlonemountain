@@ -1,4 +1,5 @@
 import { Button, Card, Input, Badge, Alert } from '@/components/ui'
+import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 
 export default function Home() {
   return (
@@ -39,15 +40,15 @@ export default function Home() {
         </Card>
       </section>
 
-      {/* Interactive Tool Section (Placeholder) */}
-      <section className="max-w-4xl mx-auto py-12 px-4 flex flex-col items-center">
-        <h2 className="text-2xl font-semibold mb-4 text-luxury-navy">Find Your Home Value</h2>
-        <div className="w-full max-w-md">
-          {/* Replace this with Homebot or valuation widget */}
-          <Input placeholder="Enter your address" className="mb-4" />
-          <Button className="w-full bg-luxury-navy text-white hover:bg-luxury-navy-light">Get Valuation</Button>
+      {/* Properties Listings Section */}
+      <section className="max-w-7xl mx-auto py-12 px-4">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold mb-4 text-luxury-navy">Available Properties</h2>
+          <p className="text-lg text-luxury-charcoal">Explore our curated selection of homes for sale</p>
         </div>
-        <Badge className="mt-4 bg-luxury-charcoal text-white">Powered by Homebot</Badge>
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          <RealScoutWidget />
+        </div>
       </section>
 
       {/* Objection Handling Section */}

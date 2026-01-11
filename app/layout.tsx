@@ -82,7 +82,7 @@ export default function RootLayout({
         />
         <style>{`
           realscout-office-listings {
-            --rs-listing-divider-color: rgb(101, 141, 172);
+            --rs-listing-divider-color: #0e64c8;
             width: 100%;
           }
         `}</style>
