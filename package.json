@@ -10,8 +10,6 @@
     "format": "prettier --write \"**/*.{ts,tsx,md,mdx,json}\""
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^12.4.0",
-    "@astrojs/db": "^0.14.10",
     "@radix-ui/react-slot": "^1.1.2",
     "@react-google-maps/api": "^2.19.2",
     "@types/google.maps": "^3.54.10",
