@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Homes at Lone Mountain | Luxury Real Estate in Las Vegas',
     description: 'Discover luxury homes with breathtaking mountain views in Las Vegas\'s most prestigious neighborhood.',
-    images: ['/twitter-image.jpg']
+    images: ['/og-image.jpg'] // Use same image as Open Graph for consistency
   },
   robots: {
     index: true,
