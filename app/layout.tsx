@@ -78,6 +78,7 @@ export default function RootLayout({
         <script
           src="https://em.realscout.com/widgets/realscout-web-components.umd.js"
           type="module"
+          async
         />
         <style>{`
           realscout-office-listings {
