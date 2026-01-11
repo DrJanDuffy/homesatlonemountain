@@ -9,6 +9,28 @@ export const revalidate = 3600 // Rebuild every hour
 export const metadata: Metadata = {
   title: 'Lone Mountain Homes for Sale - Las Vegas, Nevada',
   description: 'Search Lone Mountain homes for sale in Las Vegas, NV. Expert real estate guidance from Dr. Jan Duffy with 30+ years of local experience. Browse current listings, get market insights, and find your dream home in Northwest Las Vegas.',
+  openGraph: {
+    title: 'Lone Mountain Homes for Sale - Las Vegas, Nevada',
+    description: 'Search Lone Mountain homes for sale in Las Vegas, NV. Expert real estate guidance from Dr. Jan Duffy with 30+ years of local experience. Browse current listings, get market insights, and find your dream home in Northwest Las Vegas.',
+    url: '/',
+    siteName: 'Homes at Lone Mountain',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Lone Mountain Homes for Sale - Las Vegas, Nevada'
+      }
+    ],
+    locale: 'en_US',
+    type: 'website'
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Lone Mountain Homes for Sale - Las Vegas, Nevada',
+    description: 'Search Lone Mountain homes for sale in Las Vegas, NV. Expert real estate guidance from Dr. Jan Duffy with 30+ years of local experience.',
+    images: ['/og-image.jpg']
+  }
 }
 
 export default function Home() {
