@@ -17,13 +17,15 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://homesatlonemountain
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Homes at Lone Mountain | Luxury Real Estate in Las Vegas',
-    template: '%s | Homes at Lone Mountain'
+    default: 'Lone Mountain Homes for Sale | Las Vegas Real Estate | Dr. Jan Duffy',
+    template: '%s | Lone Mountain Las Vegas'
   },
-  description: 'Discover luxury homes with breathtaking mountain views in Las Vegas\'s most prestigious neighborhood. Experience the perfect blend of luxury living and natural beauty.',
+  description: 'Search Lone Mountain homes for sale in Las Vegas. Get expert guidance from Dr. Jan Duffy, 30+ years local experience. Updated daily listings, market reports, neighborhood insights.',
+  keywords: ['Lone Mountain homes for sale', 'Lone Mountain Las Vegas', 'Las Vegas real estate', 'homes near Lone Mountain', 'Northwest Las Vegas homes', 'Lone Mountain real estate agent', 'Dr. Jan Duffy realtor'],
+  authors: [{ name: 'Dr. Jan Duffy', url: 'https://www.homesatlonemountain.com' }],
   openGraph: {
-    title: 'Homes at Lone Mountain | Luxury Real Estate in Las Vegas',
-    description: 'Discover luxury homes with breathtaking mountain views in Las Vegas\'s most prestigious neighborhood. Experience the perfect blend of luxury living and natural beauty.',
+    title: 'Lone Mountain Homes for Sale | Las Vegas Real Estate | Dr. Jan Duffy',
+    description: 'Search Lone Mountain homes for sale in Las Vegas. Get expert guidance from Dr. Jan Duffy, 30+ years local experience. Updated daily listings, market reports, neighborhood insights.',
     url: '/',
     siteName: 'Homes at Lone Mountain',
     images: [
@@ -39,9 +41,12 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Homes at Lone Mountain | Luxury Real Estate in Las Vegas',
-    description: 'Discover luxury homes with breathtaking mountain views in Las Vegas\'s most prestigious neighborhood.',
+    title: 'Lone Mountain Homes for Sale | Las Vegas Real Estate | Dr. Jan Duffy',
+    description: 'Search Lone Mountain homes for sale in Las Vegas. Get expert guidance from Dr. Jan Duffy, 30+ years local experience.',
     images: ['/og-image.jpg'] // Use same image as Open Graph for consistency
+  },
+  alternates: {
+    canonical: 'https://www.homesatlonemountain.com',
   },
   robots: {
     index: true,

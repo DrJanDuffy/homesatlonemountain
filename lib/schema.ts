@@ -142,6 +142,7 @@ export function generateBlogPostSchema(post: BlogPostSchemaInput) {
 }
 
 export function generateOrganizationSchema() {
+  // Enhanced RealEstateAgent schema for better SEO
   return {
     '@context': 'https://schema.org',
     '@type': ['Organization', 'RealEstateAgent', 'LocalBusiness'],
@@ -167,7 +168,7 @@ export function generateOrganizationSchema() {
       latitude: 36.2455,
       longitude: -115.2541
     },
-    telephone: '+1-702-555-0123',
+    telephone: '+1-702-222-1964',
     email: 'info@homesatlonemountain.com',
     sameAs: [
       'https://www.facebook.com/homesatlonemountain',
@@ -189,15 +190,10 @@ export function generateOrganizationSchema() {
       }
     ],
     areaServed: {
-      '@type': 'GeoCircle',
-      geoMidpoint: {
-        '@type': 'GeoCoordinates',
-        latitude: 36.2455,
-        longitude: -115.2541
-      },
-      geoRadius: '10000'
+      '@type': 'Place',
+      name: 'Lone Mountain, Las Vegas, Nevada'
     },
-    priceRange: '$$$$',
+    priceRange: '$400,000 - $2,000,000',
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Real Estate Services',
