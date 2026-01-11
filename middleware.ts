@@ -13,12 +13,27 @@ export function middleware(request: NextRequest) {
   response.headers.set('Referrer-Policy', 'origin-when-cross-origin')
   response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
 
-  // Handle www to non-www redirect
-  if (request.headers.get('host')?.startsWith('www.')) {
-    const url = request.nextUrl.clone()
-    url.host = url.host.replace('www.', '')
-    return NextResponse.redirect(url)
-  }
+  // Handle domain redirects (choose one canonical domain)
+  // Option 1: Redirect www to non-www (remove this if using www as primary)
+  // Option 2: Redirect non-www to www (uncomment this if using www as primary)
+  
+  // Currently disabled - let Vercel handle domain redirects at DNS level
+  // Uncomment and adjust based on your canonical domain preference:
+  
+  // For non-www canonical (homesatlonemountain.com):
+  // if (request.headers.get('host')?.startsWith('www.')) {
+  //   const url = request.nextUrl.clone()
+  //   url.host = url.host.replace('www.', '')
+  //   return NextResponse.redirect(url, 301)
+  // }
+  
+  // For www canonical (www.homesatlonemountain.com):
+  // const host = request.headers.get('host')
+  // if (host && !host.startsWith('www.')) {
+  //   const url = request.nextUrl.clone()
+  //   url.host = `www.${url.host}`
+  //   return NextResponse.redirect(url, 301)
+  // }
 
   return response
 }
