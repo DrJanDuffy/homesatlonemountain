@@ -17,13 +17,13 @@ export default function Error({
   return (
     <div className="min-h-[400px] flex items-center justify-center">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-primary-dark mb-4">
+        <h2 className="text-2xl font-bold text-luxury-navy mb-4">
           Something went wrong!
         </h2>
-        <p className="text-gray-600 mb-8">
+        <p className="text-luxury-charcoal mb-8">
           We apologize for the inconvenience. Please try again.
         </p>
-        <Button onClick={() => reset()}>
+        <Button onClick={() => reset()} className="bg-luxury-navy hover:bg-luxury-navy-light">
           Try again
         </Button>
       </div>

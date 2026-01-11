@@ -4,86 +4,114 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Luxury Color Scheme - Sophisticated Neutrals & Rich Accents */
+    
+    /* Base Colors - Warm, Elegant Neutrals */
+    --background: 0 0% 99%; /* Soft off-white (#FAFAFA) */
+    --foreground: 222 47% 11%; /* Deep navy (#0A2540) */
 
+    /* Card Colors - Pure white with subtle shadows */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
- 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
- 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
- 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
- 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
- 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
- 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --card-foreground: 222 47% 11%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
- 
+    /* Popover Colors */
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Primary - Deep Navy (Luxury Foundation) */
+    --primary: 222 47% 11%; /* #0A2540 - Deep navy */
+    --primary-foreground: 0 0% 100%; /* Pure white */
+
+    /* Secondary - Warm Taupe Gray (Sophisticated Neutral) */
+    --secondary: 30 8% 90%; /* Warm light gray (#E5E3DF) */
+    --secondary-foreground: 222 47% 11%;
+
+    /* Muted - Cool Gray (Elegant Subtle) */
+    --muted: 220 13% 96%; /* Very light gray (#F4F5F7) */
+    --muted-foreground: 215 16% 47%; /* Medium gray (#6B7280) */
+
+    /* Accent - Luxury Gold/Bronze */
+    --accent: 38 92% 50%; /* Rich gold (#D4AF37) */
+    --accent-foreground: 222 47% 11%;
+
+    /* Destructive - Refined Red */
+    --destructive: 0 72% 51%; /* Deep red (#C53030) */
+    --destructive-foreground: 0 0% 100%;
+
+    /* UI Elements - Subtle Borders */
+    --border: 220 13% 91%; /* Light gray border (#E5E7EB) */
+    --input: 220 13% 91%;
+    --ring: 222 47% 11%; /* Navy focus ring */
+
     --radius: 0.5rem;
+    
+    /* Luxury Custom Colors */
+    --luxury-navy: 222 47% 11%; /* #0A2540 */
+    --luxury-navy-light: 222 47% 20%; /* #1A3550 */
+    --luxury-navy-dark: 222 47% 8%; /* #081828 */
+    --luxury-gold: 38 92% 50%; /* #D4AF37 - Rich gold */
+    --luxury-gold-light: 38 92% 65%; /* #E5C866 - Light gold */
+    --luxury-gold-dark: 38 92% 40%; /* #B8922A - Dark gold */
+    --luxury-charcoal: 210 11% 25%; /* #3A3F47 - Sophisticated charcoal */
+    --luxury-cream: 38 18% 96%; /* #F8F6F2 - Warm cream */
+    --luxury-stone: 30 8% 88%; /* #E0DDD8 - Warm stone */
+    --luxury-blue: 210 100% 56%; /* #3A8DDE - Trust blue */
+    --luxury-green: 158 64% 52%; /* #16B286 - Success green */
   }
- 
+
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
- 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
- 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
- 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
- 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
- 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
- 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
- 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
- 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    /* Dark Mode - Inverted for Luxury Appeal */
+    --background: 222 47% 8%; /* Very dark navy */
+    --foreground: 0 0% 98%; /* Off-white */
+
+    --card: 222 47% 11%; /* Dark navy */
+    --card-foreground: 0 0% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 38 92% 65%; /* Light gold */
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 210 11% 25%; /* Charcoal */
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 210 11% 20%; /* Dark charcoal */
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 38 92% 50%; /* Gold */
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 72% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 210 11% 25%;
+    --input: 210 11% 25%;
+    --ring: 38 92% 65%;
   }
 
   h1.luxury-heading {
     @apply text-4xl md:text-5xl lg:text-6xl font-bold relative py-6 mb-8;
-    color: #0A2540;
+    color: hsl(var(--luxury-navy));
   }
 
   h1.luxury-heading::before {
     content: '';
-    @apply absolute left-0 bottom-0 w-24 h-1 bg-[#16B286];
+    @apply absolute left-0 bottom-0 w-24 h-1;
+    background-color: hsl(var(--luxury-gold));
     transform-origin: left;
     animation: expandLine 0.6s ease-out forwards;
   }
 
   h1.luxury-heading::after {
     content: '';
-    @apply absolute left-0 bottom-0 w-full h-[1px] bg-[#3A8DDE]/20;
+    @apply absolute left-0 bottom-0 w-full h-[1px];
+    background-color: hsl(var(--luxury-charcoal) / 0.2);
   }
 
   h1.luxury-heading span {
-    @apply block text-lg md:text-xl font-normal text-gray-600 mt-2;
+    @apply block text-lg md:text-xl font-normal mt-2;
+    color: hsl(var(--muted-foreground));
   }
 
   @keyframes expandLine {
@@ -119,15 +147,31 @@
   }
   
   .btn-primary {
-    @apply bg-primary-blue text-white hover:bg-opacity-90;
+    background-color: hsl(var(--luxury-navy));
+    @apply text-white hover:opacity-90 transition-opacity;
   }
   
   .btn-secondary {
-    @apply bg-primary-green text-white hover:bg-opacity-90;
+    background-color: hsl(var(--luxury-gold));
+    color: hsl(var(--luxury-navy));
+    @apply hover:opacity-90 transition-opacity;
+  }
+  
+  .btn-luxury {
+    background: linear-gradient(135deg, hsl(var(--luxury-gold)), hsl(var(--luxury-gold-dark)));
+    color: hsl(var(--luxury-navy));
+    @apply font-semibold shadow-lg hover:shadow-xl transition-all;
   }
   
   .card {
-    @apply bg-white rounded-lg shadow-sm p-6;
+    @apply bg-white rounded-lg shadow-sm p-6 border border-border;
+  }
+  
+  .card-luxury {
+    background-color: hsl(var(--card));
+    @apply rounded-lg shadow-lg p-6 border;
+    border-color: hsl(var(--luxury-stone));
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 }
 

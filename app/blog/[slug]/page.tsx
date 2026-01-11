@@ -29,7 +29,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <div className="container mx-auto px-4 py-8">
         <article className="prose prose-lg mx-auto">
           <h1>{post.title}</h1>
-          <div className="flex items-center gap-4 text-gray-600 mb-8">
+          <div className="flex items-center gap-4 text-luxury-charcoal mb-8">
             <div className="flex items-center gap-2">
               <svg
                 className="w-5 h-5"

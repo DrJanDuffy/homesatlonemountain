@@ -38,36 +38,36 @@ export default function PropertyPage({ params }: PropertyPageProps) {
     <>
       <SchemaMarkup schema={propertySchema} />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-6">{property.title}</h1>
+        <h1 className="text-4xl font-bold mb-6 text-luxury-navy">{property.title}</h1>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div>
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h2 className="text-2xl font-semibold mb-4">Property Details</h2>
-              <p className="text-gray-600 mb-4">{property.address}</p>
+            <div className="card-luxury">
+              <h2 className="text-2xl font-semibold mb-4 text-luxury-navy">Property Details</h2>
+              <p className="text-luxury-charcoal mb-4">{property.address}</p>
               <div className="grid grid-cols-3 gap-4 mb-6">
                 <div>
-                  <p className="text-sm text-gray-500">Price</p>
-                  <p className="text-lg font-semibold">${property.price.toLocaleString()}</p>
+                  <p className="text-sm text-luxury-charcoal">Price</p>
+                  <p className="text-lg font-semibold text-luxury-navy">${property.price.toLocaleString()}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Bedrooms</p>
-                  <p className="text-lg font-semibold">{property.bedrooms}</p>
+                  <p className="text-sm text-luxury-charcoal">Bedrooms</p>
+                  <p className="text-lg font-semibold text-luxury-navy">{property.bedrooms}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Bathrooms</p>
-                  <p className="text-lg font-semibold">{property.bathrooms}</p>
+                  <p className="text-sm text-luxury-charcoal">Bathrooms</p>
+                  <p className="text-lg font-semibold text-luxury-navy">{property.bathrooms}</p>
                 </div>
               </div>
-              <div className="prose max-w-none">
+              <div className="prose max-w-none text-luxury-charcoal">
                 {property.description}
               </div>
               <div className="mt-8">
-                <h3 className="text-xl font-semibold mb-4">Features</h3>
+                <h3 className="text-xl font-semibold mb-4 text-luxury-navy">Features</h3>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {property.features.map((feature, index) => (
-                    <li key={index} className="flex items-center text-gray-700">
+                    <li key={index} className="flex items-center text-luxury-charcoal">
                       <svg
-                        className="w-5 h-5 text-primary-500 mr-2"
+                        className="w-5 h-5 text-luxury-gold mr-2 flex-shrink-0"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >

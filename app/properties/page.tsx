@@ -40,10 +40,10 @@ export default function PropertiesPage() {
       }} />
       <div className="container">
         <div className="max-w-2xl mx-auto text-center mb-16">
-          <h1 className="text-4xl font-bold text-primary-dark mb-4">
+          <h1 className="text-4xl font-bold text-luxury-navy mb-4">
             Available Properties
           </h1>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-luxury-charcoal">
             Discover your perfect home in the Lone Mountain area
           </p>
         </div>
@@ -76,35 +76,35 @@ export default function PropertiesPage() {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">{property.title}</h3>
-                <p className="text-gray-600 mb-4">{property.address}</p>
+                <h3 className="text-xl font-bold mb-2 text-luxury-navy">{property.title}</h3>
+                <p className="text-luxury-charcoal mb-4">{property.address}</p>
                 <div className="flex justify-between items-center mb-4">
-                  <span className="text-2xl font-bold text-primary-dark">
+                  <span className="text-2xl font-bold text-luxury-navy">
                     ${property.price.toLocaleString()}
                   </span>
-                  <span className="text-primary-green capitalize">
+                  <span className="text-luxury-green capitalize font-medium">
                     {property.status}
                   </span>
                 </div>
-                <div className="flex gap-4 text-sm text-gray-600 mb-4">
+                <div className="flex gap-4 text-sm text-luxury-charcoal mb-4">
                   <span>{property.bedrooms} beds</span>
                   <span>{property.bathrooms} baths</span>
                   <span>{property.squareFeet.toLocaleString()} sq ft</span>
                 </div>
-                <p className="text-gray-600 mb-4 line-clamp-3">
+                <p className="text-luxury-charcoal mb-4 line-clamp-3">
                   {property.description}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {property.features.slice(0, 3).map((feature, index) => (
                     <span
                       key={index}
-                      className="px-2 py-1 text-xs bg-primary-light text-primary-dark rounded-full"
+                      className="px-2 py-1 text-xs bg-luxury-cream text-luxury-navy rounded-full border border-luxury-stone"
                     >
                       {feature}
                     </span>
                   ))}
                   {property.features.length > 3 && (
-                    <span className="px-2 py-1 text-xs bg-primary-light text-primary-dark rounded-full">
+                    <span className="px-2 py-1 text-xs bg-luxury-cream text-luxury-navy rounded-full border border-luxury-stone">
                       +{property.features.length - 3} more
                     </span>
                   )}

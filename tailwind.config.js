@@ -23,12 +23,10 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#0A2540",
-          foreground: "#ffffff",
-          dark: "#0A2540",
-          light: "#F7F9FC",
-          blue: "#3A8DDE",
-          green: "#16B286",
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+          dark: "hsl(var(--luxury-navy-dark))",
+          light: "hsl(var(--luxury-cream))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -54,6 +52,23 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Luxury Real Estate Color Palette
+        luxury: {
+          navy: "hsl(var(--luxury-navy))",
+          "navy-light": "hsl(var(--luxury-navy-light))",
+          "navy-dark": "hsl(var(--luxury-navy-dark))",
+          gold: "hsl(var(--luxury-gold))",
+          "gold-light": "hsl(var(--luxury-gold-light))",
+          "gold-dark": "hsl(var(--luxury-gold-dark))",
+          charcoal: "hsl(var(--luxury-charcoal))",
+          cream: "hsl(var(--luxury-cream))",
+          stone: "hsl(var(--luxury-stone))",
+          blue: "hsl(var(--luxury-blue))",
+          green: "hsl(var(--luxury-green))",
+        },
+        // Legacy support (keeping existing hex values)
+        "primary-blue": "#3A8DDE",
+        "primary-green": "#16B286",
       },
       borderRadius: {
         lg: "var(--radius)",

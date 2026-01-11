@@ -68,10 +68,10 @@ export default function BlogPage() {
       }} />
       <div className="container">
         <div className="max-w-2xl mx-auto text-center mb-16">
-          <h1 className="text-4xl font-bold text-primary-dark mb-4">
+          <h1 className="text-4xl font-bold text-luxury-navy mb-4">
             Market Insights
           </h1>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-luxury-charcoal">
             Stay informed about the Lone Mountain real estate market
           </p>
         </div>
@@ -80,7 +80,7 @@ export default function BlogPage() {
           {categories.map((category) => (
             <button
               key={category}
-              className="px-4 py-2 rounded-full text-sm font-medium bg-primary-light text-primary-dark hover:bg-primary-blue hover:text-white transition-colors"
+              className="px-4 py-2 rounded-full text-sm font-medium bg-luxury-cream text-luxury-navy border border-luxury-stone hover:bg-luxury-gold hover:text-luxury-navy hover:border-luxury-gold transition-colors"
             >
               {category.split('-').join(' ')}
             </button>
@@ -113,22 +113,22 @@ export default function BlogPage() {
                 </div>
               )}
               <div className="p-6">
-                <div className="text-primary-blue text-sm font-medium mb-2 uppercase">
+                <div className="text-luxury-gold text-sm font-medium mb-2 uppercase">
                   {post.category.replace('-', ' ')}
                 </div>
-                <h3 className="text-xl font-bold mb-2">{post.title}</h3>
-                <p className="text-gray-600 mb-4 line-clamp-3">
+                <h3 className="text-xl font-bold mb-2 text-luxury-navy">{post.title}</h3>
+                <p className="text-luxury-charcoal mb-4 line-clamp-3">
                   {post.description}
                 </p>
                 <div className="flex justify-between items-center">
-                  <time className="text-sm text-gray-500">
+                  <time className="text-sm text-luxury-charcoal">
                     {new Date(post.published).toLocaleDateString('en-US', {
                       month: 'long',
                       day: 'numeric',
                       year: 'numeric',
                     })}
                   </time>
-                  <button className="text-primary-blue hover:text-primary-green font-medium">
+                  <button className="text-luxury-navy hover:text-luxury-gold font-medium transition-colors">
                     Read More →
                   </button>
                 </div>
