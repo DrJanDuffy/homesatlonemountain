@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     title: 'Lone Mountain Real Estate Blog | Homes at Lone Mountain',
     description: 'Read the latest news, tips, and market trends for Lone Mountain real estate. Stay informed with Dr. Jan Duffy\'s expert blog.',
     url: 'https://homesatlonemountain.com/blog',
-    type: 'blog',
+    type: 'website',
     images: [
       {
         url: 'https://homesatlonemountain.com/og-image.jpg',
