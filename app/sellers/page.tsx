@@ -4,7 +4,7 @@ import { Container } from '@/components/ui/Container'
 import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { generateBreadcrumbSchema } from '@/lib/schema'
-import { Phone, CheckCircle, TrendingUp } from 'lucide-react'
+import { Phone, CheckCircle, TrendingUp } from '@/components/ui/Icons'
 
 export const metadata: Metadata = {
   title: 'Sell Your Lone Mountain Home | Lone Mountain Seller Guide | Dr. Jan Duffy',

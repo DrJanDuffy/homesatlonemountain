@@ -1,4 +1,4 @@
-import { Shield, TrendingUp, Users, Award, Clock, Home } from 'lucide-react'
+import { Shield, TrendingUp, Users, Award, Clock, Home } from '@/components/ui/Icons'
 
 const features = [
   {

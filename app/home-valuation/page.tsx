@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { generateFaqSchema, generateBreadcrumbSchema } from '@/lib/schema'
-import { Phone, CheckCircle } from 'lucide-react'
+import { Phone, CheckCircle } from '@/components/ui/Icons'
 
 export const metadata: Metadata = {
   title: 'Lone Mountain Home Valuation | Free Property Value Estimate | Dr. Jan Duffy',

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import { ChevronDown, ChevronUp } from '@/components/ui/Icons'
 import { loneMountainFaqs } from '@/lib/lone-mountain-faqs'
 
 export interface FAQ {

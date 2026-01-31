@@ -1,6 +1,6 @@
 'use client'
 
-import { Star } from 'lucide-react'
+import { Star } from '@/components/ui/Icons'
 
 export interface Review {
   id: number

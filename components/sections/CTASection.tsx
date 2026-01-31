@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
-import { Phone, Mail, Home } from 'lucide-react'
+import { Phone, Mail, Home } from '@/components/ui/Icons'
 
 export function CTASection() {
   return (

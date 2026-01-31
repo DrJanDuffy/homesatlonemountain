@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { generateBreadcrumbSchema } from '@/lib/schema'
-import { Phone, Search, Home, Key, CheckCircle } from 'lucide-react'
+import { Phone, Search, Home, Key, CheckCircle } from '@/components/ui/Icons'
 
 export const metadata: Metadata = {
   title: 'Buy a Home in Lone Mountain | Lone Mountain Buyer Guide | Dr. Jan Duffy',
