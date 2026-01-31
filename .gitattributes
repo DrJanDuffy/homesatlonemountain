@@ -1,0 +1,3 @@
+# Normalize line endings for content files (fixes Contentlayer YAML parse on Windows)
+content/**/*.mdx text eol=lf
+content/**/*.md text eol=lf

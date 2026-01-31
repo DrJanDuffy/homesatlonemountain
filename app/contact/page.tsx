@@ -4,7 +4,9 @@ import dynamicImport from 'next/dynamic'
 import { Metadata } from 'next'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
+import { CalendlyWidget } from '@/components/calendly/CalendlyWidget'
 import { generateFaqSchema } from '@/lib/schema'
+import { agentInfo, officeInfo } from '@/lib/site-config'
 
 // Force static generation for SEO
 export const dynamic = 'force-static'
@@ -55,7 +57,16 @@ export default function ContactPage() {
           "areaServed": "Lone Mountain, Las Vegas",
           "url": "https://www.homesatlonemountain.com/contact",
           "image": "https://www.homesatlonemountain.com/jan-duffy.jpg",
-          "telephone": "+1-702-222-1964"
+          "telephone": "+1-702-222-1964",
+          "email": agentInfo.email,
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": officeInfo.address.street,
+            "addressLocality": officeInfo.address.city,
+            "addressRegion": officeInfo.address.state,
+            "postalCode": officeInfo.address.zip,
+            "addressCountry": "US"
+          }
         }
       }} />
       <div className="py-16">
@@ -75,7 +86,13 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
               <h2 className="text-2xl font-bold text-luxury-navy mb-6">
-                Get in Touch
+                Schedule a Lone Mountain Showing
+              </h2>
+              <div className="mb-8 rounded-lg overflow-hidden border border-luxury-stone">
+                <CalendlyWidget height="650px" />
+              </div>
+              <h2 className="text-2xl font-bold text-luxury-navy mb-6 mt-12">
+                Or Send a Message
               </h2>
               <form className="space-y-6">
                 <div>
@@ -146,25 +163,30 @@ export default function ContactPage() {
 
             <div>
               <h2 className="text-2xl font-bold text-luxury-navy mb-6">
-                Our Office
+                Our Office (NAP matches GBP)
               </h2>
               <div className="space-y-8">
                 <div>
                   <h3 className="text-lg font-semibold text-luxury-navy mb-2">
                     Address
                   </h3>
-                  <p className="text-luxury-charcoal">
-                    123 Mountain View Drive<br />
-                    Las Vegas, NV 89129
-                  </p>
+                  <a
+                    href={officeInfo.googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-luxury-charcoal hover:text-luxury-gold transition-colors block"
+                  >
+                    {officeInfo.address.full}
+                  </a>
+                  <span className="text-sm text-luxury-charcoal/80">(Get directions)</span>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-luxury-navy mb-2">
                     Phone
                   </h3>
                   <p className="text-luxury-charcoal">
-                    <a href="tel:+17022221964" className="hover:text-luxury-gold transition-colors font-semibold">
-                      702-222-1964
+                    <a href={agentInfo.phoneTel} className="hover:text-luxury-gold transition-colors font-semibold">
+                      {agentInfo.phoneFormatted}
                     </a>
                   </p>
                 </div>
@@ -173,8 +195,8 @@ export default function ContactPage() {
                     Email
                   </h3>
                   <p className="text-luxury-charcoal">
-                    <a href="mailto:info@lonemountain.com" className="hover:text-luxury-gold transition-colors">
-                      info@lonemountain.com
+                    <a href={`mailto:${agentInfo.email}`} className="hover:text-luxury-gold transition-colors">
+                      {agentInfo.email}
                     </a>
                   </p>
                 </div>

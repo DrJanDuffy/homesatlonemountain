@@ -1,19 +1,24 @@
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.homesatlonemountain.com'
 
+// NAP must match GBP; uses BHHS office address
+const officeAddress = {
+  streetAddress: '9406 W Lake Mead Blvd, Suite 100',
+  addressLocality: 'Las Vegas',
+  addressRegion: 'NV',
+  postalCode: '89134',
+  addressCountry: 'US'
+}
+
 export const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'RealEstateAgent',
   name: 'Homes at Lone Mountain',
   description: 'Luxury real estate agency specializing in Lone Mountain properties in Las Vegas, Nevada.',
-  url: 'https://www.homesatlonemountain.com',
-  logo: 'https://www.homesatlonemountain.com/images/logo.png',
+  url: baseUrl,
+  logo: `${baseUrl}/images/logo.png`,
   address: {
     '@type': 'PostalAddress',
-    streetAddress: '1234 Lone Mountain Drive',
-    addressLocality: 'Las Vegas',
-    addressRegion: 'NV',
-    postalCode: '89129',
-    addressCountry: 'US'
+    ...officeAddress
   },
   geo: {
     '@type': 'GeoCoordinates',

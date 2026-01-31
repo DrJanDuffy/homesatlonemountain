@@ -2,6 +2,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Metadata } from 'next'
 import Script from 'next/script'
+import { CalendlyBadge } from '@/components/calendly/CalendlyBadge'
 import { Inter } from 'next/font/google'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -76,7 +77,7 @@ export default function RootLayout({
   const websiteSchema = generateWebSiteSchema()
 
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full scroll-smooth">
       <head>
         <SchemaMarkup schema={organizationSchema} />
         <SchemaMarkup schema={websiteSchema} />
@@ -102,6 +103,7 @@ export default function RootLayout({
             </div>
             <Analytics />
             <SpeedInsights />
+            <CalendlyBadge />
           </AnalyticsProvider>
         </MapsProvider>
       </body>

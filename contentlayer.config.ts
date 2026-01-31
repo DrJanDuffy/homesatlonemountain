@@ -21,8 +21,7 @@ export const Property = defineDocumentType(() => ({
     published: { type: 'string', required: true },
     featured: { type: 'boolean', default: false },
     status: { type: 'string', required: true },
-    latitude: { type: 'string', required: true },
-    longitude: { type: 'string', required: true }
+    coordinates: { type: 'string', required: true }
   },
   computedFields: {
     slug: {
@@ -37,13 +36,21 @@ export const Property = defineDocumentType(() => ({
         return `/properties/${slug}`
       },
     },
-    lat: {
+    latitude: {
       type: 'number',
-      resolve: (doc) => parseFloat(doc.latitude)
+      resolve: (doc) => {
+        const c = String((doc as { coordinates?: string }).coordinates ?? '').replace(/\r/g, '').trim()
+        const [lat] = c.split(',')
+        return parseFloat(lat || '0') || 0
+      }
     },
-    lng: {
+    longitude: {
       type: 'number',
-      resolve: (doc) => parseFloat(doc.longitude)
+      resolve: (doc) => {
+        const c = String((doc as { coordinates?: string }).coordinates ?? '').replace(/\r/g, '').trim()
+        const [, lng] = c.split(',')
+        return parseFloat(lng || '0') || 0
+      }
     }
   },
 }))

@@ -8,6 +8,13 @@ import { Button } from '@/components/ui/Button'
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isServicesOpen, setIsServicesOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 10)
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const mainNavLinks = [
     { href: '/', label: 'Home' },
@@ -23,13 +30,14 @@ export function Header() {
     { href: '/home-valuation', label: 'Lone Mountain Home Valuation' },
     { href: '/services', label: 'Services' },
     { href: '/blog', label: 'Lone Mountain Market Updates' },
+    { href: '/market-report', label: 'Market Report' },
     { href: '/faq', label: 'FAQ' },
   ]
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className={`bg-white shadow-sm sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-0'}`}>
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8" aria-label="Top">
-        <div className="flex h-16 items-center justify-between">
+        <div className={`flex items-center justify-between ${isScrolled ? 'h-12' : 'h-16'}`}>
           <div className="flex items-center">
             <div className="flex flex-col">
               <Link href="/" className="text-xl md:text-2xl font-bold text-luxury-navy hover:text-luxury-gold transition-colors">

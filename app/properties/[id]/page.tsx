@@ -29,8 +29,8 @@ export default function PropertyPage({ params }: PropertyPageProps) {
     squareFeet: property.squareFeet,
     images: property.images,
     features: property.features,
-    latitude: property.lat,
-    longitude: property.lng,
+    latitude: property.latitude,
+    longitude: property.longitude,
     status: property.status,
     url: property.url,
   })
@@ -88,7 +88,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
           </div>
           <div>
             <PropertyMap
-              propertyLocation={{ lat: property.lat, lng: property.lng }}
+              propertyLocation={{ lat: property.latitude, lng: property.longitude }}
               propertyTitle={property.title}
               className="aspect-[4/3] w-full"
             />

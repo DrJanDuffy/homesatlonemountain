@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { route: '/buyers', priority: 0.9, changeFreq: 'monthly' as const },
     { route: '/sellers', priority: 0.9, changeFreq: 'monthly' as const },
     { route: '/blog', priority: 0.8, changeFreq: 'weekly' as const },
+    { route: '/market-report', priority: 0.9, changeFreq: 'weekly' as const },
   ].map(({ route, priority, changeFreq }) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),

@@ -23,6 +23,17 @@ export const agentInfo = {
   brokerage: 'Berkshire Hathaway HomeServices Nevada Properties',
 };
 
+export const officeInfo = {
+  address: {
+    street: '9406 W Lake Mead Blvd, Suite 100',
+    city: 'Las Vegas',
+    state: 'NV',
+    zip: '89134',
+    full: '9406 W Lake Mead Blvd, Suite 100, Las Vegas, NV 89134',
+  },
+  googleMapsUrl: 'https://maps.google.com/?q=9406+W+Lake+Mead+Blvd+Suite+100+Las+Vegas+NV+89134',
+};
+
 export const loneMountainStats = {
   medianPrice: 550000,
   medianPriceFormatted: '$550,000',
