@@ -1,5 +1,8 @@
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.homesatlonemountain.com'
 
+// Logo path - matches public folder
+const logoPath = '/icons/White Logo Berkshire Hathaway HomeServices Nevada.jpg'
+
 // NAP must match GBP; uses BHHS office address
 const officeAddress = {
   streetAddress: '9406 W Lake Mead Blvd, Suite 100',
@@ -15,7 +18,7 @@ export const organizationSchema = {
   name: 'Homes at Lone Mountain',
   description: 'Luxury real estate agency specializing in Lone Mountain properties in Las Vegas, Nevada.',
   url: baseUrl,
-  logo: `${baseUrl}/images/logo.png`,
+  logo: logoPath,
   address: {
     '@type': 'PostalAddress',
     ...officeAddress
@@ -141,7 +144,7 @@ export function generateBlogPostSchema(post: BlogPostSchemaInput) {
       name: 'Homes at Lone Mountain',
       logo: {
         '@type': 'ImageObject',
-        url: `${baseUrl}/logo.png`,
+        url: logoPath,
       },
     },
     mainEntityOfPage: {
@@ -161,17 +164,13 @@ export function generateOrganizationSchema() {
     url: 'https://www.homesatlonemountain.com',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://www.homesatlonemountain.com/logo.png',
+      url: logoPath,
       width: '180',
       height: '60'
     },
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '1234 Lone Mountain Drive',
-      addressLocality: 'Las Vegas',
-      addressRegion: 'NV',
-      postalCode: '89129',
-      addressCountry: 'US'
+      ...officeAddress
     },
     geo: {
       '@type': 'GeoCoordinates',

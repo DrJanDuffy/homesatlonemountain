@@ -21,8 +21,8 @@ const requiredFiles = [
   { path: 'public/sitemap.xml', alt: 'app/sitemap.ts' },
   { path: 'public/og-image.jpg' },
   { path: 'public/favicon.png', alt: 'app/icon.png' },
-  { path: 'public/images/agent/jan-duffy.jpg' },
-  { path: 'public/images/logo.png' },
+  { path: 'public/images/agent/design 0001_new 2.jpg', alt: 'agent photo' },
+  { path: 'public/icons/White Logo Berkshire Hathaway HomeServices Nevada.jpg', alt: 'logo' },
 ];
 
 console.log('📋 Required Files:');

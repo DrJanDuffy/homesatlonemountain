@@ -52,6 +52,18 @@ export const agentStats = {
   reviewCount: 200,
 };
 
+// Asset paths - match filenames in public folder (spaces OK for same-origin, encoded for URLs)
+const siteUrl = 'https://www.homesatlonemountain.com';
+export const assetPaths = {
+  agentPhoto: '/images/agent/design 0001_new 2.jpg',
+  logo: '/icons/White Logo Berkshire Hathaway HomeServices Nevada.jpg',
+  buyerGuide: '/documents/Things to Consider When Buying a Home Winter 2026.pdf',
+  buyerGuideSpanish: '/documents/Things to Consider When Buying a Home Winter 2026 Spanish Version.pdf',
+  // Full URLs for Open Graph, schema (encoded for external consumers)
+  agentPhotoUrl: `${siteUrl}/images/agent/design%200001_new%202.jpg`,
+  logoUrl: `${siteUrl}/icons/White%20Logo%20Berkshire%20Hathaway%20HomeServices%20Nevada.jpg`,
+};
+
 export const loneMountainHighlights = [
   'Mountain views',
   'Spacious homes',

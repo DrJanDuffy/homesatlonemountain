@@ -4,6 +4,7 @@ import dynamicImport from 'next/dynamic'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 import { generateFaqSchema } from '@/lib/schema'
+import { assetPaths } from '@/lib/site-config'
 
 // Force static generation for SEO
 export const dynamic = 'force-static'
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
     type: 'profile',
     images: [
       {
-        url: 'https://www.homesatlonemountain.com/images/agent/jan-duffy.jpg',
+        url: assetPaths.agentPhotoUrl,
         width: 800,
         height: 800,
         alt: 'Dr. Jan Duffy, Lone Mountain Realtor'
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'About Dr. Jan Duffy | Homes at Lone Mountain',
     description: 'Learn about Dr. Jan Duffy, your trusted Lone Mountain real estate expert. Discover her experience, local knowledge, and commitment to helping you buy or sell your home.',
-    images: ['https://www.homesatlonemountain.com/images/agent/jan-duffy.jpg']
+    images: [`https://www.homesatlonemountain.com${assetPaths.agentPhoto}`]
   }
 }
 
@@ -51,7 +52,7 @@ export default function AboutPage() {
         "name": "Dr. Jan Duffy",
         "areaServed": "Lone Mountain, Las Vegas",
         "url": "https://www.homesatlonemountain.com/about",
-        "image": "https://www.homesatlonemountain.com/images/agent/jan-duffy.jpg",
+        "image": assetPaths.agentPhotoUrl,
         "telephone": "+1-702-222-1964"
       }} />
       <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:py-32">

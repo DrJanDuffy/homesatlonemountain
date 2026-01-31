@@ -6,7 +6,7 @@ import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 import { CalendlyWidget } from '@/components/calendly/CalendlyWidget'
 import { generateFaqSchema } from '@/lib/schema'
-import { agentInfo, officeInfo } from '@/lib/site-config'
+import { agentInfo, officeInfo, assetPaths } from '@/lib/site-config'
 
 // Force static generation for SEO
 export const dynamic = 'force-static'
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://www.homesatlonemountain.com/images/agent/jan-duffy.jpg',
+        url: assetPaths.agentPhotoUrl,
         width: 800,
         height: 800,
         alt: 'Dr. Jan Duffy, Lone Mountain Realtor'
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Contact Dr. Jan Duffy | Homes at Lone Mountain',
     description: 'Contact Dr. Jan Duffy, your Lone Mountain real estate expert. Get in touch for showings, questions, or to start your home buying or selling journey.',
-    images: ['https://www.homesatlonemountain.com/images/agent/jan-duffy.jpg']
+    images: [assetPaths.agentPhotoUrl]
   }
 }
 
@@ -56,7 +56,7 @@ export default function ContactPage() {
           "name": "Dr. Jan Duffy",
           "areaServed": "Lone Mountain, Las Vegas",
           "url": "https://www.homesatlonemountain.com/contact",
-          "image": "https://www.homesatlonemountain.com/images/agent/jan-duffy.jpg",
+          "image": assetPaths.agentPhotoUrl,
           "telephone": "+1-702-222-1964",
           "email": agentInfo.email,
           "address": {

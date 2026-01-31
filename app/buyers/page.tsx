@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { generateBreadcrumbSchema } from '@/lib/schema'
+import { assetPaths } from '@/lib/site-config'
 import { Phone, Search, Home, Key, CheckCircle } from '@/components/ui/Icons'
 
 export const metadata: Metadata = {
@@ -67,6 +68,27 @@ export default function BuyersPage() {
             <Phone className="h-5 w-5" />
             Call 702-222-1964
           </a>
+        </div>
+
+        <div className="mb-16 p-6 bg-luxury-cream rounded-lg">
+          <h2 className="text-2xl font-bold text-luxury-navy mb-4">Free Buyer&apos;s Guide</h2>
+          <p className="text-luxury-charcoal mb-4">Download our guide: Things to Consider When Buying a Home Winter 2026.</p>
+          <div className="flex flex-wrap gap-4">
+            <a
+              href={assetPaths.buyerGuide}
+              download
+              className="inline-flex items-center gap-2 bg-luxury-navy text-white px-6 py-3 rounded-lg font-semibold hover:bg-luxury-navy-light transition-colors"
+            >
+              Download Buyer&apos;s Guide (PDF)
+            </a>
+            <a
+              href={assetPaths.buyerGuideSpanish}
+              download
+              className="inline-flex items-center gap-2 border-2 border-luxury-navy text-luxury-navy px-6 py-3 rounded-lg font-semibold hover:bg-luxury-navy hover:text-white transition-colors"
+            >
+              Descargar Guía en Español
+            </a>
+          </div>
         </div>
 
         <section className="py-12 bg-white rounded-lg shadow-lg">

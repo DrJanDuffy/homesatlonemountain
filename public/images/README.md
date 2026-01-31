@@ -7,14 +7,14 @@ This folder contains all site images for Homes at Lone Mountain.
 ```
 images/
 ├── agent/          # Agent headshot and professional photos
-│   └── jan-duffy.jpg   # Dr. Jan Duffy professional headshot (recommended: 800x800)
+│   └── design 0001_new 2.jpg   # Dr. Jan Duffy professional headshot (primary)
 ├── blog/           # Blog post featured images (recommended: 1200x630)
 │   └── market-update-q1-2024.jpg
 ├── properties/     # Property listing images (recommended: 1200x800)
 │   ├── luxury-home-1.jpg
 │   ├── luxury-home-2.jpg
 │   └── luxury-home-3.jpg
-└── logo.png        # Site logo (recommended: 400x100 or square)
+└── (logo in /icons/White Logo Berkshire Hathaway HomeServices Nevada.jpg)
 ```
 
 ## Image Guidelines
@@ -32,4 +32,4 @@ images/
 3. `/images/properties/luxury-home-1.jpg` - Sample property gallery
 4. `/images/properties/luxury-home-2.jpg` - Sample property gallery
 5. `/images/properties/luxury-home-3.jpg` - Sample property gallery
-6. `/images/logo.png` - Site logo for schema markup
+6. `/icons/White Logo Berkshire Hathaway HomeServices Nevada.jpg` - Logo for schema markup
