@@ -6,7 +6,7 @@ import { ReviewsSection } from '@/components/sections/ReviewsSection'
 import { FAQSection } from '@/components/sections/FAQSection'
 import { loneMountainFaqs } from '@/lib/lone-mountain-faqs'
 import { CTASection } from '@/components/sections/CTASection'
-import { LeadForm } from '@/components/LeadForm'
+import { CalendlyWidget } from '@/components/calendly/CalendlyWidget'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { generateFaqSchema } from '@/lib/schema'
 import Link from 'next/link'
@@ -137,8 +137,8 @@ export default function Home() {
                   </li>
                 </ul>
               </div>
-              <div className="rounded-xl border border-luxury-stone bg-white p-6 md:p-8 shadow-sm">
-                <LeadForm />
+              <div className="rounded-xl border border-luxury-stone bg-white overflow-hidden shadow-sm">
+                <CalendlyWidget height="630px" />
               </div>
             </div>
           </div>

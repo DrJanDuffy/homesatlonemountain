@@ -6,7 +6,6 @@ import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 import { CalendlyWidget } from '@/components/calendly/CalendlyWidget'
 import { generateFaqSchema } from '@/lib/schema'
 import { agentInfo, officeInfo, assetPaths } from '@/lib/site-config'
-import { LeadForm } from '@/components/LeadForm'
 
 // Force static generation for SEO
 export const dynamic = 'force-static'
@@ -91,10 +90,6 @@ export default function ContactPage() {
               <div className="mb-8 rounded-lg overflow-hidden border border-luxury-stone">
                 <CalendlyWidget height="650px" />
               </div>
-              <h2 className="text-2xl font-bold text-luxury-navy mb-6 mt-12">
-                Or Send a Message
-              </h2>
-              <LeadForm />
             </div>
 
             <div>
