@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
+import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 
 export default function NotFound() {
   return (
@@ -13,13 +14,17 @@ export default function NotFound() {
           The page you're looking for doesn't exist or has been moved.
           Let's get you back on track.
         </p>
-        <div className="space-x-4">
+        <div className="space-x-4 mb-12">
           <Button asChild variant="outline" className="border-luxury-stone text-luxury-navy hover:bg-luxury-cream">
             <Link href="/">Go Home</Link>
           </Button>
           <Button asChild className="bg-luxury-navy hover:bg-luxury-navy-light">
             <Link href="/properties">View Properties</Link>
           </Button>
+        </div>
+        <div className="w-full max-w-4xl mx-auto px-4 mt-8">
+          <h2 className="text-xl font-semibold text-luxury-navy mb-4">Explore Lone Mountain Homes</h2>
+          <RealScoutWidget />
         </div>
       </div>
     </div>

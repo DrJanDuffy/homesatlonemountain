@@ -1,3 +1,5 @@
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.homesatlonemountain.com'
+
 export const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'RealEstateAgent',
@@ -41,7 +43,7 @@ export const organizationSchema = {
       closes: '16:00'
     }
   ],
-  telephone: '+1-702-555-0123',
+  telephone: '+1-702-222-1964',
   sameAs: [
     'https://www.facebook.com/homesatlonemountain',
     'https://www.instagram.com/homesatlonemountain',
@@ -115,28 +117,31 @@ interface BlogPostSchemaInput {
 }
 
 export function generateBlogPostSchema(post: BlogPostSchemaInput) {
+  const url = post.url.startsWith('http') ? post.url : `${baseUrl}${post.url}`
+  const image = post.image.startsWith('http') ? post.image : `${baseUrl}${post.image}`
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.description,
-    image: post.image,
+    image,
     datePublished: post.published,
     author: {
       '@type': 'Person',
       name: post.author,
+      url: `${baseUrl}/about`,
     },
     publisher: {
       '@type': 'Organization',
       name: 'Homes at Lone Mountain',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://www.homesatlonemountain.com/logo.png',
+        url: `${baseUrl}/logo.png`,
       },
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': post.url,
+      '@id': url,
     },
   }
 }
@@ -221,6 +226,34 @@ export function generateOrganizationSchema() {
         }
       ]
     }
+  }
+}
+
+export function generateBreadcrumbSchema(items: { name: string; url: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      item: item.url.startsWith('http') ? item.url : `${baseUrl}${item.url}`,
+    })),
+  }
+}
+
+export function generateFaqSchema(faqs: { question: string; answer: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(({ question, answer }) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: answer,
+      },
+    })),
   }
 }
 

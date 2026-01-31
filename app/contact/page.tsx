@@ -4,6 +4,7 @@ import dynamicImport from 'next/dynamic'
 import { Metadata } from 'next'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
+import { generateFaqSchema } from '@/lib/schema'
 
 // Force static generation for SEO
 export const dynamic = 'force-static'
@@ -36,9 +37,15 @@ export const metadata: Metadata = {
 
 const FeatureSection = dynamicImport(() => import('@/components/layout/FeatureSection').then(mod => mod.FeatureSection), { ssr: false })
 
+const contactFaqs = [
+  { question: 'How can I contact Dr. Jan Duffy?', answer: 'Call 702-222-1964 for immediate assistance or use the contact form on this page. Dr. Jan Duffy responds promptly to all inquiries and offers free consultations for buyers and sellers.' },
+  { question: 'What areas does Dr. Jan Duffy serve?', answer: 'Dr. Jan Duffy specializes in Lone Mountain, Northwest Las Vegas, Summerlin, and surrounding communities. She has 30+ years of experience in the greater Las Vegas area.' },
+]
+
 export default function ContactPage() {
   return (
     <>
+      <SchemaMarkup schema={generateFaqSchema(contactFaqs)} />
       <SchemaMarkup schema={{
         "@context": "https://schema.org",
         "@type": "ContactPage",
@@ -183,6 +190,18 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="mt-16 max-w-2xl mx-auto">
+            <h2 className="text-2xl font-bold text-luxury-navy mb-6">Frequently Asked Questions</h2>
+            <dl className="space-y-6">
+              {contactFaqs.map((faq) => (
+                <div key={faq.question}>
+                  <dt className="font-semibold text-luxury-navy">{faq.question}</dt>
+                  <dd className="mt-2 text-luxury-charcoal">{faq.answer}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
 
           <FeatureSection variant="default" ctaText="Contact Jan & See Featured Listings!" ctaButtonText="Contact & Browse" ctaIconUrl="/icons/contact.svg" />

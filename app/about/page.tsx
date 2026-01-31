@@ -3,12 +3,18 @@ import { Container } from '@/components/ui/Container'
 import dynamicImport from 'next/dynamic'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
+import { generateFaqSchema } from '@/lib/schema'
 
 // Force static generation for SEO
 export const dynamic = 'force-static'
 export const revalidate = 3600
 
 const FeatureSection = dynamicImport(() => import('@/components/layout/FeatureSection').then(mod => mod.FeatureSection), { ssr: false })
+
+const aboutFaqs = [
+  { question: 'Who is Dr. Jan Duffy?', answer: 'Dr. Jan Duffy is a licensed real estate professional with over 30 years of experience in Las Vegas real estate. She specializes in Lone Mountain and Northwest Las Vegas, helping buyers and sellers achieve their goals. License #S.0197614.LLC, Berkshire Hathaway HomeServices Nevada Properties.' },
+  { question: 'Why choose Homes at Lone Mountain?', answer: 'We offer personalized service, deep local market knowledge, integrity in every transaction, and a commitment to helping clients find their perfect home in the Lone Mountain community.' },
+]
 
 export const metadata: Metadata = {
   title: 'About Dr. Jan Duffy | Homes at Lone Mountain',
@@ -38,6 +44,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <Container>
+      <SchemaMarkup schema={generateFaqSchema(aboutFaqs)} />
       <SchemaMarkup schema={{
         "@context": "https://schema.org",
         "@type": "RealEstateAgent",
@@ -81,6 +88,17 @@ export default function AboutPage() {
             <p className="mt-4 text-luxury-charcoal">
               With our extensive experience in the Lone Mountain real estate market, we understand the unique characteristics and opportunities this area offers. We combine this knowledge with cutting-edge technology and personalized service to ensure you find the perfect property that meets your needs and exceeds your expectations.
             </p>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight text-luxury-navy">Frequently Asked Questions</h2>
+            <dl className="mt-6 space-y-4">
+              {aboutFaqs.map((faq) => (
+                <div key={faq.question}>
+                  <dt className="font-semibold text-luxury-navy">{faq.question}</dt>
+                  <dd className="mt-1 text-luxury-charcoal">{faq.answer}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
 

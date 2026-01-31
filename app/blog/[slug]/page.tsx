@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation'
 import { allPosts } from 'contentlayer/generated'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
-import { generateBlogPostSchema } from '@/lib/schema'
+import { generateBlogPostSchema, generateBreadcrumbSchema } from '@/lib/schema'
 import { MDXContent } from '@/components/MDXContent'
+import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 import Image from 'next/image'
 
 interface BlogPostPageProps {
@@ -25,6 +26,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <>
+      <SchemaMarkup schema={generateBreadcrumbSchema([{ name: 'Home', url: '/' }, { name: 'Blog', url: '/blog' }, { name: post.title, url: post.url }])} />
       <SchemaMarkup schema={blogPostSchema} />
       <div className="container mx-auto px-4 py-8">
         <article className="prose prose-lg mx-auto">
@@ -81,6 +83,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           )}
           <MDXContent code={post.body.code} />
         </article>
+        {/* RealScout Office Listings - on every page per SEO/engagement */}
+        <section className="mt-12 pt-12 border-t border-luxury-stone">
+          <h2 className="text-2xl font-bold text-luxury-navy mb-6">Explore Lone Mountain Homes for Sale</h2>
+          <RealScoutWidget />
+        </section>
       </div>
     </>
   )

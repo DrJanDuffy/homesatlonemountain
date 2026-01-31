@@ -3,6 +3,7 @@ import { SchemaMarkup } from '@/components/SchemaMarkup'
 import dynamicImport from 'next/dynamic'
 import { BlogList } from '@/components/blog/BlogList'
 import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
+import { generateFaqSchema, generateBreadcrumbSchema } from '@/lib/schema'
 
 // Force static generation for SEO
 export const dynamic = 'force-static'
@@ -35,9 +36,16 @@ export const metadata: Metadata = {
 
 const FeatureSection = dynamicImport(() => import('@/components/layout/FeatureSection').then(mod => mod.FeatureSection), { ssr: false })
 
+const blogFaqs = [
+  { question: 'What does the Lone Mountain real estate blog cover?', answer: 'Our blog covers market updates, neighborhood insights, buying and selling tips, and local real estate trends for Lone Mountain and Northwest Las Vegas. Written by Dr. Jan Duffy with 30+ years of experience.' },
+  { question: 'How often is the blog updated?', answer: 'We publish new articles regularly to keep you informed about the Lone Mountain market. Subscribe or check back often for the latest insights.' },
+]
+
 export default function BlogPage() {
   return (
     <div className="py-16">
+      <SchemaMarkup schema={generateBreadcrumbSchema([{ name: 'Home', url: '/' }, { name: 'Blog', url: '/blog' }])} />
+      <SchemaMarkup schema={generateFaqSchema(blogFaqs)} />
       <SchemaMarkup schema={{
         "@context": "https://schema.org",
         "@type": "Blog",
@@ -59,6 +67,18 @@ export default function BlogPage() {
         </div>
 
         <BlogList />
+
+        <div className="mt-16 max-w-2xl mx-auto">
+          <h2 className="text-2xl font-bold text-luxury-navy mb-6">Frequently Asked Questions</h2>
+          <dl className="space-y-6">
+            {blogFaqs.map((faq) => (
+              <div key={faq.question}>
+                <dt className="font-semibold text-luxury-navy">{faq.question}</dt>
+                <dd className="mt-2 text-luxury-charcoal">{faq.answer}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
 
         <FeatureSection variant="alt1" ctaText="Explore the Latest Blog-Featured Listings!" ctaButtonText="See Blog Picks" ctaIconUrl="/icons/blog.svg" />
 

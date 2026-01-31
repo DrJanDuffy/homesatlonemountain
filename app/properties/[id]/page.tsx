@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation'
 import { allProperties } from 'contentlayer/generated'
 import PropertyMap from '@/components/property/PropertyMap'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
-import { generatePropertySchema } from '@/lib/schema'
+import { generatePropertySchema, generateBreadcrumbSchema } from '@/lib/schema'
+import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 
 interface PropertyPageProps {
   params: {
@@ -36,6 +37,7 @@ export default function PropertyPage({ params }: PropertyPageProps) {
 
   return (
     <>
+      <SchemaMarkup schema={generateBreadcrumbSchema([{ name: 'Home', url: '/' }, { name: 'Properties', url: '/properties' }, { name: property.title, url: property.url }])} />
       <SchemaMarkup schema={propertySchema} />
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold mb-6 text-luxury-navy">{property.title}</h1>
@@ -92,6 +94,11 @@ export default function PropertyPage({ params }: PropertyPageProps) {
             />
           </div>
         </div>
+        {/* RealScout Office Listings - on every page per SEO/engagement */}
+        <section className="mt-12 pt-12 border-t border-luxury-stone">
+          <h2 className="text-2xl font-bold text-luxury-navy mb-6">More Lone Mountain Homes for Sale</h2>
+          <RealScoutWidget />
+        </section>
       </div>
     </>
   )

@@ -179,4 +179,33 @@
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* RealScout Simple Search - Lone Mountain hero */
+realscout-simple-search {
+  --rs-ss-font-primary-color: #0A2540;
+  --rs-ss-searchbar-border-color: #E0DDD8;
+  --rs-ss-box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+  --rs-ss-widget-width: 600px !important;
+  --rs-ss-border-radius: 9999px;
+  --rs-ss-background-color: rgba(255, 255, 255, 0.95);
+}
+.realscout-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0 1rem;
+}
+@media (max-width: 768px) {
+  realscout-simple-search {
+    --rs-ss-widget-width: 100% !important;
+    max-width: 500px;
+  }
+}
+@media (max-width: 480px) {
+  realscout-simple-search {
+    --rs-ss-widget-width: 100% !important;
+    max-width: 100%;
+  }
 } 

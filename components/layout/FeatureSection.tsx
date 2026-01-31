@@ -1,3 +1,5 @@
+import { MLSDisclaimer } from '@/components/properties/MLSDisclaimer'
+
 // Type declaration for RealScout custom element (shared with RealScoutWidget)
 // @ts-ignore
 declare global {
@@ -62,6 +64,7 @@ export function FeatureSection({
           listing-status="For Sale" 
           property-types="SFR,MF"
         ></realscout-office-listings>
+        <MLSDisclaimer className="text-center" />
       </div>
       <p className="mt-4 text-[#3A8DDE] text-center font-medium">Browse the best homes in Lone Mountain, handpicked for you by Dr. Jan Duffy.</p>
     </section>

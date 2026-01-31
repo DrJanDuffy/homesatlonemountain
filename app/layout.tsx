@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Metadata } from 'next'
+import Script from 'next/script'
 import { Inter } from 'next/font/google'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -79,11 +80,10 @@ export default function RootLayout({
       <head>
         <SchemaMarkup schema={organizationSchema} />
         <SchemaMarkup schema={websiteSchema} />
-        {/* RealScout Widget Script and Style */}
-        <script
+        {/* RealScout Widget Script - load before interactive; UMD needs classic script, not module */}
+        <Script
           src="https://em.realscout.com/widgets/realscout-web-components.umd.js"
-          type="module"
-          async
+          strategy="beforeInteractive"
         />
         <style>{`
           realscout-office-listings {

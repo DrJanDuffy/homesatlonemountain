@@ -13,6 +13,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { route: '/about', priority: 0.8, changeFreq: 'monthly' as const },
     { route: '/contact', priority: 0.9, changeFreq: 'monthly' as const },
     { route: '/properties', priority: 0.9, changeFreq: 'daily' as const },
+    { route: '/neighborhood', priority: 0.9, changeFreq: 'monthly' as const },
+    { route: '/services', priority: 0.9, changeFreq: 'monthly' as const },
+    { route: '/faq', priority: 0.8, changeFreq: 'monthly' as const },
+    { route: '/home-valuation', priority: 0.9, changeFreq: 'monthly' as const },
+    { route: '/buyers', priority: 0.9, changeFreq: 'monthly' as const },
+    { route: '/sellers', priority: 0.9, changeFreq: 'monthly' as const },
     { route: '/blog', priority: 0.8, changeFreq: 'weekly' as const },
   ].map(({ route, priority, changeFreq }) => ({
     url: `${baseUrl}${route}`,

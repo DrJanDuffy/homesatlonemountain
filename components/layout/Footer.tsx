@@ -4,9 +4,14 @@ import Link from 'next/link'
 const navigation = {
   main: [
     { name: 'Home', href: '/' },
-    { name: 'Properties', href: '/properties' },
-    { name: 'Market Updates', href: '/blog' },
-    { name: 'About', href: '/about' },
+    { name: 'Lone Mountain Listings', href: '/properties' },
+    { name: 'Neighborhood', href: '/neighborhood' },
+    { name: 'Buyers', href: '/buyers' },
+    { name: 'Sellers', href: '/sellers' },
+    { name: 'Home Valuation', href: '/home-valuation' },
+    { name: 'Services', href: '/services' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'FAQ', href: '/faq' },
     { name: 'Contact', href: '/contact' },
   ],
   relatedSites: [

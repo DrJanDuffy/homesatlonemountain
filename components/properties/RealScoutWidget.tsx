@@ -1,5 +1,7 @@
 'use client'
 
+import { MLSDisclaimer } from './MLSDisclaimer'
+
 // RealScout Office Listings Widget Component
 // @ts-ignore
 declare global {
@@ -19,9 +21,10 @@ declare global {
 
 interface RealScoutWidgetProps {
   className?: string;
+  showDisclaimer?: boolean;
 }
 
-export function RealScoutWidget({ className = '' }: RealScoutWidgetProps) {
+export function RealScoutWidget({ className = '', showDisclaimer = true }: RealScoutWidgetProps) {
   return (
     <div className={className}>
       <realscout-office-listings
@@ -32,6 +35,7 @@ export function RealScoutWidget({ className = '' }: RealScoutWidgetProps) {
         price-min="400000"
         price-max="700000"
       ></realscout-office-listings>
+      {showDisclaimer && <MLSDisclaimer />}
     </div>
   );
 }
