@@ -57,6 +57,15 @@ export default function AboutPage() {
       }} />
       <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:py-32">
         <div className="text-center">
+          <div className="mx-auto mb-8 w-48 h-48 sm:w-56 sm:h-56 rounded-full overflow-hidden border-4 border-luxury-gold shadow-xl ring-2 ring-luxury-navy/10">
+            <img
+              src={assetPaths.agentPhoto.replace(/\s/g, '%20')}
+              alt="Dr. Jan Duffy, Lone Mountain Real Estate Expert"
+              className="w-full h-full object-cover"
+              width={224}
+              height={224}
+            />
+          </div>
           <h1 className="text-4xl font-bold tracking-tight text-luxury-navy sm:text-6xl">
             About Homes at Lone Mountain
           </h1>

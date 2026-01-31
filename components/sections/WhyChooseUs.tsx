@@ -1,4 +1,5 @@
 import { Shield, TrendingUp, Users, Award, Clock, Home } from '@/components/ui/Icons'
+import { assetPaths } from '@/lib/site-config'
 
 const features = [
   {
@@ -38,6 +39,13 @@ export function WhyChooseUs() {
     <section className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
+          <img
+            src={assetPaths.agentPhoto.replace(/\s/g, '%20')}
+            alt="Dr. Jan Duffy, Lone Mountain Real Estate Expert"
+            className="mx-auto mb-4 w-24 h-24 rounded-full object-cover border-2 border-luxury-gold shadow-lg"
+            width={96}
+            height={96}
+          />
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-luxury-navy mb-4">
             Why Choose Dr. Jan Duffy for Lone Mountain Real Estate
           </h2>

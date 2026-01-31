@@ -93,6 +93,17 @@ export default function ContactPage() {
             </div>
 
             <div>
+              <div className="mb-6">
+                <img
+                  src={assetPaths.agentPhoto.replace(/\s/g, '%20')}
+                  alt="Dr. Jan Duffy, Lone Mountain Real Estate Expert"
+                  className="w-40 h-40 rounded-lg object-cover border-2 border-luxury-stone shadow-md"
+                  width={160}
+                  height={160}
+                />
+                <p className="mt-2 font-semibold text-luxury-navy">Dr. Jan Duffy</p>
+                <p className="text-sm text-luxury-charcoal">REALTOR® | 30+ Years Experience</p>
+              </div>
               <h2 className="text-2xl font-bold text-luxury-navy mb-6">
                 Our Office (NAP matches GBP)
               </h2>
