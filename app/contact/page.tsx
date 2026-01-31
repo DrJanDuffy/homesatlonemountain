@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://www.homesatlonemountain.com/jan-duffy.jpg',
+        url: 'https://www.homesatlonemountain.com/og-image.jpg', // TODO: Replace with jan-duffy.jpg when available
         width: 800,
         height: 800,
         alt: 'Dr. Jan Duffy, Lone Mountain Realtor'
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Contact Dr. Jan Duffy | Homes at Lone Mountain',
     description: 'Contact Dr. Jan Duffy, your Lone Mountain real estate expert. Get in touch for showings, questions, or to start your home buying or selling journey.',
-    images: ['https://www.homesatlonemountain.com/jan-duffy.jpg']
+    images: ['https://www.homesatlonemountain.com/og-image.jpg'] // TODO: Replace with jan-duffy.jpg
   }
 }
 
@@ -56,7 +56,7 @@ export default function ContactPage() {
           "name": "Dr. Jan Duffy",
           "areaServed": "Lone Mountain, Las Vegas",
           "url": "https://www.homesatlonemountain.com/contact",
-          "image": "https://www.homesatlonemountain.com/jan-duffy.jpg",
+          "image": "https://www.homesatlonemountain.com/og-image.jpg", // TODO: Replace with jan-duffy.jpg
           "telephone": "+1-702-222-1964",
           "email": agentInfo.email,
           "address": {
