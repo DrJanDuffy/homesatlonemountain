@@ -1,5 +1,4 @@
 import React from 'react'
-import { Button } from '@/components/ui/Button'
 import dynamicImport from 'next/dynamic'
 import { Metadata } from 'next'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
@@ -7,6 +6,7 @@ import { RealScoutWidget } from '@/components/properties/RealScoutWidget'
 import { CalendlyWidget } from '@/components/calendly/CalendlyWidget'
 import { generateFaqSchema } from '@/lib/schema'
 import { agentInfo, officeInfo, assetPaths } from '@/lib/site-config'
+import { ContactForm } from '@/components/forms/ContactForm'
 
 // Force static generation for SEO
 export const dynamic = 'force-static'
@@ -94,71 +94,7 @@ export default function ContactPage() {
               <h2 className="text-2xl font-bold text-luxury-navy mb-6 mt-12">
                 Or Send a Message
               </h2>
-              <form className="space-y-6">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-luxury-navy mb-2"
-                  >
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    className="w-full px-4 py-2 border border-luxury-stone rounded-lg focus:ring-2 focus:ring-luxury-gold focus:border-luxury-gold"
-                    placeholder="Your name"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-luxury-navy mb-2"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="w-full px-4 py-2 border border-luxury-stone rounded-lg focus:ring-2 focus:ring-luxury-gold focus:border-luxury-gold"
-                    placeholder="your@email.com"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="phone"
-                    className="block text-sm font-medium text-luxury-navy mb-2"
-                  >
-                    Phone
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    className="w-full px-4 py-2 border border-luxury-stone rounded-lg focus:ring-2 focus:ring-luxury-gold focus:border-luxury-gold"
-                    placeholder="(555) 555-5555"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-medium text-luxury-navy mb-2"
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={4}
-                    className="w-full px-4 py-2 border border-luxury-stone rounded-lg focus:ring-2 focus:ring-luxury-gold focus:border-luxury-gold"
-                    placeholder="How can we help you?"
-                  />
-                </div>
-                <Button type="submit" className="w-full bg-luxury-navy hover:bg-luxury-navy-light">
-                  Send Message
-                </Button>
-              </form>
+              <ContactForm source="contact-page" />
             </div>
 
             <div>
