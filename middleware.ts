@@ -14,8 +14,10 @@ export function middleware(request: NextRequest) {
   response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
 
   // Canonical: www.homesatlonemountain.com. Redirect non-www to www.
+  // Only for production domain—skip Vercel preview URLs (*.vercel.app) to avoid SSL errors
   const host = request.headers.get('host')
-  if (host && !host.startsWith('www.')) {
+  const isProductionApex = host === 'homesatlonemountain.com'
+  if (host && !host.startsWith('www.') && isProductionApex) {
     const url = request.nextUrl.clone()
     url.host = `www.${host}`
     return NextResponse.redirect(url, 301)
