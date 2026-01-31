@@ -62,7 +62,7 @@ export function BlogList() {
                   alt={post.title}
                   fill
                   sizes="(min-width: 1280px) 384px, (min-width: 1024px) calc(33.33vw - 32px), (min-width: 768px) calc(50vw - 48px), calc(100vw - 32px)"
-                  priority={post.featured}
+                  priority={(post as unknown as { isFeatured?: boolean }).isFeatured}
                   className="transition-transform hover:scale-105"
                 />
               </div>

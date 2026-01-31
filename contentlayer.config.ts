@@ -84,7 +84,7 @@ export const Post = defineDocumentType(() => ({
     category: { type: 'string', required: true },
     published: { type: 'string', required: true },
     author: { type: 'string', required: true },
-    featured: { type: 'boolean', default: false }
+    featured: { type: 'string', default: 'false' }
   },
   computedFields: {
     slug: {
@@ -94,6 +94,10 @@ export const Post = defineDocumentType(() => ({
     url: {
       type: 'string',
       resolve: (post) => `/blog/${post._raw.flattenedPath}`,
+    },
+    isFeatured: {
+      type: 'boolean',
+      resolve: (doc) => String((doc as { featured?: string }).featured || '').replace(/\r/g, '').trim().toLowerCase() === 'true'
     },
   },
 }))

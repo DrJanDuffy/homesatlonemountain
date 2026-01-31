@@ -33,7 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${baseUrl}${post.url}`,
     lastModified: new Date(post.published),
     changeFrequency: 'monthly' as const,
-    priority: post.featured ? 0.9 : 0.7,
+    priority: (post as unknown as { isFeatured?: boolean }).isFeatured ? 0.9 : 0.7,
   }))
 
   // Dynamic property routes
