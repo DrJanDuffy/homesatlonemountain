@@ -6,6 +6,7 @@ import { ReviewsSection } from '@/components/sections/ReviewsSection'
 import { FAQSection } from '@/components/sections/FAQSection'
 import { loneMountainFaqs } from '@/lib/lone-mountain-faqs'
 import { CTASection } from '@/components/sections/CTASection'
+import { LeadForm } from '@/components/LeadForm'
 import { SchemaMarkup } from '@/components/SchemaMarkup'
 import { generateFaqSchema } from '@/lib/schema'
 import Link from 'next/link'
@@ -109,6 +110,40 @@ export default function Home() {
         <WhyChooseUs />
         <ReviewsSection />
         <FAQSection />
+
+        {/* Lead capture – Ready to Find Your Mountain Retreat */}
+        <section className="py-16 md:py-24 bg-luxury-cream">
+          <div className="container mx-auto px-4">
+            <div className="max-w-5xl mx-auto lg:grid lg:grid-cols-2 lg:gap-12 lg:items-start">
+              <div className="mb-10 lg:mb-0">
+                <h2 className="text-3xl md:text-4xl font-bold text-luxury-navy mb-4">
+                  Ready to Find Your Mountain Retreat?
+                </h2>
+                <p className="text-lg text-luxury-charcoal leading-relaxed mb-6">
+                  Explore homes for sale in Lone Mountain and the Northwest Las Vegas area. From mountain-view estates to family-friendly neighborhoods, Dr. Jan Duffy can help you find the perfect fit.
+                </p>
+                <ul className="space-y-3 text-luxury-charcoal">
+                  <li className="flex items-center gap-2">
+                    <span className="text-luxury-gold">✓</span>
+                    Free Lone Mountain market insights
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-luxury-gold">✓</span>
+                    Personalized home search & listings
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-luxury-gold">✓</span>
+                    30+ years Las Vegas real estate expertise
+                  </li>
+                </ul>
+              </div>
+              <div className="rounded-xl border border-luxury-stone bg-white p-6 md:p-8 shadow-sm">
+                <LeadForm />
+              </div>
+            </div>
+          </div>
+        </section>
+
         <CTASection />
 
         <div className="bg-luxury-cream py-4 text-center text-sm text-luxury-charcoal">
