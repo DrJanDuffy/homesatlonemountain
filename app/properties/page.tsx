@@ -23,7 +23,7 @@ export default function PropertiesPage() {
         "@type": "CollectionPage",
         "name": "Lone Mountain Homes for Sale",
         "description": "Browse all homes for sale in Lone Mountain, Las Vegas. Find your dream property with Dr. Jan Duffy's expert guidance and local knowledge.",
-        "url": "https://homesatlonemountain.com/properties"
+        "url": "https://www.homesatlonemountain.com/properties"
       }} />
       <div className="container">
         <div className="max-w-2xl mx-auto text-center mb-12">

@@ -16,11 +16,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'About Dr. Jan Duffy | Homes at Lone Mountain',
     description: 'Learn about Dr. Jan Duffy, your trusted Lone Mountain real estate expert. Discover her experience, local knowledge, and commitment to helping you buy or sell your home.',
-    url: 'https://homesatlonemountain.com/about',
+    url: 'https://www.homesatlonemountain.com/about',
     type: 'profile',
     images: [
       {
-        url: 'https://homesatlonemountain.com/jan-duffy.jpg',
+        url: 'https://www.homesatlonemountain.com/jan-duffy.jpg',
         width: 800,
         height: 800,
         alt: 'Dr. Jan Duffy, Lone Mountain Realtor'
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'About Dr. Jan Duffy | Homes at Lone Mountain',
     description: 'Learn about Dr. Jan Duffy, your trusted Lone Mountain real estate expert. Discover her experience, local knowledge, and commitment to helping you buy or sell your home.',
-    images: ['https://homesatlonemountain.com/jan-duffy.jpg']
+    images: ['https://www.homesatlonemountain.com/jan-duffy.jpg']
   }
 }
 
@@ -43,8 +43,8 @@ export default function AboutPage() {
         "@type": "RealEstateAgent",
         "name": "Dr. Jan Duffy",
         "areaServed": "Lone Mountain, Las Vegas",
-        "url": "https://homesatlonemountain.com/about",
-        "image": "https://homesatlonemountain.com/jan-duffy.jpg",
+        "url": "https://www.homesatlonemountain.com/about",
+        "image": "https://www.homesatlonemountain.com/jan-duffy.jpg",
         "telephone": "+1-702-222-1964"
       }} />
       <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:py-32">

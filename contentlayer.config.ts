@@ -31,7 +31,11 @@ export const Property = defineDocumentType(() => ({
     },
     url: {
       type: 'string',
-      resolve: (property) => `/properties/${property._raw.flattenedPath}`,
+      resolve: (property) => {
+        const path = property._raw.flattenedPath
+        const slug = path.startsWith('properties/') ? path.slice(11) : path
+        return `/properties/${slug}`
+      },
     },
     lat: {
       type: 'number',

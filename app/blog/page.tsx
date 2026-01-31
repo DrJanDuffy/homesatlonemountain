@@ -14,11 +14,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Lone Mountain Real Estate Blog | Homes at Lone Mountain',
     description: 'Read the latest news, tips, and market trends for Lone Mountain real estate. Stay informed with Dr. Jan Duffy\'s expert blog.',
-    url: 'https://homesatlonemountain.com/blog',
+    url: 'https://www.homesatlonemountain.com/blog',
     type: 'website',
     images: [
       {
-        url: 'https://homesatlonemountain.com/og-image.jpg',
+        url: 'https://www.homesatlonemountain.com/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Lone Mountain Real Estate Blog'
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Lone Mountain Real Estate Blog | Homes at Lone Mountain',
     description: 'Read the latest news, tips, and market trends for Lone Mountain real estate. Stay informed with Dr. Jan Duffy\'s expert blog.',
-    images: ['https://homesatlonemountain.com/og-image.jpg']
+    images: ['https://www.homesatlonemountain.com/og-image.jpg']
   }
 }
 
@@ -43,7 +43,7 @@ export default function BlogPage() {
         "@type": "Blog",
         "name": "Lone Mountain Real Estate Blog",
         "description": "Read the latest news, tips, and market trends for Lone Mountain real estate. Stay informed with Dr. Jan Duffy's expert blog.",
-        "url": "https://homesatlonemountain.com/blog"
+        "url": "https://www.homesatlonemountain.com/blog"
       }} />
       <div className="container">
         <div className="max-w-2xl mx-auto text-center mb-16">

@@ -12,7 +12,7 @@ import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://homesatlonemountain.com'
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.homesatlonemountain.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   description: 'Search Lone Mountain homes for sale in Las Vegas. Get expert guidance from Dr. Jan Duffy, 30+ years local experience. Updated daily listings, market reports, neighborhood insights.',
   keywords: ['Lone Mountain homes for sale', 'Lone Mountain Las Vegas', 'Las Vegas real estate', 'homes near Lone Mountain', 'Northwest Las Vegas homes', 'Lone Mountain real estate agent', 'Dr. Jan Duffy realtor'],
-  authors: [{ name: 'Dr. Jan Duffy', url: 'https://www.homesatlonemountain.com' }],
+  authors: [{ name: 'Dr. Jan Duffy', url: siteUrl }],
   openGraph: {
     title: 'Lone Mountain Homes for Sale | Las Vegas Real Estate | Dr. Jan Duffy',
     description: 'Search Lone Mountain homes for sale in Las Vegas. Get expert guidance from Dr. Jan Duffy, 30+ years local experience. Updated daily listings, market reports, neighborhood insights.',
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     images: ['/og-image.jpg'] // Use same image as Open Graph for consistency
   },
   alternates: {
-    canonical: 'https://www.homesatlonemountain.com',
+    canonical: './', // Resolves to current route (metadataBase + path) per page
   },
   robots: {
     index: true,

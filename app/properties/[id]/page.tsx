@@ -12,7 +12,7 @@ interface PropertyPageProps {
 }
 
 export default function PropertyPage({ params }: PropertyPageProps) {
-  const property = allProperties.find((p) => p._raw.flattenedPath === params.id)
+  const property = allProperties.find((p) => p.url === `/properties/${params.id}`)
 
   if (!property) {
     notFound()

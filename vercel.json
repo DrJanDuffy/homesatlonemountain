@@ -19,6 +19,11 @@
       "source": "/home",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/properties/properties/:path*",
+      "destination": "/properties/:path*",
+      "permanent": true
     }
   ]
 } 

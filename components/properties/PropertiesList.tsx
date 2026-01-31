@@ -25,7 +25,7 @@ export function PropertiesList() {
       {properties.map((property) => (
         <Link
           key={property._id}
-          href={`/properties/${property._raw.flattenedPath}`}
+          href={property.url}
           className="card"
           onClick={() =>
             trackPropertyView({

@@ -3,8 +3,8 @@ export const organizationSchema = {
   '@type': 'RealEstateAgent',
   name: 'Homes at Lone Mountain',
   description: 'Luxury real estate agency specializing in Lone Mountain properties in Las Vegas, Nevada.',
-  url: 'https://homesatlonemountain.com',
-  logo: 'https://homesatlonemountain.com/images/logo.png',
+  url: 'https://www.homesatlonemountain.com',
+  logo: 'https://www.homesatlonemountain.com/images/logo.png',
   address: {
     '@type': 'PostalAddress',
     streetAddress: '1234 Lone Mountain Drive',
@@ -96,12 +96,12 @@ export function generatePropertySchema(property: {
       value: property.squareFeet,
       unitCode: 'FTK'
     },
-    image: property.images.map(img => `https://homesatlonemountain.com${img}`),
+    image: property.images.map(img => `https://www.homesatlonemountain.com${img}`),
     amenityFeature: property.features.map(feature => ({
       '@type': 'LocationFeatureSpecification',
       name: feature
     })),
-    url: `https://homesatlonemountain.com${property.url}`
+    url: `https://www.homesatlonemountain.com${property.url}`
   }
 }
 
@@ -131,7 +131,7 @@ export function generateBlogPostSchema(post: BlogPostSchemaInput) {
       name: 'Homes at Lone Mountain',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://homesatlonemountain.com/logo.png',
+        url: 'https://www.homesatlonemountain.com/logo.png',
       },
     },
     mainEntityOfPage: {
@@ -146,12 +146,12 @@ export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': ['Organization', 'RealEstateAgent', 'LocalBusiness'],
-    '@id': 'https://homesatlonemountain.com/#organization',
+    '@id': 'https://www.homesatlonemountain.com/#organization',
     name: 'Homes at Lone Mountain',
-    url: 'https://homesatlonemountain.com',
+    url: 'https://www.homesatlonemountain.com',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://homesatlonemountain.com/logo.png',
+      url: 'https://www.homesatlonemountain.com/logo.png',
       width: '180',
       height: '60'
     },
@@ -228,17 +228,17 @@ export function generateWebSiteSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    '@id': 'https://homesatlonemountain.com/#website',
+    '@id': 'https://www.homesatlonemountain.com/#website',
     name: 'Homes at Lone Mountain',
-    url: 'https://homesatlonemountain.com',
+    url: 'https://www.homesatlonemountain.com',
     publisher: {
-      '@id': 'https://homesatlonemountain.com/#organization'
+      '@id': 'https://www.homesatlonemountain.com/#organization'
     },
     potentialAction: {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: 'https://homesatlonemountain.com/properties?search={search_term_string}'
+        urlTemplate: 'https://www.homesatlonemountain.com/properties?search={search_term_string}'
       },
       'query-input': 'required name=search_term_string'
     }
